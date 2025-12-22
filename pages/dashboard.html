@@ -1,1 +1,108 @@
-Welcome to Dashboard Page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | RHS Grow Test Automation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #f6fff8, #ffffff);
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dashboard-card {
+      max-width: 850px;
+      padding: 3rem;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+      border-top: 6px solid #036153;
+      text-align: center;
+    }
+
+    .title {
+      color: #036153;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: #73A041;
+      font-weight: 600;
+    }
+
+    .construction-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .placeholder-box {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 2px dashed #cfe8d8;
+      border-radius: 12px;
+      background: #f9fffb;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .coming-soon {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #036153;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="dashboard-card">
+    <div class="construction-icon">🚧</div>
+
+    <h1 class="title mb-2">
+      Automation Dashboard
+    </h1>
+
+    <p class="subtitle mb-3">
+      RHS Grow Test Automation
+    </p>
+
+    <p class="lead">
+      This page is currently <strong>under construction</strong>.
+    </p>
+
+    <p>
+      Soon, this dashboard will provide a <strong>high-level view</strong> of:
+    </p>
+
+    <ul class="list-unstyled mt-3">
+      <li>📈 Execution trends over time</li>
+      <li>✅ Pass / ❌ Fail statistics</li>
+      <li>📱 Platform-wise breakdown (Android & iOS)</li>
+      <li>🧪 Tag-based test coverage</li>
+    </ul>
+
+    <div class="placeholder-box">
+      🔧 <strong>Coming Soon</strong><br>
+      Interactive charts, summary widgets, and real-time insights powered
+      directly from your automated test runs.
+    </div>
+
+    <div class="coming-soon">
+      Stay tuned – exciting insights are on the way! 🌱
+    </div>
+  </div>
+
+</body>
+</html>
