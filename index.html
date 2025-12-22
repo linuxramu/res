@@ -21,20 +21,20 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#" onclick="loadWelcome()">
+    <a class="navbar-brand" href="#" onclick="loadPage('pages/welcome.html')">
       <img src="./img/rhs.png" alt="RHS Logo" style="max-height:40px">
       RHS Grow – Test Automation Results
     </a>
 
     <ul class="navbar-nav ms-auto flex-row">
       <li class="nav-item me-3">
-        <a class="nav-link" href="#" onclick="loadStatic('dashboard.html')">Dashboard</a>
+        <a class="nav-link" href="#" onclick="loadPage('pages/dashboard.html')">Dashboard</a>
       </li>
       <li class="nav-item me-3">
-        <a class="nav-link" href="#" onclick="loadStatic('about.html')">About</a>
+        <a class="nav-link" href="#" onclick="loadPage('pages/about.html')">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" onclick="loadStatic('contact.html')">Contact</a>
+        <a class="nav-link" href="#" onclick="loadPage('pages/contact.html')">Contact</a>
       </li>
     </ul>
   </div>
@@ -59,39 +59,47 @@
             <div class="accordion-body p-0">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.7.ios.cucumber.html')">
+                    onclick="loadPage('results/20251222.8.ios.cucumber.html')">
+                  20251222.8.ios.cucumber.html
+                </li>
+                <li class="list-group-item folder-link"
+                    onclick="loadPage('results/20251222.8.android.cucumber.html')">
+                  20251222.8.android.cucumber.html
+                </li>
+                <li class="list-group-item folder-link"
+                    onclick="loadPage('results/20251222.7.ios.cucumber.html')">
                   20251222.7.ios.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.7.android.cucumber.html')">
+                    onclick="loadPage('results/20251222.7.android.cucumber.html')">
                   20251222.7.android.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.6.ios.cucumber.html')">
+                    onclick="loadPage('results/20251222.6.ios.cucumber.html')">
                   20251222.6.ios.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.6.android.cucumber.html')">
+                    onclick="loadPage('results/20251222.6.android.cucumber.html')">
                   20251222.6.android.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.5.ios.cucumber.html')">
+                    onclick="loadPage('results/20251222.5.ios.cucumber.html')">
                   20251222.5.ios.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.5.android.cucumber.html')">
+                    onclick="loadPage('results/20251222.5.android.cucumber.html')">
                   20251222.5.android.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.4.android.cucumber.html')">
+                    onclick="loadPage('results/20251222.4.android.cucumber.html')">
                   20251222.4.android.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.3.ios.cucumber.html')">
+                    onclick="loadPage('results/20251222.3.ios.cucumber.html')">
                   20251222.3.ios.cucumber.html
                 </li>
                 <li class="list-group-item folder-link"
-                    onclick="loadResult('results/20251222.3.android.cucumber.html')">
+                    onclick="loadPage('results/20251222.3.android.cucumber.html')">
                   20251222.3.android.cucumber.html
                 </li>
               </ul>
@@ -105,48 +113,9 @@
     <div class="col-md-9 p-0">
       <iframe
         id="resultFrame"
+        name="resultFrame"
         class="iframe-display"
-        srcdoc="
-          <html>
-          <head>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                padding: 40px;
-                background: linear-gradient(to right, #f8fff8, #ffffff);
-              }
-              h1 { color: #036153; }
-              .card {
-                border-left: 6px solid #73A041;
-                padding: 25px;
-                background: #ffffff;
-                box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-                max-width: 900px;
-              }
-            </style>
-          </head>
-          <body>
-            <div class='card'>
-              <h1>🌱 Welcome to RHS Grow Test Automation Results</h1>
-              <p>
-                This application provides a consolidated view of automated test
-                executions across platforms for the RHS Grow ecosystem.
-              </p>
-
-              <h5>How to use this dashboard</h5>
-              <ul>
-                <li>📅 Browse test executions grouped by date on the left</li>
-                <li>🧪 Click any test run to view its detailed Cucumber report</li>
-                <li>📊 Use the top navigation for Dashboard, About, and Contact pages</li>
-              </ul>
-
-              <p style='margin-top:20px'>
-                👉 Start by selecting a test run from the left panel.
-              </p>
-            </div>
-          </body>
-          </html>
-        ">
+        src="pages/welcome.html">
       </iframe>
     </div>
 
@@ -155,16 +124,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  function loadResult(path) {
+  function loadPage(path) {
     document.getElementById('resultFrame').src = path;
-  }
-
-  function loadStatic(page) {
-    document.getElementById('resultFrame').src = page;
-  }
-
-  function loadWelcome() {
-    location.reload();
   }
 </script>
 
