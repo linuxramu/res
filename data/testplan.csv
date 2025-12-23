@@ -5,14 +5,14 @@ Login|C807|Login with valid credentials, should able to login successfully |Aut
 Plants|C880|My Garden - Should have three tabs All Plants, Collections, Wishlists|Automated|
 Plants|C881|My Garden - All Plants - Plants added in all collections and wishlists should be present|Automated|
 Plants|C882|My Garden - All Plants - Sort based on date added|Automated|
-Plants|C883|My Garden - All Plants - sort based on include/exclude wishlists|Needs to Automate|
+Plants|C883|My Garden - All Plants - sort based on include/exclude wishlists|ToBeAutomated|
 Plants|C884|My Garden - All Plants - sort based on caretips|Automated|
 Plants|C885|My Garden - All Plants - Test Botanical names toggle|Automated|
 Plants|C886|My Garden - All Plants - Test the list /grid view in search results|Automated|
 Plants|C887|My Garden - All Plants - Test search within My plants|Automated|
 Plants|C888|My Garden - All Plants - Tap on ellipsis on the top right, should show option to delete, make sure able to delete one and more plants by making a selection|Automated|
 Plants|C889|My Garden - All Plants - Test 'Add a plant'--> 'Search for a plant' flow ( should lead to manual search screen, add plant to collections/wishlist)|Automated|
-Plants|C890|My Garden - All Plants - Test 'Add a plant'--> 'Use Plant Identifier' flow (should lead to plant id, add plant to collections/wishlists|Can't be Automated|
+Plants|C890|My Garden - All Plants - Test 'Add a plant'--> 'Use Plant Identifier' flow (should lead to plant id, add plant to collections/wishlists|Can'tBeAutomated|
 Plants|C891|My Garden - All Plants - Tap on plant added, should navigate to Plant Card|Automated|
 Plants|C892|My Garden - All Plants - Tap on ellipsis shown beside the plant, should have options to edit, add to wishlist and delete|Automated|
 Plants|C893|My Garden - All Plants - Test edit collections/wishlists flow|Automated|
