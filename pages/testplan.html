@@ -19,13 +19,20 @@
 
     h1 {
       font-size: 28px;
-      margin-bottom: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 24px 0 12px;
+      font-weight: 600;
     }
 
     /* Tabs */
     .tabs {
       display: flex;
-      gap: 24px;
+      gap: 28px;
       border-bottom: 1px solid #d1d5db;
       margin-bottom: 24px;
     }
@@ -34,28 +41,43 @@
       padding: 10px 0;
       cursor: pointer;
       font-weight: 600;
-      color: #374151;
+      color: #4b5563;
       border-bottom: 3px solid transparent;
     }
 
     .tab.active {
-      border-color: #5a7f4f;
+      border-color: #5a7f4f; /* RHS green tone */
+      color: #1f2933;
     }
 
-    .tab-content {
-      display: none;
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Summary cards */
+    .summary {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
     }
 
-    .tab-content.active {
-      display: block;
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
     }
 
-    /* Feature Accordion */
+    .summary-row:last-child { border-bottom: none; }
+
+    /* Feature accordion */
     .feature {
       background: #ffffff;
+      border: 1px solid #e5e7eb;
       border-radius: 8px;
       margin-bottom: 12px;
-      border: 1px solid #e5e7eb;
     }
 
     .feature-header {
@@ -63,21 +85,14 @@
       font-size: 17px;
       font-weight: 600;
       cursor: pointer;
-      background: #f4f6f3;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-    }
-
-    .feature-meta {
-      font-size: 13px;
-      font-weight: 400;
-      color: #4b5563;
+      background: #f4f6f3;
     }
 
     .feature-content {
       display: none;
-      padding: 12px 18px 18px;
+      padding: 14px 18px 18px;
     }
 
     table {
@@ -90,13 +105,15 @@
       padding: 10px;
       border-bottom: 1px solid #e5e7eb;
       vertical-align: top;
+      text-align: left;
     }
 
     th {
       background: #fafafa;
+      font-weight: 600;
     }
 
-    /* Status Pills */
+    /* Status badges */
     .badge {
       padding: 4px 10px;
       border-radius: 999px;
@@ -106,38 +123,10 @@
     }
 
     .Automated { background: #e6f4ea; color: #1e4620; }
-    .Needs, .ToBeAutomated { background: #fdecc8; color: #7a4a00; }
-    .InProgress { background: #e8f0fe; color: #1a3c78; }
+    .Needs { background: #fff7cc; color: #665c00; }
+    .ToBeAutomated { background: #fdecc8; color: #7a4a00; }
+    .InProgress { background: #ede9fe; color: #4c1d95; }
     .Cant { background: #fde2e2; color: #7f1d1d; }
-
-    /* Progress bar */
-    .progress {
-      background: #e5e7eb;
-      border-radius: 6px;
-      overflow: hidden;
-      height: 10px;
-      margin-top: 8px;
-    }
-
-    .progress-bar {
-      height: 100%;
-      background: #5a7f4f;
-      width: 0%;
-    }
-
-    /* Milestones */
-    .milestone {
-      background: #ffffff;
-      border: 1px solid #e5e7eb;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 14px;
-    }
-
-    .milestone h3 {
-      margin: 0 0 8px;
-      font-size: 16px;
-    }
   </style>
 </head>
 
@@ -150,58 +139,91 @@
   <div class="tab" data-tab="milestones">Milestones</div>
 </div>
 
+<!-- ================= TEST PLAN TAB ================= -->
 <div id="testplan" class="tab-content active">
-  <div id="app"></div>
+  <div id="automation-summary" class="summary"></div>
+  <div id="features"></div>
 </div>
 
+<!-- ================= MILESTONES TAB ================= -->
 <div id="milestones" class="tab-content">
-  <div id="milestone-content"></div>
+  <div id="overall-progress" class="summary"></div>
+  <div class="summary">
+    <h2>Milestones</h2>
+    <table id="milestone-table">
+      <thead>
+        <tr>
+          <th>Milestone</th>
+          <th>Target</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
-  const CSV_PATH = "../data/testplan.csv";
+  const TESTPLAN_CSV = "../data/testplan.csv";
   const MILESTONE_CSV = "../data/milestones.csv";
 
-  /* ---------------- TAB HANDLING ---------------- */
+  /* Tabs */
   document.querySelectorAll(".tab").forEach(tab => {
     tab.onclick = () => {
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
       document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-
       tab.classList.add("active");
       document.getElementById(tab.dataset.tab).classList.add("active");
     };
   });
 
-  /* ---------------- TEST PLAN ---------------- */
   function normalizeStatus(status) {
     if (!status) return "";
-    if (status.includes("Can't")) return "Cant";
-    if (status.includes("Needs")) return "Needs";
-    return status.replace(/\s+/g, "");
+    return status.replace(/\s+/g, "").replace("Can't", "Cant");
   }
 
-  fetch(CSV_PATH)
-    .then(res => res.text())
+  /* ================= LOAD TEST PLAN ================= */
+  fetch(TESTPLAN_CSV)
+    .then(r => r.text())
     .then(csv => {
-      const parsed = Papa.parse(csv, {
+      const rows = Papa.parse(csv, {
         header: true,
         delimiter: "|",
         skipEmptyLines: true
-      });
+      }).data;
 
       const grouped = {};
-      parsed.data.forEach(row => {
-        const feature = row.Feature || "Uncategorized";
+      let total = 0, automated = 0;
+
+      rows.forEach(r => {
+        const feature = r.Feature || "Uncategorized";
         grouped[feature] = grouped[feature] || [];
-        grouped[feature].push(row);
+        grouped[feature].push(r);
+        total++;
+        if (r.Status === "Automated") automated++;
       });
 
-      const app = document.getElementById("app");
+      /* Feature automation summary */
+      const summary = document.getElementById("automation-summary");
+      summary.innerHTML = "<h2>Automation Coverage</h2>";
 
       Object.entries(grouped).forEach(([feature, tests]) => {
-        const featureDiv = document.createElement("div");
-        featureDiv.className = "feature";
+        const auto = tests.filter(t => t.Status === "Automated").length;
+        const pct = Math.round((auto / tests.length) * 100);
+        summary.innerHTML += `
+          <div class="summary-row">
+            <strong>${feature}</strong>
+            <span>${pct}% Automated (${auto}/${tests.length})</span>
+          </div>
+        `;
+      });
+
+      /* Feature accordions */
+      const container = document.getElementById("features");
+
+      Object.entries(grouped).forEach(([feature, tests]) => {
+        const box = document.createElement("div");
+        box.className = "feature";
 
         const header = document.createElement("div");
         header.className = "feature-header";
@@ -209,7 +231,6 @@
 
         const content = document.createElement("div");
         content.className = "feature-content";
-
         content.innerHTML = `
           <table>
             <thead>
@@ -236,82 +257,45 @@
         `;
 
         header.onclick = () => {
-          content.style.display =
-            content.style.display === "block" ? "none" : "block";
+          content.style.display = content.style.display === "block" ? "none" : "block";
         };
 
-        featureDiv.appendChild(header);
-        featureDiv.appendChild(content);
-        app.appendChild(featureDiv);
+        box.appendChild(header);
+        box.appendChild(content);
+        container.appendChild(box);
       });
+
+      /* Overall automation progress (Milestones tab) */
+      const pct = Math.round((automated / total) * 100);
+      document.getElementById("overall-progress").innerHTML = `
+        <h2>Overall Automation Progress</h2>
+        <div class="summary-row">
+          <strong>${automated} of ${total} test cases automated</strong>
+          <span>${pct}%</span>
+        </div>
+      `;
     });
 
-  /* ---------------- MILESTONES ---------------- */
-
-  const quarters = [
-    {
-      name: "May–Jun 2025",
-      start: new Date("2025-05-01"),
-      end: new Date("2025-06-30")
-    },
-    {
-      name: "Jul–Sep 2025",
-      start: new Date("2025-07-01"),
-      end: new Date("2025-09-30")
-    },
-    {
-      name: "Oct–Dec 2025",
-      start: new Date("2025-10-01"),
-      end: new Date("2025-12-31")
-    }
-  ];
-
-  const EXPECTED_DAYS = 44;
-
+  /* ================= LOAD MILESTONES TABLE ================= */
   fetch(MILESTONE_CSV)
-    .then(res => res.text())
+    .then(r => r.text())
     .then(csv => {
-      const data = Papa.parse(csv, {
-        header: true,
-        skipEmptyLines: true
-      }).data;
+      const rows = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
+      const tbody = document.querySelector("#milestone-table tbody");
 
-      const table = document.createElement("table");
-      table.innerHTML = `
-        <thead>
+      rows.forEach(r => {
+        tbody.innerHTML += `
           <tr>
-            <th>Milestone</th>
-            <th>Status</th>
-            <th>Comments</th>
+            <td><strong>${r.Milestone || ""}</strong></td>
+            <td>${r.Target || ""}</td>
+            <td>${r.Notes || ""}</td>
           </tr>
-        </thead>
-        <tbody></tbody>
-      `;
-
-      const tbody = table.querySelector("tbody");
-
-      quarters.forEach(q => {
-        const days = data.filter(d => {
-          const dt = new Date(d.date);
-          return dt >= q.start && dt <= q.end;
-        });
-
-        const worked = days.filter(d => d.worked === "1").length;
-        const holidays = days.filter(d => d.worked === "0").length;
-
-        const achieved = worked >= EXPECTED_DAYS * 0.7;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><strong>${q.name}</strong></td>
-          <td>${achieved ? "✅ Achieved" : "❌ Not Achieved"}</td>
-          <td>${holidays > 0 ? `Took ${holidays} days holiday / leave` : "—"}</td>
         `;
-
-        tbody.appendChild(tr);
       });
-
-      document.getElementById("milestones").appendChild(table);
+    })
+    .catch(() => {
+      document.querySelector("#milestone-table tbody").innerHTML =
+        "<tr><td colspan='3'>No milestones defined</td></tr>";
     });
 </script>
 
