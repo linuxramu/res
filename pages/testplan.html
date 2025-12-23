@@ -5,68 +5,110 @@
   <title>Test Plan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Font -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- DataTables CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"
-  />
+  <!-- PapaParse -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <style>
     body {
       font-family: "Inter", sans-serif;
-      background: #f4f6f8;
+      background: #f3f4f6;
       margin: 0;
       padding: 30px;
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #1f2937;
+      margin-bottom: 30px;
+      color: #111827;
     }
 
-    .table-container {
+    .feature {
       background: #ffffff;
-      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      margin-bottom: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      overflow: hidden;
     }
 
-    table.dataTable {
-      border-collapse: collapse !important;
-      width: 100% !important;
-    }
-
-    table.dataTable thead th {
+    .feature-header {
+      padding: 16px 20px;
+      font-size: 18px;
+      font-weight: 600;
       background: #2563eb;
       color: white;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .feature-header span {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .feature-content {
+      display: none;
+      padding: 16px 20px 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f9fafb;
       font-weight: 600;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      color: #374151;
     }
 
-    table.dataTable tbody tr:nth-child(even) {
-      background-color: #f9fafb;
+    tr:hover {
+      background: #f1f5f9;
     }
 
-    table.dataTable tbody tr:hover {
-      background-color: #e0f2fe;
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
     }
 
-    .dataTables_filter input {
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      padding: 6px 10px;
+    .Automated {
+      background: #dcfce7;
+      color: #166534;
     }
 
-    .dataTables_length select {
-      border-radius: 6px;
-      border: 1px solid #cbd5e1;
-      padding: 4px;
+    .Needs {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .ToBeAutomated {
+      background: #fde68a;
+      color: #92400e;
+    }
+
+    .InProgress {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .Cant {
+      background: #fee2e2;
+      color: #991b1b;
     }
 
     .error {
@@ -79,61 +121,99 @@
 
 <body>
 
-  <h1>📋 Test Plan</h1>
+<h1>📋 Test Plan</h1>
+<div id="app"></div>
+<div id="error" class="error"></div>
 
-  <div class="table-container">
-    <table id="testPlanTable" class="display"></table>
-    <div id="error" class="error"></div>
-  </div>
+<script>
+  const CSV_PATH = "../data/testplan.csv";
 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  function normalizeStatus(status) {
+    if (!status) return "";
+    if (status.includes("Can't")) return "Cant";
+    if (status.includes("Needs")) return "Needs";
+    return status.replace(/\s+/g, "");
+  }
 
-  <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-
-  <!-- PapaParse (CSV parser) -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-  <script>
-    const CSV_PATH = "../data/testplan.csv";
-
-    fetch(CSV_PATH)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("CSV file not found");
-        }
-        return response.text();
-      })
-      .then(csvText => {
-        const parsed = Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true
-        });
-
-        if (!parsed.data.length) {
-          throw new Error("CSV is empty or invalid");
-        }
-
-        const columns = Object.keys(parsed.data[0]).map(key => ({
-          title: key,
-          data: key
-        }));
-
-        $('#testPlanTable').DataTable({
-          data: parsed.data,
-          columns: columns,
-          pageLength: 10,
-          lengthMenu: [5, 10, 25, 50],
-          order: [],
-          responsive: true
-        });
-      })
-      .catch(err => {
-        document.getElementById("error").textContent =
-          "❌ Failed to load testplan.csv (" + err.message + ")";
+  fetch(CSV_PATH)
+    .then(res => {
+      if (!res.ok) throw new Error("CSV not found");
+      return res.text();
+    })
+    .then(csv => {
+      const parsed = Papa.parse(csv, {
+        header: true,
+        delimiter: "|",
+        skipEmptyLines: true
       });
-  </script>
+
+      const grouped = {};
+      parsed.data.forEach(row => {
+        const feature = row.Feature || "Uncategorized";
+        grouped[feature] = grouped[feature] || [];
+        grouped[feature].push(row);
+      });
+
+      const app = document.getElementById("app");
+
+      Object.keys(grouped).forEach(feature => {
+        const tests = grouped[feature];
+
+        const featureDiv = document.createElement("div");
+        featureDiv.className = "feature";
+
+        const header = document.createElement("div");
+        header.className = "feature-header";
+        header.innerHTML = `
+          ${feature}
+          <span>${tests.length} Tests ▾</span>
+        `;
+
+        const content = document.createElement("div");
+        content.className = "feature-content";
+
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>TCID</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tests.map(t => `
+              <tr>
+                <td><strong>${t.TCID || ""}</strong></td>
+                <td>${t["Test Case Description"] || ""}</td>
+                <td>
+                  <span class="badge ${normalizeStatus(t.Status)}">
+                    ${t.Status || ""}
+                  </span>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        `;
+
+        content.appendChild(table);
+
+        header.onclick = () => {
+          content.style.display =
+            content.style.display === "block" ? "none" : "block";
+        };
+
+        featureDiv.appendChild(header);
+        featureDiv.appendChild(content);
+        app.appendChild(featureDiv);
+      });
+    })
+    .catch(err => {
+      document.getElementById("error").textContent =
+        "❌ Failed to load testplan.csv";
+      console.error(err);
+    });
+</script>
 
 </body>
 </html>
