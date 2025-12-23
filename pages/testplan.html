@@ -160,7 +160,20 @@
 
 <script>
   const CSV_PATH = "../data/testplan.csv";
+  const MILESTONE_CSV = "../data/milestones.csv";
 
+  /* ---------------- TAB HANDLING ---------------- */
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.onclick = () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    };
+  });
+
+  /* ---------------- TEST PLAN ---------------- */
   function normalizeStatus(status) {
     if (!status) return "";
     if (status.includes("Can't")) return "Cant";
@@ -178,91 +191,128 @@
       });
 
       const grouped = {};
-      let total = 0, automated = 0;
-
       parsed.data.forEach(row => {
         const feature = row.Feature || "Uncategorized";
         grouped[feature] = grouped[feature] || [];
         grouped[feature].push(row);
-        total++;
-        if (row.Status === "Automated") automated++;
       });
 
       const app = document.getElementById("app");
 
       Object.entries(grouped).forEach(([feature, tests]) => {
-        const autoCount = tests.filter(t => t.Status === "Automated").length;
-        const percent = Math.round((autoCount / tests.length) * 100);
-
         const featureDiv = document.createElement("div");
         featureDiv.className = "feature";
 
-        featureDiv.innerHTML = `
-          <div class="feature-header">
-            ${feature}
-            <div class="feature-meta">
-              ${percent}% Automated (${autoCount}/${tests.length})
-            </div>
-          </div>
-          <div class="feature-content">
-            <div class="progress">
-              <div class="progress-bar" style="width:${percent}%"></div>
-            </div>
-            <table>
-              <thead>
+        const header = document.createElement("div");
+        header.className = "feature-header";
+        header.innerHTML = `${feature} <span>${tests.length} tests</span>`;
+
+        const content = document.createElement("div");
+        content.className = "feature-content";
+
+        content.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>TCID</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tests.map(t => `
                 <tr>
-                  <th>TCID</th>
-                  <th>Description</th>
-                  <th>Status</th>
+                  <td><strong>${t.TCID || ""}</strong></td>
+                  <td>${t["Test Case Description"] || ""}</td>
+                  <td>
+                    <span class="badge ${normalizeStatus(t.Status)}">
+                      ${t.Status || ""}
+                    </span>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                ${tests.map(t => `
-                  <tr>
-                    <td><strong>${t.TCID || ""}</strong></td>
-                    <td>${t["Test Case Description"] || ""}</td>
-                    <td>
-                      <span class="badge ${normalizeStatus(t.Status)}">
-                        ${t.Status || ""}
-                      </span>
-                    </td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-          </div>
+              `).join("")}
+            </tbody>
+          </table>
         `;
 
-        featureDiv.querySelector(".feature-header").onclick = () => {
-          const c = featureDiv.querySelector(".feature-content");
-          c.style.display = c.style.display === "block" ? "none" : "block";
+        header.onclick = () => {
+          content.style.display =
+            content.style.display === "block" ? "none" : "block";
         };
 
+        featureDiv.appendChild(header);
+        featureDiv.appendChild(content);
         app.appendChild(featureDiv);
       });
-
-      // Milestones summary
-      const overall = Math.round((automated / total) * 100);
-      document.getElementById("milestone-content").innerHTML = `
-        <div class="milestone">
-          <h3>Overall Automation Progress</h3>
-          <p>${automated} of ${total} test cases automated (${overall}%)</p>
-          <div class="progress">
-            <div class="progress-bar" style="width:${overall}%"></div>
-          </div>
-        </div>
-      `;
     });
 
-  // Tabs
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.onclick = () => {
-      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-      tab.classList.add("active");
-      document.getElementById(tab.dataset.tab).classList.add("active");
-    };
-  });
+  /* ---------------- MILESTONES ---------------- */
+
+  const quarters = [
+    {
+      name: "May–Jun 2025",
+      start: new Date("2025-05-01"),
+      end: new Date("2025-06-30")
+    },
+    {
+      name: "Jul–Sep 2025",
+      start: new Date("2025-07-01"),
+      end: new Date("2025-09-30")
+    },
+    {
+      name: "Oct–Dec 2025",
+      start: new Date("2025-10-01"),
+      end: new Date("2025-12-31")
+    }
+  ];
+
+  const EXPECTED_DAYS = 44;
+
+  fetch(MILESTONE_CSV)
+    .then(res => res.text())
+    .then(csv => {
+      const data = Papa.parse(csv, {
+        header: true,
+        skipEmptyLines: true
+      }).data;
+
+      const table = document.createElement("table");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Milestone</th>
+            <th>Status</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+      const tbody = table.querySelector("tbody");
+
+      quarters.forEach(q => {
+        const days = data.filter(d => {
+          const dt = new Date(d.date);
+          return dt >= q.start && dt <= q.end;
+        });
+
+        const worked = days.filter(d => d.worked === "1").length;
+        const holidays = days.filter(d => d.worked === "0").length;
+
+        const achieved = worked >= EXPECTED_DAYS * 0.7;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${q.name}</strong></td>
+          <td>${achieved ? "✅ Achieved" : "❌ Not Achieved"}</td>
+          <td>${holidays > 0 ? `Took ${holidays} days holiday / leave` : "—"}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById("milestones").appendChild(table);
+    });
 </script>
 
 </body>
