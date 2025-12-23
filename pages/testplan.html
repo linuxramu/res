@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- DataTables CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css"
+  />
+
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    .table-container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    table.dataTable {
+      border-collapse: collapse !important;
+      width: 100% !important;
+    }
+
+    table.dataTable thead th {
+      background: #2563eb;
+      color: white;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    table.dataTable tbody tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+
+    table.dataTable tbody tr:hover {
+      background-color: #e0f2fe;
+    }
+
+    .dataTables_filter input {
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      padding: 6px 10px;
+    }
+
+    .dataTables_length select {
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      padding: 4px;
+    }
+
+    .error {
+      color: #dc2626;
+      text-align: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>📋 Test Plan</h1>
+
+  <div class="table-container">
+    <table id="testPlanTable" class="display"></table>
+    <div id="error" class="error"></div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+  <!-- PapaParse (CSV parser) -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <script>
+    const CSV_PATH = "../data/testplan.csv";
+
+    fetch(CSV_PATH)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("CSV file not found");
+        }
+        return response.text();
+      })
+      .then(csvText => {
+        const parsed = Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true
+        });
+
+        if (!parsed.data.length) {
+          throw new Error("CSV is empty or invalid");
+        }
+
+        const columns = Object.keys(parsed.data[0]).map(key => ({
+          title: key,
+          data: key
+        }));
+
+        $('#testPlanTable').DataTable({
+          data: parsed.data,
+          columns: columns,
+          pageLength: 10,
+          lengthMenu: [5, 10, 25, 50],
+          order: [],
+          responsive: true
+        });
+      })
+      .catch(err => {
+        document.getElementById("error").textContent =
+          "❌ Failed to load testplan.csv (" + err.message + ")";
+      });
+  </script>
+
+</body>
+</html>
