@@ -17,15 +17,8 @@ body {
   color: #1f2933;
 }
 
-h1 {
-  font-size: 26px;
-  margin-bottom: 20px;
-}
-
-h2 {
-  font-size: 18px;
-  margin: 24px 0 12px;
-}
+h1 { font-size: 26px; margin-bottom: 20px; }
+h2 { font-size: 18px; margin: 16px 0 12px; }
 
 /* Tabs */
 .tabs {
@@ -55,31 +48,16 @@ h2 {
   border-radius: 8px;
   margin-bottom: 10px;
 }
-
 .feature-header {
   padding: 14px 16px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   cursor: pointer;
   background: #f2f4ef;
 }
-
-.feature-title {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.feature-meta {
-  font-size: 13px;
-  color: #5f6f5a;
-  white-space: nowrap;
-}
-
-.feature-content {
-  display: none;
-  padding: 12px 16px 16px;
-}
+.feature-title { font-weight: 600; }
+.feature-meta { font-size: 13px; color: #5f6f5a; }
+.feature-content { display: none; padding: 12px 16px 16px; }
 
 /* Tables */
 table {
@@ -88,55 +66,49 @@ table {
   font-size: 14px;
 }
 th, td {
-  padding: 8px;
+  padding: 10px 8px;
   border-bottom: 1px solid #e5e7eb;
+  text-align: left;
 }
-th {
+thead th {
+  position: sticky;
+  top: 0;
   background: #fafafa;
-  font-weight: 600;
+  z-index: 2;
 }
+tbody tr:nth-child(even) { background: #f9faf7; }
+tbody tr.achieved-row { background: #eef7ee !important; }
 
-/* Status pills */
+/* Badges */
 .badge {
   padding: 3px 10px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
-  display: inline-block;
 }
-
 .Automated { background: #e6f4ea; color: #1e4620; }
-.Needs { background: #fff7cc; color: #665c00; }
-.ToBeAutomated { background: #fdecc8; color: #7a4a00; }
-.InProgress { background: #ede9fe; color: #4c1d95; }
-.Cant { background: #fde2e2; color: #7f1d1d; }
-
 .Achieved { background: #e6f4ea; color: #1e4620; }
-.Planned { background: #fff7cc; color: #665c00; }
 
-/* Overall progress */
-.overall {
-  margin-bottom: 16px;
-  padding: 12px 14px;
-  background: #f2f4ef;
-  border: 1px solid #e1e4dd;
-  border-radius: 8px;
-  font-size: 14px;
-}
-.overall strong {
-  font-size: 18px;
-  margin-right: 8px;
-}
-.overall span {
-  color: #5f6f5a;
-}
-
-/* Milestone box */
+/* Milestone card */
 .box {
+  background: #fbfcfa;
+  border: 1px solid #e3e7df;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Progress cards */
+.progress-box {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.progress-item {
   background: #ffffff;
   border: 1px solid #e1e4dd;
   border-radius: 8px;
-  padding: 14px;
+  padding: 10px 14px;
 }
 </style>
 </head>
@@ -150,15 +122,14 @@ th {
   <div class="tab" data-tab="milestones">Milestones</div>
 </div>
 
-<!-- ================= TEST PLAN ================= -->
+<!-- TEST PLAN -->
 <div id="testplan" class="tab-content active">
   <div id="features"></div>
 </div>
 
-<!-- ================= MILESTONES ================= -->
+<!-- MILESTONES -->
 <div id="milestones" class="tab-content">
-  <div id="overall"></div>
-
+  <div id="milestoneProgress" class="progress-box"></div>
   <div class="box">
     <h2>Milestones</h2>
     <table id="milestone-table">
@@ -182,120 +153,74 @@ const MILESTONE_CSV = "../data/milestones.csv";
 /* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.onclick = () => {
-    document.querySelectorAll(".tab, .tab-content")
-      .forEach(e => e.classList.remove("active"));
+    document.querySelectorAll(".tab, .tab-content").forEach(e => e.classList.remove("active"));
     tab.classList.add("active");
     document.getElementById(tab.dataset.tab).classList.add("active");
   };
 });
 
-function cls(status) {
-  return (status || "")
-    .replace(/\s+/g, "")
-    .replace("Can't", "Cant");
-}
+/* Load Test Plan */
+fetch(TESTPLAN_CSV).then(r => r.text()).then(csv => {
+  const rows = Papa.parse(csv, { header: true, delimiter: "|", skipEmptyLines: true }).data;
+  const grouped = {};
+  rows.forEach(r => {
+    const f = r.Feature || "Other";
+    grouped[f] = grouped[f] || [];
+    grouped[f].push(r);
+  });
 
-/* ================= LOAD TEST PLAN ================= */
-fetch(TESTPLAN_CSV)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = Papa.parse(csv, {
-      header: true,
-      delimiter: "|",
-      skipEmptyLines: true
-    }).data;
-
-    const grouped = {};
-    let total = 0, automated = 0;
-
-    rows.forEach(r => {
-      const f = r.Feature || "Other";
-      grouped[f] = grouped[f] || [];
-      grouped[f].push(r);
-      total++;
-      if (r.Status === "Automated") automated++;
-    });
-
-    const container = document.getElementById("features");
-
-    Object.entries(grouped).forEach(([feature, tests]) => {
-      const auto = tests.filter(t => t.Status === "Automated").length;
-      const pct = Math.round((auto / tests.length) * 100);
-
-      const box = document.createElement("div");
-      box.className = "feature";
-
-      const header = document.createElement("div");
-      header.className = "feature-header";
-      header.innerHTML = `
-        <div class="feature-title">${feature}</div>
-        <div class="feature-meta">${pct}% automated (${auto}/${tests.length})</div>
-      `;
-
-      const content = document.createElement("div");
-      content.className = "feature-content";
-      content.innerHTML = `
-        <table>
-          <thead>
+  const container = document.getElementById("features");
+  Object.entries(grouped).forEach(([feature, tests]) => {
+    const box = document.createElement("div");
+    box.className = "feature";
+    const header = document.createElement("div");
+    header.className = "feature-header";
+    header.innerHTML = `<div class="feature-title">${feature}</div>`;
+    const content = document.createElement("div");
+    content.className = "feature-content";
+    content.innerHTML = `
+      <table>
+        <tbody>
+          ${tests.map(t => `
             <tr>
-              <th>TCID</th>
-              <th>Description</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tests.map(t => `
-              <tr>
-                <td>${t.TCID || ""}</td>
-                <td>${t["Test Case Description"] || ""}</td>
-                <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      `;
+              <td>${t.TCID}</td>
+              <td>${t["Test Case Description"]}</td>
+              <td><span class="badge Automated">${t.Status}</span></td>
+            </tr>`).join("")}
+        </tbody>
+      </table>`;
+    header.onclick = () => content.style.display = content.style.display === "block" ? "none" : "block";
+    box.append(header, content);
+    container.appendChild(box);
+  });
+});
 
-      header.onclick = () => {
-        content.style.display =
-          content.style.display === "block" ? "none" : "block";
-      };
+/* Load Milestones */
+fetch(MILESTONE_CSV).then(r => r.text()).then(csv => {
+  const rows = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
+  const tbody = document.querySelector("#milestone-table tbody");
+  const progress = {};
 
-      box.append(header, content);
-      container.appendChild(box);
-    });
+  rows.forEach(r => {
+    progress[r.Milestone] = progress[r.Milestone] || { t: 0, a: 0 };
+    progress[r.Milestone].t++;
+    if (r.Status === "Achieved") progress[r.Milestone].a++;
 
-    const pct = Math.round((automated / total) * 100);
-    document.getElementById("overall").innerHTML = `
-      <div class="overall">
-        <strong>${pct}%</strong>
-        Overall Automation Progress
-        <span>(${automated} of ${total} test cases automated)</span>
-      </div>
-    `;
+    const tr = document.createElement("tr");
+    if (r.Status === "Achieved") tr.classList.add("achieved-row");
+    tr.innerHTML = `
+      <td>${r.Milestone}</td>
+      <td>${r.Activity}</td>
+      <td><span class="badge Achieved">${r.Status}</span></td>
+      <td>${r.Comments}</td>`;
+    tbody.appendChild(tr);
   });
 
-/* ================= LOAD MILESTONES ================= */
-fetch(MILESTONE_CSV)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = Papa.parse(csv, {
-      header: true,
-      skipEmptyLines: true
-    }).data;
-
-    const tbody = document.querySelector("#milestone-table tbody");
-
-    rows.forEach(r => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${r.Milestone || "-"}</td>
-          <td>${r.Activity || "-"}</td>
-          <td><span class="badge ${cls(r.Status)}">${r.Status || "-"}</span></td>
-          <td>${r.Comments || "-"}</td>
-        </tr>
-      `;
-    });
+  Object.entries(progress).forEach(([k, v]) => {
+    document.getElementById("milestoneProgress").innerHTML +=
+      `<div class="progress-item"><strong>${Math.round(v.a/v.t*100)}%</strong> ${k} (${v.a}/${v.t})</div>`;
   });
+});
 </script>
 
 </body>
