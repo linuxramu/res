@@ -102,14 +102,19 @@ th {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
+  display: inline-block;
 }
+
 .Automated { background: #e6f4ea; color: #1e4620; }
 .Needs { background: #fff7cc; color: #665c00; }
 .ToBeAutomated { background: #fdecc8; color: #7a4a00; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .Cant { background: #fde2e2; color: #7f1d1d; }
 
-/* Overall progress (light) */
+.Achieved { background: #e6f4ea; color: #1e4620; }
+.Planned { background: #fff7cc; color: #665c00; }
+
+/* Overall progress */
 .overall {
   margin-bottom: 16px;
   padding: 12px 14px;
@@ -160,6 +165,7 @@ th {
       <thead>
         <tr>
           <th>Milestone</th>
+          <th>Activity</th>
           <th>Status</th>
           <th>Comments</th>
         </tr>
@@ -184,98 +190,112 @@ document.querySelectorAll(".tab").forEach(tab => {
 });
 
 function cls(status) {
-  return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
+  return (status || "")
+    .replace(/\s+/g, "")
+    .replace("Can't", "Cant");
 }
 
-/* Load Test Plan */
-fetch(TESTPLAN_CSV).then(r => r.text()).then(csv => {
-  const rows = Papa.parse(csv, {
-    header: true,
-    delimiter: "|",
-    skipEmptyLines: true
-  }).data;
+/* ================= LOAD TEST PLAN ================= */
+fetch(TESTPLAN_CSV)
+  .then(r => r.text())
+  .then(csv => {
+    const rows = Papa.parse(csv, {
+      header: true,
+      delimiter: "|",
+      skipEmptyLines: true
+    }).data;
 
-  const grouped = {};
-  let total = 0, automated = 0;
+    const grouped = {};
+    let total = 0, automated = 0;
 
-  rows.forEach(r => {
-    const f = r.Feature || "Other";
-    grouped[f] = grouped[f] || [];
-    grouped[f].push(r);
-    total++;
-    if (r.Status === "Automated") automated++;
-  });
+    rows.forEach(r => {
+      const f = r.Feature || "Other";
+      grouped[f] = grouped[f] || [];
+      grouped[f].push(r);
+      total++;
+      if (r.Status === "Automated") automated++;
+    });
 
-  const container = document.getElementById("features");
+    const container = document.getElementById("features");
 
-  Object.entries(grouped).forEach(([feature, tests]) => {
-    const auto = tests.filter(t => t.Status === "Automated").length;
-    const pct = Math.round((auto / tests.length) * 100);
+    Object.entries(grouped).forEach(([feature, tests]) => {
+      const auto = tests.filter(t => t.Status === "Automated").length;
+      const pct = Math.round((auto / tests.length) * 100);
 
-    const box = document.createElement("div");
-    box.className = "feature";
+      const box = document.createElement("div");
+      box.className = "feature";
 
-    const header = document.createElement("div");
-    header.className = "feature-header";
-    header.innerHTML = `
-      <div class="feature-title">${feature}</div>
-      <div class="feature-meta">${pct}% automated (${auto}/${tests.length})</div>
-    `;
+      const header = document.createElement("div");
+      header.className = "feature-header";
+      header.innerHTML = `
+        <div class="feature-title">${feature}</div>
+        <div class="feature-meta">${pct}% automated (${auto}/${tests.length})</div>
+      `;
 
-    const content = document.createElement("div");
-    content.className = "feature-content";
-    content.innerHTML = `
-      <table>
-        <thead>
-          <tr><th>TCID</th><th>Description</th><th>Status</th></tr>
-        </thead>
-        <tbody>
-          ${tests.map(t => `
+      const content = document.createElement("div");
+      content.className = "feature-content";
+      content.innerHTML = `
+        <table>
+          <thead>
             <tr>
-              <td>${t.TCID || ""}</td>
-              <td>${t["Test Case Description"] || ""}</td>
-              <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
+              <th>TCID</th>
+              <th>Description</th>
+              <th>Status</th>
             </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    `;
+          </thead>
+          <tbody>
+            ${tests.map(t => `
+              <tr>
+                <td>${t.TCID || ""}</td>
+                <td>${t["Test Case Description"] || ""}</td>
+                <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
 
-    header.onclick = () => {
-      content.style.display =
-        content.style.display === "block" ? "none" : "block";
-    };
+      header.onclick = () => {
+        content.style.display =
+          content.style.display === "block" ? "none" : "block";
+      };
 
-    box.append(header, content);
-    container.appendChild(box);
-  });
+      box.append(header, content);
+      container.appendChild(box);
+    });
 
-  /* Overall automation (light) */
-  const pct = Math.round((automated / total) * 100);
-  document.getElementById("overall").innerHTML = `
-    <div class="overall">
-      <strong>${pct}%</strong>
-      Overall Automation Progress
-      <span>(${automated} of ${total} test cases automated)</span>
-    </div>
-  `;
-});
-
-/* Load milestones */
-fetch(MILESTONE_CSV).then(r => r.text()).then(csv => {
-  const rows = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
-  const tbody = document.querySelector("#milestone-table tbody");
-
-  rows.forEach(r => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${r.Milestone}</td>
-        <td>${r.Status}</td>
-        <td>${r.Comments}</td>
-      </tr>
+    const pct = Math.round((automated / total) * 100);
+    document.getElementById("overall").innerHTML = `
+      <div class="overall">
+        <strong>${pct}%</strong>
+        Overall Automation Progress
+        <span>(${automated} of ${total} test cases automated)</span>
+      </div>
     `;
   });
-});
+
+/* ================= LOAD MILESTONES ================= */
+fetch(MILESTONE_CSV)
+  .then(r => r.text())
+  .then(csv => {
+    const rows = Papa.parse(csv, {
+      header: true,
+      skipEmptyLines: true
+    }).data;
+
+    const tbody = document.querySelector("#milestone-table tbody");
+
+    rows.forEach(r => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${r.Milestone || "-"}</td>
+          <td>${r.Activity || "-"}</td>
+          <td><span class="badge ${cls(r.Status)}">${r.Status || "-"}</span></td>
+          <td>${r.Comments || "-"}</td>
+        </tr>
+      `;
+    });
+  });
 </script>
 
 </body>
