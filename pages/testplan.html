@@ -9,6 +9,22 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
+
+  /* Overall Automation Progress – highlight (light) */
+.overall.highlight {
+  background: #eef6ff;          /* very light blue */
+  border: 1px solid #d6e6f5;
+}
+
+.overall.highlight strong {
+  color: #1f4f8a;
+}
+
+.overall.highlight span {
+  color: #4b6b8a;
+}
+
+
 body {
   font-family: Inter, sans-serif;
   background: #f7f8f5;
@@ -306,7 +322,7 @@ fetch(TESTPLAN_CSV)
     const overallPercent = Math.round((automatedTests / totalTests) * 100);
 
     document.getElementById("overall").innerHTML = `
-      <div class="overall">
+      <div class="overall highlight">
         <strong>${overallPercent}%</strong>
         Overall Automation Progress
         <span>(${automatedTests} of ${totalTests} test cases automated)</span>
