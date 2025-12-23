@@ -1,5 +1,4 @@
-Module	TC No	Test Case Description	Status
-
+Feature|TCID|Test Case Description|Status
 Login|C804|Login - Launch the App, use 'I have an RHS Account' cta, submit an invalid credentials, should throw error |Automated|
 Login|C805|Login - Using 'Forgot Password' link, test changing the password funcionality|Automated|
 Login|C807|Login with valid credentials, should able to login successfully |Automated|
