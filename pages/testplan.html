@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>QA Test Plan</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -11,83 +11,74 @@
 <style>
 body {
   font-family: Inter, sans-serif;
-  background: #f7f7f5;
+  background: #f7f8f5;
   margin: 0;
   padding: 24px;
   color: #1f2933;
 }
 
-h1 { font-size: 28px; margin-bottom: 16px; }
-h2 { font-size: 18px; margin: 24px 0 12px; }
+h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 24px 0 12px;
+}
 
 /* Tabs */
 .tabs {
   display: flex;
-  gap: 28px;
-  border-bottom: 1px solid #d1d5db;
-  margin-bottom: 24px;
+  gap: 24px;
+  border-bottom: 1px solid #d6dad2;
+  margin-bottom: 20px;
 }
 .tab {
   padding: 10px 0;
   cursor: pointer;
   font-weight: 600;
-  color: #4b5563;
+  color: #5f6f5a;
   border-bottom: 3px solid transparent;
 }
 .tab.active {
-  border-color: #5a7f4f;
+  border-color: #7a9c72;
   color: #1f2933;
 }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Coverage tiles */
-.coverage-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-bottom: 28px;
-}
-.coverage-tile {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-left: 6px solid #5a7f4f;
-  border-radius: 10px;
-  padding: 16px;
-}
-.coverage-title {
-  font-weight: 600;
-  font-size: 16px;
-}
-.coverage-value {
-  font-size: 22px;
-  font-weight: 600;
-  margin-top: 6px;
-}
-.coverage-sub {
-  font-size: 13px;
-  color: #6b7280;
-}
-
 /* Feature accordion */
 .feature {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e1e4dd;
   border-radius: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
+
 .feature-header {
-  padding: 16px 18px;
-  font-size: 17px;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 14px 16px;
   display: flex;
   justify-content: space-between;
-  background: #f4f6f3;
+  align-items: center;
+  cursor: pointer;
+  background: #f2f4ef;
 }
+
+.feature-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.feature-meta {
+  font-size: 13px;
+  color: #5f6f5a;
+  white-space: nowrap;
+}
+
 .feature-content {
   display: none;
-  padding: 14px 18px 18px;
+  padding: 12px 16px 16px;
 }
 
 /* Tables */
@@ -97,15 +88,17 @@ table {
   font-size: 14px;
 }
 th, td {
-  padding: 10px;
+  padding: 8px;
   border-bottom: 1px solid #e5e7eb;
-  text-align: left;
 }
-th { background: #fafafa; }
+th {
+  background: #fafafa;
+  font-weight: 600;
+}
 
-/* Status badges */
+/* Status pills */
 .badge {
-  padding: 4px 10px;
+  padding: 3px 10px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 600;
@@ -116,40 +109,36 @@ th { background: #fafafa; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .Cant { background: #fde2e2; color: #7f1d1d; }
 
-/* Flashy overall milestone banner */
-.overall-banner {
-  background: linear-gradient(135deg, #5a7f4f, #7ea870);
-  color: #ffffff;
-  border-radius: 14px;
-  padding: 24px;
-  margin-bottom: 28px;
-}
-.overall-banner h2 {
-  margin: 0 0 10px;
-  font-size: 20px;
-}
-.overall-value {
-  font-size: 34px;
-  font-weight: 600;
-}
-.overall-sub {
-  opacity: 0.9;
+/* Overall progress (light) */
+.overall {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  background: #f2f4ef;
+  border: 1px solid #e1e4dd;
+  border-radius: 8px;
   font-size: 14px;
 }
+.overall strong {
+  font-size: 18px;
+  margin-right: 8px;
+}
+.overall span {
+  color: #5f6f5a;
+}
 
-/* Milestone table box */
+/* Milestone box */
 .box {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 16px;
+  border: 1px solid #e1e4dd;
+  border-radius: 8px;
+  padding: 14px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📋 QA Test Plan</h1>
+<h1>QA Test Plan</h1>
 
 <div class="tabs">
   <div class="tab active" data-tab="testplan">Test Plan</div>
@@ -158,7 +147,6 @@ th { background: #fafafa; }
 
 <!-- ================= TEST PLAN ================= -->
 <div id="testplan" class="tab-content active">
-  <div id="coverage" class="coverage-grid"></div>
   <div id="features"></div>
 </div>
 
@@ -172,8 +160,8 @@ th { background: #fafafa; }
       <thead>
         <tr>
           <th>Milestone</th>
-          <th>Target</th>
-          <th>Notes</th>
+          <th>Status</th>
+          <th>Comments</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -195,13 +183,13 @@ document.querySelectorAll(".tab").forEach(tab => {
   };
 });
 
-function normalizeStatus(s) {
-  return (s || "").replace(/\s+/g, "").replace("Can't", "Cant");
+function cls(status) {
+  return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
 }
 
 /* Load Test Plan */
 fetch(TESTPLAN_CSV).then(r => r.text()).then(csv => {
-  const data = Papa.parse(csv, {
+  const rows = Papa.parse(csv, {
     header: true,
     delimiter: "|",
     skipEmptyLines: true
@@ -210,7 +198,7 @@ fetch(TESTPLAN_CSV).then(r => r.text()).then(csv => {
   const grouped = {};
   let total = 0, automated = 0;
 
-  data.forEach(r => {
+  rows.forEach(r => {
     const f = r.Feature || "Other";
     grouped[f] = grouped[f] || [];
     grouped[f].push(r);
@@ -218,28 +206,21 @@ fetch(TESTPLAN_CSV).then(r => r.text()).then(csv => {
     if (r.Status === "Automated") automated++;
   });
 
-  /* Coverage tiles */
-  const coverage = document.getElementById("coverage");
-  Object.entries(grouped).forEach(([f, tests]) => {
+  const container = document.getElementById("features");
+
+  Object.entries(grouped).forEach(([feature, tests]) => {
     const auto = tests.filter(t => t.Status === "Automated").length;
     const pct = Math.round((auto / tests.length) * 100);
-    coverage.innerHTML += `
-      <div class="coverage-tile">
-        <div class="coverage-title">${f}</div>
-        <div class="coverage-value">${pct}% Automated</div>
-        <div class="coverage-sub">${auto}/${tests.length} test cases</div>
-      </div>`;
-  });
 
-  /* Feature accordions */
-  const container = document.getElementById("features");
-  Object.entries(grouped).forEach(([f, tests]) => {
     const box = document.createElement("div");
     box.className = "feature";
 
     const header = document.createElement("div");
     header.className = "feature-header";
-    header.innerHTML = `${f} <span>${tests.length} tests</span>`;
+    header.innerHTML = `
+      <div class="feature-title">${feature}</div>
+      <div class="feature-meta">${pct}% automated (${auto}/${tests.length})</div>
+    `;
 
     const content = document.createElement("div");
     content.className = "feature-content";
@@ -253,39 +234,46 @@ fetch(TESTPLAN_CSV).then(r => r.text()).then(csv => {
             <tr>
               <td>${t.TCID || ""}</td>
               <td>${t["Test Case Description"] || ""}</td>
-              <td><span class="badge ${normalizeStatus(t.Status)}">${t.Status}</span></td>
-            </tr>`).join("")}
+              <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
+            </tr>
+          `).join("")}
         </tbody>
-      </table>`;
+      </table>
+    `;
 
-    header.onclick = () =>
-      content.style.display = content.style.display === "block" ? "none" : "block";
+    header.onclick = () => {
+      content.style.display =
+        content.style.display === "block" ? "none" : "block";
+    };
 
     box.append(header, content);
     container.appendChild(box);
   });
 
-  /* Overall automation banner */
+  /* Overall automation (light) */
   const pct = Math.round((automated / total) * 100);
   document.getElementById("overall").innerHTML = `
-    <div class="overall-banner">
-      <h2>Overall Automation Progress</h2>
-      <div class="overall-value">${pct}%</div>
-      <div class="overall-sub">${automated} of ${total} test cases automated</div>
-    </div>`;
+    <div class="overall">
+      <strong>${pct}%</strong>
+      Overall Automation Progress
+      <span>(${automated} of ${total} test cases automated)</span>
+    </div>
+  `;
 });
 
 /* Load milestones */
 fetch(MILESTONE_CSV).then(r => r.text()).then(csv => {
   const rows = Papa.parse(csv, { header: true, skipEmptyLines: true }).data;
   const tbody = document.querySelector("#milestone-table tbody");
+
   rows.forEach(r => {
     tbody.innerHTML += `
       <tr>
-        <td><strong>${r.Milestone}</strong></td>
-        <td>${r.Target}</td>
-        <td>${r.Notes}</td>
-      </tr>`;
+        <td>${r.Milestone}</td>
+        <td>${r.Status}</td>
+        <td>${r.Comments}</td>
+      </tr>
+    `;
   });
 });
 </script>
