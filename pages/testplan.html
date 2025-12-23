@@ -325,9 +325,12 @@ fetch(TESTPLAN_CSV)
         </table>
       `;
 
-      header.onclick = () => {
-        content.style.display = content.style.display === "block" ? "none" : "block";
-      };
+header.onclick = () => {
+  const isOpen = content.style.display === "block";
+  content.style.display = isOpen ? "none" : "block";
+  featureBox.classList.toggle("open", !isOpen);
+};
+
 
       featureBox.appendChild(header);
       featureBox.appendChild(content);
