@@ -14,106 +14,156 @@
   <style>
     body {
       font-family: "Inter", sans-serif;
-      background: #f3f4f6;
+      background: #f7f7f5;
       margin: 0;
-      padding: 30px;
+      padding: 24px;
+      color: #1f2933;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #111827;
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: 600;
     }
 
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 24px;
+      border-bottom: 1px solid #d1d5db;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 10px 0;
+      cursor: pointer;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+      border-color: #5a7f4f;
+      color: #1f2933;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Feature Accordion */
     .feature {
       background: #ffffff;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      overflow: hidden;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: 1px solid #e5e7eb;
     }
 
     .feature-header {
-      padding: 16px 20px;
-      font-size: 18px;
+      padding: 16px 18px;
+      font-size: 17px;
       font-weight: 600;
-      background: #2563eb;
-      color: white;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: #f4f6f3;
     }
 
     .feature-header span {
-      font-size: 14px;
-      opacity: 0.9;
+      font-size: 13px;
+      font-weight: 400;
+      color: #4b5563;
     }
 
     .feature-content {
       display: none;
-      padding: 16px 20px 20px;
+      padding: 12px 18px 18px;
     }
 
+    /* Table */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      font-size: 14px;
     }
 
     th, td {
-      padding: 10px 12px;
+      padding: 10px;
       border-bottom: 1px solid #e5e7eb;
-      text-align: left;
       vertical-align: top;
     }
 
     th {
-      background: #f9fafb;
       font-weight: 600;
+      background: #fafafa;
       color: #374151;
     }
 
     tr:hover {
-      background: #f1f5f9;
+      background: #f9fafb;
     }
 
+    /* Status Pills */
     .badge {
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 600;
-      display: inline-block;
+      white-space: nowrap;
     }
 
     .Automated {
-      background: #dcfce7;
-      color: #166534;
+      background: #e6f4ea;
+      color: #1e4620;
     }
 
     .Needs {
-      background: #fef9c3;
-      color: #854d0e;
+      background: #fff7cc;
+      color: #665c00;
     }
 
     .ToBeAutomated {
-      background: #fde68a;
-      color: #92400e;
+      background: #fdecc8;
+      color: #7a4a00;
     }
 
     .InProgress {
-      background: #dbeafe;
-      color: #1e40af;
+      background: #e8f0fe;
+      color: #1a3c78;
     }
 
     .Cant {
-      background: #fee2e2;
-      color: #991b1b;
+      background: #fde2e2;
+      color: #7f1d1d;
+    }
+
+    /* Milestones */
+    .milestone {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .milestone h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .milestone p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 14px;
     }
 
     .error {
-      color: #dc2626;
-      text-align: center;
+      color: #b91c1c;
       font-weight: 600;
     }
   </style>
@@ -121,9 +171,33 @@
 
 <body>
 
-<h1>📋 Test Plan</h1>
-<div id="app"></div>
-<div id="error" class="error"></div>
+<h1>📋 QA Test Plan</h1>
+
+<div class="tabs">
+  <div class="tab active" data-tab="testplan">Test Plan</div>
+  <div class="tab" data-tab="milestones">Milestones</div>
+</div>
+
+<div id="testplan" class="tab-content active">
+  <div id="app"></div>
+</div>
+
+<div id="milestones" class="tab-content">
+  <div class="milestone">
+    <h3>Phase 1 – Core Automation</h3>
+    <p>Login, My Garden, Discover critical flows automated</p>
+  </div>
+
+  <div class="milestone">
+    <h3>Phase 2 – Coverage Expansion</h3>
+    <p>Edge cases, negative scenarios, stability improvements</p>
+  </div>
+
+  <div class="milestone">
+    <h3>Phase 3 – Non-Automatable Areas</h3>
+    <p>Manual verification & exploratory testing</p>
+  </div>
+</div>
 
 <script>
   const CSV_PATH = "../data/testplan.csv";
@@ -136,10 +210,7 @@
   }
 
   fetch(CSV_PATH)
-    .then(res => {
-      if (!res.ok) throw new Error("CSV not found");
-      return res.text();
-    })
+    .then(res => res.text())
     .then(csv => {
       const parsed = Papa.parse(csv, {
         header: true,
@@ -156,47 +227,41 @@
 
       const app = document.getElementById("app");
 
-      Object.keys(grouped).forEach(feature => {
-        const tests = grouped[feature];
-
+      Object.entries(grouped).forEach(([feature, tests]) => {
         const featureDiv = document.createElement("div");
         featureDiv.className = "feature";
 
         const header = document.createElement("div");
         header.className = "feature-header";
-        header.innerHTML = `
-          ${feature}
-          <span>${tests.length} Tests ▾</span>
-        `;
+        header.innerHTML = `${feature} <span>${tests.length} tests</span>`;
 
         const content = document.createElement("div");
         content.className = "feature-content";
 
-        const table = document.createElement("table");
-        table.innerHTML = `
-          <thead>
-            <tr>
-              <th>TCID</th>
-              <th>Description</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tests.map(t => `
+        content.innerHTML = `
+          <table>
+            <thead>
               <tr>
-                <td><strong>${t.TCID || ""}</strong></td>
-                <td>${t["Test Case Description"] || ""}</td>
-                <td>
-                  <span class="badge ${normalizeStatus(t.Status)}">
-                    ${t.Status || ""}
-                  </span>
-                </td>
+                <th>TCID</th>
+                <th>Description</th>
+                <th>Status</th>
               </tr>
-            `).join("")}
-          </tbody>
+            </thead>
+            <tbody>
+              ${tests.map(t => `
+                <tr>
+                  <td><strong>${t.TCID || ""}</strong></td>
+                  <td>${t["Test Case Description"] || ""}</td>
+                  <td>
+                    <span class="badge ${normalizeStatus(t.Status)}">
+                      ${t.Status || ""}
+                    </span>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
         `;
-
-        content.appendChild(table);
 
         header.onclick = () => {
           content.style.display =
@@ -207,12 +272,18 @@
         featureDiv.appendChild(content);
         app.appendChild(featureDiv);
       });
-    })
-    .catch(err => {
-      document.getElementById("error").textContent =
-        "❌ Failed to load testplan.csv";
-      console.error(err);
     });
+
+  // Tabs logic
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.onclick = () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+
+      tab.classList.add("active");
+      document.getElementById(tab.dataset.tab).classList.add("active");
+    };
+  });
 </script>
 
 </body>
