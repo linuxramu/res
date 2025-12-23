@@ -174,6 +174,19 @@ th {
   background-color: #eef3ec;
 }
 
+/* Expand / collapse indicator */
+.chevron {
+  font-size: 14px;
+  margin-right: 10px;
+  color: #6b7b67;
+  transition: transform 0.2s ease;
+}
+
+.feature.open .chevron {
+  transform: rotate(90deg);
+}
+
+
 </style>
 </head>
 
@@ -282,7 +295,9 @@ fetch(TESTPLAN_CSV)
       header.className = "feature-header";
 
       header.innerHTML = `
-        <div class="feature-title">${feature}</div>
+        <div class="feature-title">
+          <span class="chevron">▸</span>${feature}
+        </div>
         <div class="feature-meta">${percent}% automated (${automated}/${tests.length})</div>
       `;
 
