@@ -14,94 +14,129 @@
     body {
       background: linear-gradient(135deg, #f6fff8, #ffffff);
       font-family: Arial, sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 2rem;
     }
 
-    .dashboard-card {
-      max-width: 850px;
-      padding: 3rem;
-      border-radius: 16px;
-      background: #ffffff;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
-      border-top: 6px solid #036153;
+    .page-title {
       text-align: center;
+      margin-bottom: 2.5rem;
     }
 
-    .title {
+    .page-title h1 {
       color: #036153;
       font-weight: 700;
     }
 
-    .subtitle {
+    .page-title p {
       color: #73A041;
       font-weight: 600;
     }
 
-    .construction-icon {
-      font-size: 4rem;
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .dashboard-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      border-top: 6px solid #036153;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon {
+      font-size: 3rem;
       margin-bottom: 1rem;
     }
 
-    .placeholder-box {
-      margin-top: 2rem;
-      padding: 1.5rem;
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #036153;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1.2rem;
+    }
+
+    .card-placeholder {
+      padding: 1rem;
       border: 2px dashed #cfe8d8;
       border-radius: 12px;
       background: #f9fffb;
-      color: #666;
-      font-size: 0.95rem;
-    }
-
-    .coming-soon {
-      margin-top: 1.5rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #036153;
+      font-size: 0.9rem;
+      color: #555;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="dashboard-card">
-    <div class="construction-icon">🚧</div>
+  <!-- Page Header -->
+  <div class="page-title">
+    <h1>Automation Dashboard</h1>
+    <p>RHS Grow Test Automation</p>
+  </div>
 
-    <h1 class="title mb-2">
-      Automation Dashboard
-    </h1>
+  <!-- Dashboard Cards -->
+  <div class="dashboard-grid">
 
-    <p class="subtitle mb-3">
-      RHS Grow Test Automation
-    </p>
-
-    <p class="lead">
-      This page is currently <strong>under construction</strong>.
-    </p>
-
-    <p>
-      Soon, this dashboard will provide a <strong>high-level view</strong> of:
-    </p>
-
-    <ul class="list-unstyled mt-3">
-      <li>📈 Execution trends over time</li>
-      <li>✅ Pass / ❌ Fail statistics</li>
-      <li>📱 Platform-wise breakdown (Android & iOS)</li>
-      <li>🧪 Tag-based test coverage</li>
-    </ul>
-
-    <div class="placeholder-box">
-      🔧 <strong>Coming Soon</strong><br>
-      Interactive charts, summary widgets, and real-time insights powered
-      directly from your automated test runs.
+    <!-- Card 1 -->
+    <div class="dashboard-card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Dashboard 1</div>
+      <div class="card-subtitle">Execution Overview</div>
+      <div class="card-placeholder">
+        High-level execution trends and run summaries will appear here.
+      </div>
     </div>
 
-    <div class="coming-soon">
-      Stay tuned – exciting insights are on the way! 🌱
+    <!-- Card 2 -->
+    <div class="dashboard-card">
+      <div class="card-icon">✅</div>
+      <div class="card-title">Dashboard 2</div>
+      <div class="card-subtitle">Pass / Fail Statistics</div>
+      <div class="card-placeholder">
+        Pass, fail, and skipped test metrics by run.
+      </div>
     </div>
+
+    <!-- Card 3 -->
+    <div class="dashboard-card">
+      <div class="card-icon">📱</div>
+      <div class="card-title">Dashboard 3</div>
+      <div class="card-subtitle">Platform Breakdown</div>
+      <div class="card-placeholder">
+        Android vs iOS execution distribution and trends.
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="dashboard-card">
+      <div class="card-icon">🧪</div>
+      <div class="card-title">Dashboard 4</div>
+      <div class="card-subtitle">Tag & Coverage Insights</div>
+      <div class="card-placeholder">
+        Tag-based automation coverage and test categorization.
+      </div>
+    </div>
+
   </div>
 
 </body>
