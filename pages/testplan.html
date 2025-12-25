@@ -186,6 +186,25 @@ th {
   transform: rotate(90deg);
 }
 
+.milestone-header {
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #f2f4ef;
+  border-bottom: 1px solid #e1e4dd;
+}
+
+.milestone-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.milestone-meta {
+  font-size: 13px;
+  color: #5f6f5a;
+}
 
 </style>
 </head>
@@ -211,24 +230,13 @@ th {
 <!-- ================= MILESTONES ================= -->
 <div id="milestones" class="tab-content">
 
-  <div id="milestoneProgress"></div>
-
   <div class="box">
     <h2>Milestones</h2>
-    <table id="milestone-table">
-      <thead>
-        <tr>
-          <th>Milestone</th>
-          <th>Activity</th>
-          <th>Status</th>
-          <th>Comments</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div id="milestone-accordion"></div>
   </div>
 
 </div>
+
 
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
@@ -359,30 +367,74 @@ fetch(MILESTONE_CSV)
       skipEmptyLines: true
     }).data;
 
-    const tbody = document.querySelector("#milestone-table tbody");
-    const progress = {};
+    const grouped = {};
 
+    // Group activities by Milestone
     rows.forEach(row => {
-
-      const q = row.Milestone || "Other";
-
-      if (!progress[q]) {
-        progress[q] = { total: 0, achieved: 0 };
+      const milestone = row.Milestone || "Other";
+      if (!grouped[milestone]) {
+        grouped[milestone] = [];
       }
+      grouped[milestone].push(row);
+    });
 
-      progress[q].total++;
-      if (row.Status === "Achieved") {
-        progress[q].achieved++;
-      }
+    const container = document.getElementById("milestone-accordion");
 
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${row.Milestone || "-"}</td>
-        <td>${row.Activity || "-"}</td>
-        <td>${row.Status || "-"}</td>
-        <td>${row.Comments || "-"}</td>
+    Object.keys(grouped).forEach(milestone => {
+
+      const activities = grouped[milestone];
+      const achieved = activities.filter(a => a.Status === "Achieved").length;
+
+      const box = document.createElement("div");
+      box.className = "feature";
+
+      const header = document.createElement("div");
+      header.className = "milestone-header";
+
+      header.innerHTML = `
+        <div class="milestone-title">
+          <span class="chevron">▸</span>${milestone}
+        </div>
+        <div class="milestone-meta">
+          ${achieved}/${activities.length} achieved
+        </div>
       `;
-      tbody.appendChild(tr);
+
+      const content = document.createElement("div");
+      content.className = "feature-content";
+
+      content.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${activities.map(a => `
+              <tr>
+                <td>${a.Activity || "-"}</td>
+                <td>${a.Description || "-"}</td>
+                <td>${a.Status || "-"}</td>
+                <td>${a.Comments || "-"}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+
+      header.onclick = () => {
+        const isOpen = content.style.display === "block";
+        content.style.display = isOpen ? "none" : "block";
+        box.classList.toggle("open", !isOpen);
+      };
+
+      box.appendChild(header);
+      box.appendChild(content);
+      container.appendChild(box);
     });
   });
 </script>
