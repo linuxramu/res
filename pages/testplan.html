@@ -364,6 +364,7 @@ fetch(MILESTONE_CSV)
 
     const rows = Papa.parse(csv, {
       header: true,
+      delimiter: "|",
       skipEmptyLines: true
     }).data;
 
