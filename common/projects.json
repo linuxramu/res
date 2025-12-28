@@ -1,0 +1,14 @@
+{
+  "projects": [
+    {
+      "id": "rhsgrowmobile",
+      "name": "RHS Grow Mobile",
+      "testplan": "rhsgrowmobile/pages/testplan.html"
+    },
+    {
+      "id": "rhsweb",
+      "name": "RHS Web",
+      "testplan": "rhsweb/pages/testplan.html"
+    }
+  ]
+}
