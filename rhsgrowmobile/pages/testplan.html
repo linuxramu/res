@@ -9,21 +9,13 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
-
-  /* Overall Automation Progress – highlight (light) */
+/* Overall Automation Progress – highlight (light) */
 .overall.highlight {
-  background: #eef6ff;          /* very light blue */
+  background: #eef6ff;
   border: 1px solid #d6e6f5;
 }
-
-.overall.highlight strong {
-  color: #1f4f8a;
-}
-
-.overall.highlight span {
-  color: #4b6b8a;
-}
-
+.overall.highlight strong { color: #1f4f8a; }
+.overall.highlight span { color: #4b6b8a; }
 
 body {
   font-family: Inter, sans-serif;
@@ -33,15 +25,8 @@ body {
   color: #1f2933;
 }
 
-h1 {
-  font-size: 26px;
-  margin-bottom: 20px;
-}
-
-h2 {
-  font-size: 18px;
-  margin: 24px 0 12px;
-}
+h1 { font-size: 26px; margin-bottom: 20px; }
+h2 { font-size: 18px; margin: 24px 0 12px; }
 
 /* Tabs */
 .tabs {
@@ -61,12 +46,8 @@ h2 {
   border-color: #7a9c72;
   color: #1f2933;
 }
-.tab-content {
-  display: none;
-}
-.tab-content.active {
-  display: block;
-}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 /* Feature accordion */
 .feature {
@@ -75,27 +56,26 @@ h2 {
   border-radius: 8px;
   margin-bottom: 10px;
 }
-
-.feature-header {
+.feature-header,
+.milestone-header {
   padding: 14px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
   background: #f2f4ef;
+  border-bottom: 1px solid #e1e4dd;
 }
-
-.feature-title {
+.feature-title,
+.milestone-title {
   font-size: 16px;
   font-weight: 600;
 }
-
-.feature-meta {
+.feature-meta,
+.milestone-meta {
   font-size: 13px;
   color: #5f6f5a;
-  white-space: nowrap;
 }
-
 .feature-content {
   display: none;
   padding: 12px 16px 16px;
@@ -110,6 +90,7 @@ table {
 th, td {
   padding: 8px;
   border-bottom: 1px solid #e5e7eb;
+  text-align: left;
 }
 th {
   background: #fafafa;
@@ -123,7 +104,6 @@ th {
   font-size: 12px;
   font-weight: 600;
 }
-
 .Automated { background: #e6f4ea; color: #1e4620; }
 .Needs { background: #fff7cc; color: #665c00; }
 .ToBeAutomated { background: #fdecc8; color: #7a4a00; }
@@ -143,9 +123,7 @@ th {
   font-size: 18px;
   margin-right: 8px;
 }
-.overall span {
-  color: #5f6f5a;
-}
+.overall span { color: #5f6f5a; }
 
 /* Milestone box */
 .box {
@@ -155,57 +133,27 @@ th {
   padding: 16px;
 }
 
-/* Milestone table alignment + zebra rows */
-#milestone-table th,
-#milestone-table td {
-  text-align: left;
-  vertical-align: top;
-}
+/* Zebra rows */
+tbody tr:nth-child(even) { background: #f4f6f2; }
+tbody tr:hover { background: #eef3ec; }
 
-#milestone-table tbody tr:nth-child(even) {
-  background-color: #f4f6f2;
-}
-
-#milestone-table tbody tr:nth-child(odd) {
-  background-color: #ffffff;
-}
-
-#milestone-table tbody tr:hover {
-  background-color: #eef3ec;
-}
-
-/* Expand / collapse indicator */
+/* Chevron */
 .chevron {
   font-size: 14px;
   margin-right: 10px;
   color: #6b7b67;
   transition: transform 0.2s ease;
 }
+.feature.open .chevron { transform: rotate(90deg); }
 
-.feature.open .chevron {
-  transform: rotate(90deg);
+/* Dashboard iframe */
+#dashboard iframe {
+  width: 100%;
+  height: 80vh;
+  border: none;
+  border-radius: 8px;
+  background: #ffffff;
 }
-
-.milestone-header {
-  padding: 14px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  background: #f2f4ef;
-  border-bottom: 1px solid #e1e4dd;
-}
-
-.milestone-title {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.milestone-meta {
-  font-size: 13px;
-  color: #5f6f5a;
-}
-
 </style>
 </head>
 
@@ -216,33 +164,33 @@ th {
 <div class="tabs">
   <div class="tab active" data-tab="testplan">Test Plan</div>
   <div class="tab" data-tab="milestones">Milestones</div>
+  <div class="tab" data-tab="dashboard">Dashboard</div>
 </div>
 
 <!-- ================= TEST PLAN ================= -->
 <div id="testplan" class="tab-content active">
-
   <div id="overall"></div>
-
   <div id="features"></div>
-
 </div>
 
 <!-- ================= MILESTONES ================= -->
 <div id="milestones" class="tab-content">
-
   <div class="box">
     <h2>Milestones</h2>
     <div id="milestone-accordion"></div>
   </div>
-
 </div>
 
+<!-- ================= DASHBOARD ================= -->
+<div id="dashboard" class="tab-content">
+  <iframe src="dashboard.html" title="Automation Dashboard"></iframe>
+</div>
 
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
 const MILESTONE_CSV = "../data/milestones.csv";
 
-/* Tabs logic */
+/* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -256,12 +204,10 @@ function cls(status) {
   return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
 }
 
-/* ================= TEST PLAN LOGIC (RESTORED) ================= */
-
+/* ================= TEST PLAN ================= */
 fetch(TESTPLAN_CSV)
   .then(r => r.text())
   .then(csv => {
-
     const rows = Papa.parse(csv, {
       header: true,
       delimiter: "|",
@@ -273,25 +219,16 @@ fetch(TESTPLAN_CSV)
     let automatedTests = 0;
 
     rows.forEach(row => {
-
       const feature = row.Feature || "Other";
-
-      if (!grouped[feature]) {
-        grouped[feature] = [];
-      }
-
+      grouped[feature] = grouped[feature] || [];
       grouped[feature].push(row);
       totalTests++;
-
-      if (row.Status === "Automated") {
-        automatedTests++;
-      }
+      if (row.Status === "Automated") automatedTests++;
     });
 
     const featuresContainer = document.getElementById("features");
 
     Object.keys(grouped).forEach(feature => {
-
       const tests = grouped[feature];
       const automated = tests.filter(t => t.Status === "Automated").length;
       const percent = Math.round((automated / tests.length) * 100);
@@ -301,25 +238,17 @@ fetch(TESTPLAN_CSV)
 
       const header = document.createElement("div");
       header.className = "feature-header";
-
       header.innerHTML = `
-        <div class="feature-title">
-          <span class="chevron">▸</span>${feature}
-        </div>
+        <div class="feature-title"><span class="chevron">▸</span>${feature}</div>
         <div class="feature-meta">${percent}% automated (${automated}/${tests.length})</div>
       `;
 
       const content = document.createElement("div");
       content.className = "feature-content";
-
       content.innerHTML = `
         <table>
           <thead>
-            <tr>
-              <th>TCID</th>
-              <th>Description</th>
-              <th>Status</th>
-            </tr>
+            <tr><th>TCID</th><th>Description</th><th>Status</th></tr>
           </thead>
           <tbody>
             ${tests.map(t => `
@@ -327,41 +256,33 @@ fetch(TESTPLAN_CSV)
                 <td>${t.TCID || ""}</td>
                 <td>${t["Test Case Description"] || ""}</td>
                 <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
-              </tr>
-            `).join("")}
+              </tr>`).join("")}
           </tbody>
         </table>
       `;
 
-header.onclick = () => {
-  const isOpen = content.style.display === "block";
-  content.style.display = isOpen ? "none" : "block";
-  featureBox.classList.toggle("open", !isOpen);
-};
+      header.onclick = () => {
+        const open = content.style.display === "block";
+        content.style.display = open ? "none" : "block";
+        featureBox.classList.toggle("open", !open);
+      };
 
-
-      featureBox.appendChild(header);
-      featureBox.appendChild(content);
+      featureBox.append(header, content);
       featuresContainer.appendChild(featureBox);
     });
 
-    const overallPercent = Math.round((automatedTests / totalTests) * 100);
-
     document.getElementById("overall").innerHTML = `
       <div class="overall highlight">
-        <strong>${overallPercent}%</strong>
+        <strong>${Math.round((automatedTests / totalTests) * 100)}%</strong>
         Overall Automation Progress
         <span>(${automatedTests} of ${totalTests} test cases automated)</span>
-      </div>
-    `;
+      </div>`;
   });
 
-/* ================= MILESTONES LOGIC ================= */
-
+/* ================= MILESTONES ================= */
 fetch(MILESTONE_CSV)
   .then(r => r.text())
   .then(csv => {
-
     const rows = Papa.parse(csv, {
       header: true,
       delimiter: "|",
@@ -369,20 +290,15 @@ fetch(MILESTONE_CSV)
     }).data;
 
     const grouped = {};
-
-    // Group activities by Milestone
-    rows.forEach(row => {
-      const milestone = row.Milestone || "Other";
-      if (!grouped[milestone]) {
-        grouped[milestone] = [];
-      }
-      grouped[milestone].push(row);
+    rows.forEach(r => {
+      const m = r.Milestone || "Other";
+      grouped[m] = grouped[m] || [];
+      grouped[m].push(r);
     });
 
     const container = document.getElementById("milestone-accordion");
 
     Object.keys(grouped).forEach(milestone => {
-
       const activities = grouped[milestone];
       const achieved = activities.filter(a => a.Status === "Achieved").length;
 
@@ -391,28 +307,17 @@ fetch(MILESTONE_CSV)
 
       const header = document.createElement("div");
       header.className = "milestone-header";
-
       header.innerHTML = `
-        <div class="milestone-title">
-          <span class="chevron">▸</span>${milestone}
-        </div>
-        <div class="milestone-meta">
-          ${achieved}/${activities.length} achieved
-        </div>
+        <div class="milestone-title"><span class="chevron">▸</span>${milestone}</div>
+        <div class="milestone-meta">${achieved}/${activities.length} achieved</div>
       `;
 
       const content = document.createElement("div");
       content.className = "feature-content";
-
       content.innerHTML = `
         <table>
           <thead>
-            <tr>
-              <th>Activity</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Comments</th>
-            </tr>
+            <tr><th>Activity</th><th>Description</th><th>Status</th><th>Comments</th></tr>
           </thead>
           <tbody>
             ${activities.map(a => `
@@ -421,20 +326,18 @@ fetch(MILESTONE_CSV)
                 <td>${a.Description || "-"}</td>
                 <td>${a.Status || "-"}</td>
                 <td>${a.Comments || "-"}</td>
-              </tr>
-            `).join("")}
+              </tr>`).join("")}
           </tbody>
         </table>
       `;
 
       header.onclick = () => {
-        const isOpen = content.style.display === "block";
-        content.style.display = isOpen ? "none" : "block";
-        box.classList.toggle("open", !isOpen);
+        const open = content.style.display === "block";
+        content.style.display = open ? "none" : "block";
+        box.classList.toggle("open", !open);
       };
 
-      box.appendChild(header);
-      box.appendChild(content);
+      box.append(header, content);
       container.appendChild(box);
     });
   });
