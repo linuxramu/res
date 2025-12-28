@@ -6,7 +6,7 @@
       "testplan": "rhsgrowmobile/pages/testplan.html"
     },
     {
-      "id": "rhsweb",
+      "id": "rhsgrowweb",
       "name": "RHS Grow Web",
       "testplan": "rhsgrowweb/pages/testplan.html"
     }
