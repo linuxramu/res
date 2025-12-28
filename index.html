@@ -9,7 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
-  body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
 
   .navbar-custom {
     background-color: #ffffff;
@@ -70,8 +75,11 @@
     text-align: center;
   }
 
+  /* -------- MOBILE ONLY -------- */
   @media (max-width: 767px) {
-    .sidebar { display: none; }
+    body, html { overflow: auto; }
+    .navbar-center-title { font-size: 1rem; }
+    .iframe-display { height: calc(100vh - 120px); }
   }
 </style>
 </head>
@@ -80,6 +88,14 @@
 
 <nav class="navbar navbar-expand-lg navbar-custom">
   <div class="container-fluid position-relative">
+
+    <!-- MOBILE: Hamburger -->
+    <button class="navbar-toggler d-md-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#resultsDrawer">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
     <!-- LEFT: Logo -->
     <a class="navbar-brand d-flex align-items-center"
@@ -92,7 +108,7 @@
       RHS Test Automation Platform
     </div>
 
-    <!-- RIGHT: Nav -->
+    <!-- RIGHT -->
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -107,7 +123,7 @@
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-md-3 sidebar">
+    <div class="col-md-3 sidebar d-none d-md-block">
       <div class="section-title">Test Executions</div>
       <div class="accordion" id="resultsAccordion">
         <div class="accordion-item">
