@@ -10,6 +10,28 @@
 <style>
 body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
 
+.rhs-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 38px;
+  background: #f8f9fa;
+  border-top: 1px solid #dfeee5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  color: #036153;
+  z-index: 999;
+}
+
+/* prevent iframe from hiding behind footer */
+.iframe-display {
+  height: calc(100vh - 108px); /* navbar (70) + footer (38) */
+}
+
 .navbar-custom {
   background: #ffffff;
   border-bottom: 2px solid #e6f2ea;
@@ -57,6 +79,16 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
 .list-group-item:hover { background: #e9ffe9; }
 </style>
 </head>
+
+<footer class="rhs-footer">
+  <div class="footer-left">
+    © <span id="footerYear"></span> RHS. All rights reserved.
+  </div>
+  <div class="footer-right">
+    Build ID: <span id="buildId"></span>
+  </div>
+</footer>
+
 
 <body>
 
@@ -552,6 +584,21 @@ function loadBasePage(path) {
   document.getElementById("resultFrame").src = path;
 }
 
+/* ---------- FOOTER METADATA ---------- */
+(function () {
+  const now = new Date();
+
+  const pad = n => String(n).padStart(2, "0");
+  const buildId =
+    pad(now.getHours()) +
+    pad(now.getMinutes()) +
+    pad(now.getSeconds());
+
+  document.getElementById("buildId").innerText = buildId;
+  document.getElementById("footerYear").innerText = now.getFullYear();
+})();
+
+/* ---------- CONTEXT SWITCHING ---------- */
 function switchContext(e, ctx, label) {
   currentContext = ctx;
   localStorage.setItem("rhsContext", ctx);
