@@ -2,39 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RHS Grow – Test Automation Results</title>
+<title>RHS Test Automation Platform</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
   body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
 
-  .navbar-center-title {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #036153;
-    pointer-events: none; /* avoids blocking clicks */
-  }
-  
   .navbar-custom {
     background-color: #ffffff;
     border-bottom: 2px solid #e6f2ea;
   }
 
-  .navbar-brand {
-    color: #036153 !important;
-    font-weight: 700;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
   .navbar-brand img { max-height: 45px; }
+
+  .navbar-center-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+    color: #036153;
+    pointer-events: none;
+  }
 
   .nav-link {
     color: #036153 !important;
@@ -46,7 +40,7 @@
     background-color: #f8f9fa;
     border-right: 2px solid #73A041;
     padding-top: 1rem;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 110px);
     overflow-y: auto;
   }
 
@@ -63,8 +57,17 @@
 
   .iframe-display {
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 110px);
     border: none;
+  }
+
+  .footer {
+    background: #ffffff;
+    border-top: 1px solid #e6f2ea;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-align: center;
   }
 
   @media (max-width: 767px) {
@@ -80,7 +83,7 @@
 
     <!-- LEFT: Logo -->
     <a class="navbar-brand d-flex align-items-center"
-       onclick="loadPage('pages/welcome.html')">
+       onclick="loadPage('common/testplan.html')">
       <img src="./common/rhs.png" alt="RHS Logo">
     </a>
 
@@ -89,13 +92,11 @@
       RHS Test Automation Platform
     </div>
 
-    <!-- RIGHT: Nav Links -->
+    <!-- RIGHT: Nav -->
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" onclick="loadPage('common/testplan.html')">
-            Test Plan
-          </a>
+          <a class="nav-link" onclick="loadPage('common/testplan.html')">Test Plan</a>
         </li>
       </ul>
     </div>
@@ -114,7 +115,7 @@
             <button class="accordion-button collapsed" type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapse1">
-              📁 RHS growmobile
+              📁 <span class="project-name" data-project-id="rhsgrowmobile">rhsgrowmobile</span>
             </button>
           </h2>
           <div id="collapse1" class="accordion-collapse collapse">
@@ -198,7 +199,7 @@
             <button class="accordion-button collapsed" type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapse5">
-              📁 RHS growweb
+              📁 <span class="project-name" data-project-id="rhsgrowweb">rhsgrowweb</span>
             </button>
           </h2>
           <div id="collapse5" class="accordion-collapse collapse">
@@ -273,11 +274,15 @@
     </div>
 
     <div class="col-md-9 p-0">
-      <iframe id="resultFrame" class="iframe-display" src="pages/welcome.html"></iframe>
+      <iframe id="resultFrame" class="iframe-display" src="common/testplan.html"></iframe>
     </div>
 
   </div>
 </div>
+
+<footer class="footer">
+  © <span id="year"></span> RHS Test Automation Platform. All rights reserved.
+</footer>
 
 <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="resultsDrawer">
   <div class="offcanvas-header">
@@ -290,6 +295,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
   document.getElementById('mobileResultsAccordion').innerHTML =
     document.getElementById('resultsAccordion').innerHTML;
@@ -301,6 +307,19 @@
     );
     if (drawer) drawer.hide();
   }
+
+  fetch('common/project.json')
+    .then(res => res.json())
+    .then(data => {
+      const map = {};
+      data.projects.forEach(p => map[p.id] = p.name);
+      document.querySelectorAll('.project-name').forEach(el => {
+        const id = el.dataset.projectId;
+        if (map[id]) el.textContent = map[id];
+      });
+    });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>
