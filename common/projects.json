@@ -7,8 +7,8 @@
     },
     {
       "id": "rhsweb",
-      "name": "RHS Web",
-      "testplan": "rhsweb/pages/testplan.html"
+      "name": "RHS Grow Web",
+      "testplan": "rhsgrowweb/pages/testplan.html"
     }
   ]
 }
