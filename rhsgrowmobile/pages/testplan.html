@@ -189,6 +189,8 @@ tbody tr:hover { background: #eef3ec; }
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
 const MILESTONE_CSV = "../data/milestones.csv";
+const params = new URLSearchParams(location.search);
+const project = params.get("project") || "rhsgrowmobile";
 
 /* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
