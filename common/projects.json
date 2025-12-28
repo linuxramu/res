@@ -9,6 +9,11 @@
       "id": "rhsgrowweb",
       "name": "RHS Grow Web",
       "testplan": "rhsgrowweb/pages/testplan.html"
+    },
+    {
+      "id": "rhsgrowapi",
+      "name": "RHS Grow API",
+      "testplan": "rhsgrowapi/pages/testplan.html"
     }
   ]
 }
