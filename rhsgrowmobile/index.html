@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RHS Grow Mobile – Test Automation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body,html{margin:0;height:100%;font-family:Arial}
+.sidebar{height:calc(100vh - 70px);overflow:auto;border-right:2px solid #73A041}
+.iframe{width:100%;height:calc(100vh - 108px);border:none}
+.footer{position:fixed;bottom:0;width:100%;height:38px;background:#f8f9fa;
+display:flex;justify-content:space-between;align-items:center;padding:0 16px;
+font-size:.85rem;color:#036153}
+.list-group-item{cursor:pointer}
+.list-group-item:hover{background:#e9ffe9}
+.navbar-link{cursor:pointer;font-weight:600;color:#036153;margin-left:18px}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white px-3" style="height:70px">
+  <img src="../common/rhs.png" height="45">
+
+  <span class="navbar-link"
+        onclick="loadProduct('testplan.html')">Test Plan</span>
+
+  <span class="navbar-link"
+        onclick="loadProduct('dashboard.html')">Dashboard</span>
+
+  <!-- CONTEXT SWITCHER -->
+  <div class="dropdown ms-auto">
+    <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
+      RHS Grow Mobile
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li>
+        <a class="dropdown-item active">📱 RHS Grow Mobile</a>
+      </li>
+      <li>
+        <a class="dropdown-item"
+           href="https://linuxramu.github.io/rhsgrowweb/">
+           🖥️ RHS Grow Web
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item"
+           href="https://linuxramu.github.io/rhsgrowapi/">
+           🔌 RHS Grow API
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid">
+<div class="row">
+
+<div class="col-md-3 sidebar p-0">
+  <div class="p-2 fw-bold text-success">Test Executions</div>
+  <ul class="list-group list-group-flush">
+<li class='list-group-item'
+          onclick="loadResult('results/sanity/20251223.3.android.cucumber.html')">
+          Sanity - 20251223.3.android.cucumber.html
+          </li>
+<li class='list-group-item'
+          onclick="loadResult('results/sanity/20251223.3.ios.cucumber.html')">
+          Sanity - 20251223.3.ios.cucumber.html
+          </li>
+<li class='list-group-item'
+          onclick="loadResult('results/regression/20251222.2.android.cucumber.html')">
+          Regression - 20251222.2.android.cucumber.html
+          </li>
+<li class='list-group-item'
+          onclick="loadResult('results/regression/20251222.2.ios.cucumber.html')">
+          Regression - 20251222.2.ios.cucumber.html
+          </li>
+<li class='list-group-item'
+          onclick="loadResult('results/custom/20251223.1.android.cucumber.html')">
+          Custom - 20251223.1.android.cucumber.html
+          </li>
+<li class='list-group-item'
+          onclick="loadResult('results/custom/20251223.1.ios.cucumber.html')">
+          Custom - 20251223.1.ios.cucumber.html
+          </li>
+  </ul>
+</div>
+
+<div class="col-md-9 p-0">
+  <iframe id="frame" class="iframe"
+          src="../common/welcome.html"></iframe>
+</div>
+
+</div>
+</div>
+
+<div class="footer">
+  <span>© 2025 RHS</span>
+  <span>Build ID: 142654</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const PROJECT="rhsgrowmobile";
+
+function loadResult(p){
+  document.getElementById('frame').src=p;
+}
+
+function loadProduct(page){
+  document.getElementById('frame').src =
+    ;
+}
+</script>
+
+</body>
+</html>
