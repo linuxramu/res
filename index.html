@@ -26,6 +26,23 @@ body, html {
   max-height: 45px;
 }
 
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navbar-link {
+  font-weight: 600;
+  color: #036153;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navbar-link:hover {
+  text-decoration: underline;
+}
+
 /* Center title */
 .navbar-title {
   position: absolute;
@@ -104,6 +121,7 @@ body, html {
 
 @media (max-width: 767px) {
   .sidebar { display: none; }
+  .navbar-title { display: none; }
 }
 </style>
 </head>
@@ -120,10 +138,20 @@ body, html {
             data-bs-toggle="offcanvas"
             data-bs-target="#resultsDrawer">☰</button>
 
-    <!-- Logo (Left) -->
-    <a class="navbar-brand" onclick="loadPage('pages/welcome.html')">
-      <img src="./img/rhs.png" alt="RHS Logo">
-    </a>
+    <!-- LEFT NAV -->
+    <div class="navbar-left">
+      <a class="navbar-brand" onclick="loadPage('pages/welcome.html')">
+        <img src="./img/rhs.png" alt="RHS Logo">
+      </a>
+
+      <a class="navbar-link" onclick="loadPage('pages/testplan.html')">
+        Test Plan
+      </a>
+
+      <a class="navbar-link" onclick="loadPage('pages/dashboard.html')">
+        Dashboard
+      </a>
+    </div>
 
     <!-- Center Title -->
     <div class="navbar-title">
@@ -663,12 +691,6 @@ function switchContext(e, type, icon, label) {
   e.target.classList.add('active');
   localStorage.setItem('rhsContext', type);
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('rhsContext');
-  if (saved === 'web') switchContext({target: document.querySelectorAll('.dropdown-item')[1]}, 'web','🖥️','RHS Grow Web');
-  if (saved === 'api') switchContext({target: document.querySelectorAll('.dropdown-item')[2]}, 'api','🔌','RHS Grow API');
-});
 </script>
 
 </body>
