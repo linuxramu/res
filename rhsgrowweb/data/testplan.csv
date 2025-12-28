@@ -1,0 +1,8 @@
+Feature|TCID|Test Case Description|Status
+Login|C804|Login - Launch the App, use 'I have an RHS Account' cta, submit an invalid credentials, should throw error |Automated|
+Login|C805|Login - Using 'Forgot Password' link, test changing the password funcionality|Automated|
+Login|C807|Login with valid credentials, should able to login successfully |Automated|
+MyGarden|C880|My Garden - Should have three tabs All Plants, Collections, Wishlists|Automated|
+MyGarden|C881|My Garden - All Plants - Plants added in all collections and wishlists should be present|Automated|
+MyGarden|C882|My Garden - All Plants - Sort based on date added|Automated|
+MyGarden|C883|My Garden - All Plants - sort based on include/exclude wishlists|ToBeAutomated|
