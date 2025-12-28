@@ -8,70 +8,69 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
+body, html { height:100%; margin:0; font-family:Arial,sans-serif; }
 
 .navbar-custom {
-  background: #ffffff;
-  border-bottom: 2px solid #e6f2ea;
-  min-height: 70px;
+  background:#fff;
+  border-bottom:2px solid #e6f2ea;
+  min-height:70px;
 }
 
-.navbar-brand img { height: 45px; }
+.navbar-brand img { height:45px; }
 
 .navbar-link {
-  font-weight: 600;
-  color: #036153;
-  cursor: pointer;
-  margin-left: 18px;
+  font-weight:600;
+  color:#036153;
+  cursor:pointer;
+  margin-left:18px;
 }
 
 .navbar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #036153;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-weight:700;
+  font-size:1.2rem;
+  color:#036153;
 }
 
 .sidebar {
-  background: #f8f9fa;
-  border-right: 2px solid #73A041;
-  height: calc(100vh - 108px);
-  overflow-y: auto;
+  background:#f8f9fa;
+  border-right:2px solid #73A041;
+  height:calc(100vh - 70px);
+  overflow-y:auto;
 }
 
 .section-title {
-  font-weight: 700;
-  padding: 0.5rem 1rem;
-  color: #036153;
+  font-weight:700;
+  padding:0.5rem 1rem;
+  color:#036153;
 }
 
-.list-group-item { cursor: pointer; }
-.list-group-item:hover { background: #e9ffe9; }
+.list-group-item { cursor:pointer; }
+.list-group-item:hover { background:#e9ffe9; }
 
 .iframe-display {
-  width: 100%;
-  height: calc(100vh - 108px);
-  border: none;
+  width:100%;
+  height:calc(100vh - 108px);
+  border:none;
 }
 
-/* ---------- FOOTER ---------- */
 .rhs-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 38px;
-  background: #f8f9fa;
-  border-top: 1px solid #dfeee5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  font-size: 0.85rem;
-  color: #036153;
-  z-index: 999;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:38px;
+  background:#f8f9fa;
+  border-top:1px solid #dfeee5;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 16px;
+  font-size:.85rem;
+  color:#036153;
+  z-index:999;
 }
 </style>
 </head>
@@ -94,14 +93,13 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
       <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
         <span id="activeContextText">RHS Grow Mobile</span>
       </button>
-
       <ul class="dropdown-menu dropdown-menu-end">
         <li><a class="dropdown-item active"
-          onclick="switchContext(event,'rhsgrowmobile','RHS Grow Mobile')">📱 RHS Grow Mobile</a></li>
+               onclick="switchContext(event,'rhsgrowmobile','RHS Grow Mobile')">📱 RHS Grow Mobile</a></li>
         <li><a class="dropdown-item"
-          onclick="switchContext(event,'rhsgrowweb','RHS Grow Web')">🖥️ RHS Grow Web</a></li>
+               onclick="switchContext(event,'rhsgrowweb','RHS Grow Web')">🖥️ RHS Grow Web</a></li>
         <li><a class="dropdown-item"
-          onclick="switchContext(event,'rhsgrowapi','RHS Grow API')">🔌 RHS Grow API</a></li>
+               onclick="switchContext(event,'rhsgrowapi','RHS Grow API')">🔌 RHS Grow API</a></li>
       </ul>
     </div>
 
@@ -111,9 +109,9 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-md-3 sidebar">
+    <div class="col-md-3 sidebar" id="sidebar">
       <div class="section-title">Test Executions</div>
-      <div class="accordion">
+      <div class="accordion" id="resultsAccordion">
 <div class="accordion-item">
   <h2 class="accordion-header">
     <button class="accordion-button collapsed"
@@ -126,13 +124,9 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
     <div class="accordion-body p-0">
       <ul class="list-group list-group-flush">
 <li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.3.ios.cucumber.html')">
-  20251223.3.ios.cucumber.html
-</li>
+    onclick="loadPage('results/sanity/20251223.3.ios.cucumber.html')">20251223.3.ios.cucumber.html</li>
 <li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.3.android.cucumber.html')">
-  20251223.3.android.cucumber.html
-</li>
+    onclick="loadPage('results/sanity/20251223.3.android.cucumber.html')">20251223.3.android.cucumber.html</li>
       </ul>
     </div>
   </div>
@@ -149,13 +143,9 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
     <div class="accordion-body p-0">
       <ul class="list-group list-group-flush">
 <li class="list-group-item"
-    onclick="loadPage('results/regression/20251222.2.ios.cucumber.html')">
-  20251222.2.ios.cucumber.html
-</li>
+    onclick="loadPage('results/regression/20251222.2.ios.cucumber.html')">20251222.2.ios.cucumber.html</li>
 <li class="list-group-item"
-    onclick="loadPage('results/regression/20251222.2.android.cucumber.html')">
-  20251222.2.android.cucumber.html
-</li>
+    onclick="loadPage('results/regression/20251222.2.android.cucumber.html')">20251222.2.android.cucumber.html</li>
       </ul>
     </div>
   </div>
@@ -172,13 +162,9 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
     <div class="accordion-body p-0">
       <ul class="list-group list-group-flush">
 <li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.1.ios.cucumber.html')">
-  20251223.1.ios.cucumber.html
-</li>
+    onclick="loadPage('results/custom/20251223.1.ios.cucumber.html')">20251223.1.ios.cucumber.html</li>
 <li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.1.android.cucumber.html')">
-  20251223.1.android.cucumber.html
-</li>
+    onclick="loadPage('results/custom/20251223.1.android.cucumber.html')">20251223.1.android.cucumber.html</li>
       </ul>
     </div>
   </div>
@@ -186,7 +172,12 @@ body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
       </div>
     </div>
 
-    <div class="col-md-9 p-0">
+    <div class="col-md-9 p-0" id="contentPane">
+      <div id="noResultsMsg"
+           class="alert alert-warning text-center m-3"
+           style="display:none;">
+        ⚠️ No test executions available for this context
+      </div>
       <iframe id="resultFrame" class="iframe-display"></iframe>
     </div>
 
@@ -206,40 +197,45 @@ let currentContext = localStorage.getItem("rhsContext") || "rhsgrowmobile";
 
 async function exists(path) {
   try {
-    const r = await fetch(path, { method: "HEAD" });
+    const r = await fetch(path, { method:"HEAD" });
     return r.ok;
   } catch { return false; }
 }
 
+async function updateSidebarVisibility() {
+  const hasResults = await exists(`${currentContext}/results/`);
+  sidebar.style.display = hasResults ? "block" : "none";
+  contentPane.className = hasResults ? "col-md-9 p-0" : "col-md-12 p-0";
+  noResultsMsg.style.display = hasResults ? "none" : "block";
+}
+
 async function loadPage(relativePath) {
   const full = `${currentContext}/${relativePath}`;
-  document.getElementById("resultFrame").src =
-    (await exists(full)) ? full : FALLBACK;
+  resultFrame.src = (await exists(full)) ? full : FALLBACK;
 }
 
 function loadBasePage(path) {
-  document.getElementById("resultFrame").src = path;
+  resultFrame.src = path;
 }
 
 function switchContext(e, ctx, label) {
   currentContext = ctx;
   localStorage.setItem("rhsContext", ctx);
-  document.getElementById("activeContextText").innerText = label;
-  document.querySelectorAll('.dropdown-item').forEach(el => el.classList.remove('active'));
-  e.target.classList.add('active');
+  activeContextText.innerText = label;
+  document.querySelectorAll(".dropdown-item").forEach(x=>x.classList.remove("active"));
+  e.target.classList.add("active");
+  updateSidebarVisibility();
   loadPage("pages/welcome.html");
 }
 
-/* footer */
+/* Footer */
 (() => {
-  const d = new Date();
-  document.getElementById("footerYear").innerText = d.getFullYear();
-  document.getElementById("buildId").innerText =
-    String(d.getHours()).padStart(2,'0') +
-    String(d.getMinutes()).padStart(2,'0') +
-    String(d.getSeconds()).padStart(2,'0');
+  const d=new Date(), p=n=>String(n).padStart(2,"0");
+  buildId.innerText = p(d.getHours())+p(d.getMinutes())+p(d.getSeconds());
+  footerYear.innerText = d.getFullYear();
 })();
 
+updateSidebarVisibility();
 loadPage("pages/welcome.html");
 </script>
 
