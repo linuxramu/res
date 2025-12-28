@@ -1,9 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=rhsgrowmobile/index.html">
+<meta charset="UTF-8">
+<title>RHS Test Automation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body, html { height: 100%; margin: 0; }
+.navbar { border-bottom: 2px solid #e6f2ea; }
+.navbar-brand img { height: 40px; }
+
+.project-tab {
+  font-weight: 600;
+  color: #036153;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.project-tab.active {
+  border-bottom: 3px solid #73A041;
+}
+
+.sidebar {
+  background: #f8f9fa;
+  border-right: 2px solid #73A041;
+  height: calc(100vh - 70px);
+  overflow-y: auto;
+}
+
+.section-title {
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  color: #036153;
+}
+
+.list-group-item { cursor: pointer; }
+.list-group-item:hover { background: #e9ffe9; }
+
+iframe {
+  width: 100%;
+  height: calc(100vh - 70px);
+  border: none;
+}
+
+.footer {
+  height: 38px;
+  background: #f8f9fa;
+  border-top: 1px solid #dfeee5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  color: #036153;
+}
+</style>
 </head>
+
 <body>
-Redirecting to RHS Grow Mobile…
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" onclick="loadBasePage('common/welcome.html')">
+      <img src="common/rhs.png">
+    </a>
+
+    <div id="projectTabs" class="ms-4"></div>
+
+    <div class="ms-auto">
+      <a class="project-tab" onclick="loadPage('pages/testplan.html')">Test Plan</a>
+      <a class="project-tab" onclick="loadPage('pages/milestones.html')">Milestones</a>
+      <a class="project-tab" onclick="loadPage('pages/dashboard.html')">Dashboard</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+      <div class="section-title" id="executionTitle"></div>
+      <div class="accordion" id="resultsAccordion"></div>
+    </div>
+
+    <div class="col-md-9 p-0">
+      <iframe id="resultFrame"></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div>© <span id="year"></span> RHS. All rights reserved.</div>
+  <div>Build ID: <span id="buildId"></span></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const PROJECTS = "rhsgrowmobile "rhsgrowweb;
+let activeProject = "rhsgrowmobile";
+
+function initTabs() {
+  const tabs = document.getElementById("projectTabs");
+  PROJECTS.forEach(p => {
+    const el = document.createElement("span");
+    el.className = "project-tab" + (p === activeProject ? " active" : "");
+    el.innerText = p.replace(/([A-Z])/g, ' ').trim();
+    el.onclick = () => switchProject(p);
+    tabs.appendChild(el);
+  });
+}
+
+function switchProject(project) {
+  activeProject = project;
+  document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+  [...document.querySelectorAll('#projectTabs .project-tab')]
+    .find(t => t.innerText.replace(/\s/g,'').toLowerCase() === project.toLowerCase())
+    .classList.add('active');
+
+  loadExecutions();
+  loadPage("pages/testplan.html");
+}
+
+async function loadExecutions() {
+  document.getElementById("executionTitle").innerText =
+    "Test Execution " + activeProject.replace(/([A-Z])/g,' ').trim();
+
+  const acc = document.getElementById("resultsAccordion");
+  acc.innerHTML = "";
+
+  const sections = ["sanity","regression","custom"];
+  let idx = 0;
+
+  for (const s of sections) {
+    const path = `${activeProject}/results/${s}`;
+    try {
+      const r = await fetch(path);
+      if (!r.ok) continue;
+    } catch { continue; }
+
+    idx++;
+    acc.innerHTML += `
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" data-bs-toggle="collapse"
+          data-bs-target="#c${idx}">
+          🧪 ${s.charAt(0).toUpperCase()+s.slice(1)}
+        </button>
+      </h2>
+      <div id="c${idx}" class="accordion-collapse collapse">
+        <ul class="list-group list-group-flush" id="list-${s}"></ul>
+      </div>
+    </div>`;
+
+    const ul = document.getElementById(`list-${s}`);
+    const files = await fetch(path).then(()=>[]);
+    ul.innerHTML += `<li class="list-group-item"
+      onclick="loadPage('results/${s}')">Open</li>`;
+  }
+}
+
+function loadPage(rel) {
+  document.getElementById("resultFrame").src = `${activeProject}/${rel}`;
+}
+
+function loadBasePage(p) {
+  document.getElementById("resultFrame").src = p;
+}
+
+(function(){
+  const d=new Date();
+  document.getElementById("year").innerText=d.getFullYear();
+  document.getElementById("buildId").innerText=
+    String(d.getHours()).padStart(2,'0')+
+    String(d.getMinutes()).padStart(2,'0')+
+    String(d.getSeconds()).padStart(2,'0');
+})();
+
+initTabs();
+switchProject(activeProject);
+</script>
+
 </body>
 </html>
