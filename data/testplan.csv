@@ -28,16 +28,18 @@ Discover|C837|Discover - Popular Plants A-Z, Click here for Steps|Automated|
 Discover|C838|Discover - Plant by type A-Z|Automated|
 Discover|C839|Discover - Trending Searches, click here for steps|Automated|
 Discover|C840|Discover - Grow Your Own A-Z|Automated|
-Discover|C842|Discover - RHS Podcasts, Click here for steps|InProgress|
+Discover|C842|Discover - RHS Podcasts, Click here for steps|Automated|
 Discover|C843|Discover - 'Find a Plant' - Keyword Search|Automated|
 Discover|C1476|Discover - 'Planet friendly gardening' Click here for steps|Automated|
-Discover|C1477||ToBeAutomated|
-Discover|C1478||ToBeAutomated|
-Discover|C1479||ToBeAutomated|
-Discover|C1480||ToBeAutomated|
-Discover|C1481||ToBeAutomated|
+Discover|C1477||StepsAreNotReady|
+Discover|C1478||StepsAreNotReady|
+Discover|C1479||StepsAreNotReady|
+Discover|C1480||StepsAreNotReady|
+Discover|C1481||StepsAreNotReady|
+Discover|C1483||ReadyToBeAutomated|
+Discover|C1484||ReadyToBeAutomated|
 Discover|C1482|Discover - Growing guides A-Z|Automated|ToBeAutomated|
-CareTips|C1422| CareTips - Verify care tips for a plant added via manual search|ToBeAutomated|
+CareTips|C1422| CareTips - Verify care tips for a plant added via manual search|InProgress|
 CareTips|C1423| CareTips Verify care tips for a plant added via GYO Quick Add (Fruit)|ToBeAutomated|
 CareTips|C1424| CareTips Verify care tips for a plant added via GYO Quick Add (Vegetable)|ToBeAutomated|
 CareTips|C1425| CareTips Verify care tips for a plant added via GYO Quick Add (Herbs)|ToBeAutomated|
