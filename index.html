@@ -8,42 +8,14 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+body, html { height: 100%; margin: 0; font-family: Arial, sans-serif; }
 
-/* ---------- NAVBAR ---------- */
 .navbar-custom {
-  background-color: #ffffff;
+  background: #ffffff;
   border-bottom: 2px solid #e6f2ea;
   min-height: 70px;
-  position: relative;
 }
 
-.navbar-brand img {
-  max-height: 45px;
-}
-
-.navbar-left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.navbar-link {
-  font-weight: 600;
-  color: #036153;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.navbar-link:hover {
-  text-decoration: underline;
-}
-
-/* Center title */
 .navbar-title {
   position: absolute;
   left: 50%;
@@ -51,646 +23,153 @@ body, html {
   font-weight: 700;
   font-size: 1.2rem;
   color: #036153;
-  white-space: nowrap;
 }
 
-/* Context Switcher */
-.context-btn {
-  background: #f1f8f4;
-  border: 1px solid #b7d7c4;
-  color: #036153;
+.navbar-link {
   font-weight: 600;
-  border-radius: 999px;
-  padding: 6px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #036153;
+  cursor: pointer;
+  margin-left: 16px;
 }
 
-.context-btn:hover {
-  background: #e6f2ea;
-  border-color: #73A041;
-}
-
-.context-menu {
-  border-radius: 12px;
-  padding: 6px;
-  min-width: 220px;
-}
-
-.context-menu .dropdown-item {
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-weight: 500;
-}
-
-.context-menu .dropdown-item:hover {
-  background: #e9ffe9;
-}
-
-.context-menu .dropdown-item.active {
-  background: #036153;
-  color: #ffffff;
-}
-
-/* ---------- SIDEBAR ---------- */
 .sidebar {
-  background-color: #f8f9fa;
+  background: #f8f9fa;
   border-right: 2px solid #73A041;
-  padding-top: 1rem;
   height: calc(100vh - 70px);
   overflow-y: auto;
 }
 
 .section-title {
   font-weight: 700;
-  color: #036153;
   padding: 0.5rem 1rem;
-  border-bottom: 1px solid #dcdcdc;
-  margin-bottom: 0.5rem;
+  color: #036153;
 }
-
-.list-group-item { cursor: pointer; }
-.list-group-item:hover { background: #e9ffe9; }
 
 .iframe-display {
   width: 100%;
   height: calc(100vh - 70px);
   border: none;
 }
-
-@media (max-width: 767px) {
-  .sidebar { display: none; }
-  .navbar-title { display: none; }
-}
 </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-<nav class="navbar navbar-expand-lg navbar-custom">
+<nav class="navbar navbar-expand-lg navbar-custom position-relative">
   <div class="container-fluid">
 
-    <!-- Mobile menu -->
-    <button class="btn btn-outline-success d-md-none me-2"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#resultsDrawer">☰</button>
+    <a class="navbar-link" onclick="loadPage('pages/testplan.html')">Test Plan</a>
+    <a class="navbar-link" onclick="loadPage('pages/dashboard.html')">Dashboard</a>
 
-    <!-- LEFT NAV -->
-    <div class="navbar-left">
-      <a class="navbar-brand" onclick="loadPage('common/welcome.html')">
-        <img src="./common/rhs.png" alt="RHS Logo">
-      </a>
+    <div class="navbar-title">RHS Test Automation Platform</div>
 
-      <a class="navbar-link" onclick="loadPage('pages/testplan.html')">
-        Test Plan
-      </a>
-
-      <a class="navbar-link" onclick="loadPage('pages/dashboard.html')">
-        Dashboard
-      </a>
-    </div>
-
-    <!-- Center Title -->
-    <div class="navbar-title">
-      RHS Test Automation Platform
-    </div>
-
-    <!-- Context Switcher (Right) -->
-    <div class="dropdown ms-auto me-3">
-      <button class="btn context-btn dropdown-toggle"
-              type="button"
+    <div class="dropdown ms-auto">
+      <button class="btn btn-success dropdown-toggle"
               data-bs-toggle="dropdown">
-        <span id="activeContextIcon">📱</span>
         <span id="activeContextText">RHS Grow Mobile</span>
       </button>
 
-      <ul class="dropdown-menu dropdown-menu-end context-menu">
-        <li>
-          <a class="dropdown-item active"
-             onclick="switchContext(event,'mobile','📱','RHS Grow Mobile')">
-            📱 RHS Grow Mobile
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item"
-             onclick="switchContext(event,'web','🖥️','RHS Grow Web')">
-            🖥️ RHS Grow Web
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item"
-             onclick="switchContext(event,'api','🔌','RHS Grow API')">
-            🔌 RHS Grow API
-          </a>
-        </li>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item active"
+               onclick="switchContext(event,'rhsgrowmobile','RHS Grow Mobile')">📱 RHS Grow Mobile</a></li>
+        <li><a class="dropdown-item"
+               onclick="switchContext(event,'rhsgrowweb','RHS Grow Web')">🖥️ RHS Grow Web</a></li>
+        <li><a class="dropdown-item"
+               onclick="switchContext(event,'rhsgrowapi','RHS Grow API')">🔌 RHS Grow API</a></li>
       </ul>
     </div>
-
   </div>
 </nav>
 
 <div class="container-fluid">
   <div class="row">
-
-    <!-- SIDEBAR -->
     <div class="col-md-3 sidebar">
       <div class="section-title">Test Executions</div>
-      <div class="accordion" id="resultsAccordion">
-<div class="accordion-item">
-  <h2 class="accordion-header">
-    <button class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapse1">
-      🧪 Sanity
-    </button>
-  </h2>
-  <div id="collapse1" class="accordion-collapse collapse">
-    <div class="accordion-body p-0">
-      <ul class="list-group list-group-flush">
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251228.1.ios.cucumber.html')">
-  20251228.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251228.1.android.cucumber.html')">
-  20251228.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251227.3.ios.cucumber.html')">
-  20251227.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251227.3.android.cucumber.html')">
-  20251227.3.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251227.2.ios.cucumber.html')">
-  20251227.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251227.2.android.cucumber.html')">
-  20251227.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251227.1.ios.cucumber.html')">
-  20251227.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251227.1.android.cucumber.html')">
-  20251227.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.6.ios.cucumber.html')">
-  20251226.6.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.6.android.cucumber.html')">
-  20251226.6.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.5.ios.cucumber.html')">
-  20251226.5.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.5.android.cucumber.html')">
-  20251226.5.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.4.ios.cucumber.html')">
-  20251226.4.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.4.android.cucumber.html')">
-  20251226.4.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.3.ios.cucumber.html')">
-  20251226.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.3.android.cucumber.html')">
-  20251226.3.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.2.ios.cucumber.html')">
-  20251226.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.2.android.cucumber.html')">
-  20251226.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.1.ios.cucumber.html')">
-  20251226.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251226.1.android.cucumber.html')">
-  20251226.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.7.ios.cucumber.html')">
-  20251225.7.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.7.android.cucumber.html')">
-  20251225.7.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.6.ios.cucumber.html')">
-  20251225.6.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.6.android.cucumber.html')">
-  20251225.6.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.5.ios.cucumber.html')">
-  20251225.5.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.5.android.cucumber.html')">
-  20251225.5.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.4.ios.cucumber.html')">
-  20251225.4.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.4.android.cucumber.html')">
-  20251225.4.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.3.ios.cucumber.html')">
-  20251225.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.3.android.cucumber.html')">
-  20251225.3.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.2.ios.cucumber.html')">
-  20251225.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.2.android.cucumber.html')">
-  20251225.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.1.ios.cucumber.html')">
-  20251225.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251225.1.android.cucumber.html')">
-  20251225.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.6.ios.cucumber.html')">
-  20251224.6.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.6.android.cucumber.html')">
-  20251224.6.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.5.ios.cucumber.html')">
-  20251224.5.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.5.android.cucumber.html')">
-  20251224.5.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.4.ios.cucumber.html')">
-  20251224.4.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.4.android.cucumber.html')">
-  20251224.4.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.3.ios.cucumber.html')">
-  20251224.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.3.android.cucumber.html')">
-  20251224.3.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.2.ios.cucumber.html')">
-  20251224.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.2.android.cucumber.html')">
-  20251224.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.1.ios.cucumber.html')">
-  20251224.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251224.1.android.cucumber.html')">
-  20251224.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.9.ios.cucumber.html')">
-  20251223.9.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.9.android.cucumber.html')">
-  20251223.9.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.8.ios.cucumber.html')">
-  20251223.8.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.8.android.cucumber.html')">
-  20251223.8.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.7.ios.cucumber.html')">
-  20251223.7.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.7.android.cucumber.html')">
-  20251223.7.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.6.ios.cucumber.html')">
-  20251223.6.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.6.android.cucumber.html')">
-  20251223.6.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.5.ios.cucumber.html')">
-  20251223.5.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.5.android.cucumber.html')">
-  20251223.5.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.3.ios.cucumber.html')">
-  20251223.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/sanity/20251223.3.android.cucumber.html')">
-  20251223.3.android.cucumber.html
-</li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div class="accordion-item">
-  <h2 class="accordion-header">
-    <button class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapse2">
-      🧪 Regression
-    </button>
-  </h2>
-  <div id="collapse2" class="accordion-collapse collapse">
-    <div class="accordion-body p-0">
-      <ul class="list-group list-group-flush">
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251228.1.ios.cucumber.html')">
-  20251228.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251228.1.android.cucumber.html')">
-  20251228.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251227.2.ios.cucumber.html')">
-  20251227.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251227.2.android.cucumber.html')">
-  20251227.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251227.1.ios.cucumber.html')">
-  20251227.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251227.1.android.cucumber.html')">
-  20251227.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251226.2.ios.cucumber.html')">
-  20251226.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251226.2.android.cucumber.html')">
-  20251226.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251226.1.ios.cucumber.html')">
-  20251226.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251226.1.android.cucumber.html')">
-  20251226.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251225.2.ios.cucumber.html')">
-  20251225.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251225.2.android.cucumber.html')">
-  20251225.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251225.1.ios.cucumber.html')">
-  20251225.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251225.1.android.cucumber.html')">
-  20251225.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251224.1.ios.cucumber.html')">
-  20251224.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251224.1.android.cucumber.html')">
-  20251224.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251223.2.ios.cucumber.html')">
-  20251223.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251223.2.android.cucumber.html')">
-  20251223.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251223.1.ios.cucumber.html')">
-  20251223.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251223.1.android.cucumber.html')">
-  20251223.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251222.3.ios.cucumber.html')">
-  20251222.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251222.3.android.cucumber.html')">
-  20251222.3.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251222.2.ios.cucumber.html')">
-  20251222.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/regression/20251222.2.android.cucumber.html')">
-  20251222.2.android.cucumber.html
-</li>
-      </ul>
-    </div>
-  </div>
-</div>
-<div class="accordion-item">
-  <h2 class="accordion-header">
-    <button class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapse3">
-      🧪 Custom
-    </button>
-  </h2>
-  <div id="collapse3" class="accordion-collapse collapse">
-    <div class="accordion-body p-0">
-      <ul class="list-group list-group-flush">
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251225.3.ios.cucumber.html')">
-  20251225.3.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251225.2.ios.cucumber.html')">
-  20251225.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251225.2.android.cucumber.html')">
-  20251225.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251225.1.ios.cucumber.html')">
-  20251225.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251225.1.android.cucumber.html')">
-  20251225.1.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.7.ios.cucumber.html')">
-  20251223.7.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.7.android.cucumber.html')">
-  20251223.7.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.6.ios.cucumber.html')">
-  20251223.6.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.6.android.cucumber.html')">
-  20251223.6.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.5.ios.cucumber.html')">
-  20251223.5.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.5.android.cucumber.html')">
-  20251223.5.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.4.ios.cucumber.html')">
-  20251223.4.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.4.android.cucumber.html')">
-  20251223.4.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.3.android.cucumber.html')">
-  20251223.3.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.2.ios.cucumber.html')">
-  20251223.2.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.2.android.cucumber.html')">
-  20251223.2.android.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.1.ios.cucumber.html')">
-  20251223.1.ios.cucumber.html
-</li>
-<li class="list-group-item"
-    onclick="loadPage('results/custom/20251223.1.android.cucumber.html')">
-  20251223.1.android.cucumber.html
-</li>
-      </ul>
-    </div>
-  </div>
-</div>
-      </div>
+      <div id="resultsAccordion" class="accordion"></div>
     </div>
 
-    <!-- CONTENT -->
     <div class="col-md-9 p-0">
       <iframe id="resultFrame"
               class="iframe-display"
-              src="common/welcome.html"></iframe>
+              src=""></iframe>
     </div>
-
-  </div>
-</div>
-
-<!-- MOBILE OFFCANVAS -->
-<div class="offcanvas offcanvas-start d-md-none" id="resultsDrawer">
-  <div class="offcanvas-header">
-    <h5>Test Executions</h5>
-    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div class="accordion" id="mobileResultsAccordion"></div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-document.getElementById('mobileResultsAccordion').innerHTML =
-  document.getElementById('resultsAccordion').innerHTML;
+const FALLBACK = "common/construction.html";
+let currentContext = localStorage.getItem("rhsContext") || "rhsgrowmobile";
 
-function loadPage(path) {
-  document.getElementById('resultFrame').src = path;
+/* ---------- UTIL ---------- */
+async function exists(path) {
+  try {
+    const r = await fetch(path, { method: "HEAD" });
+    return r.ok;
+  } catch {
+    return false;
+  }
 }
 
-function switchContext(e, type, icon, label) {
-  document.getElementById('activeContextIcon').innerText = icon;
-  document.getElementById('activeContextText').innerText = label;
-
-  document.querySelectorAll('.context-menu .dropdown-item')
-    .forEach(el => el.classList.remove('active'));
-
-  e.target.classList.add('active');
-  localStorage.setItem('rhsContext', type);
+/* ---------- LOAD PAGE ---------- */
+async function loadPage(path) {
+  const fullPath = `${currentContext}/${path}`;
+  document.getElementById("resultFrame").src =
+    (await exists(fullPath)) ? fullPath : FALLBACK;
 }
+
+/* ---------- LOAD SIDEBAR ---------- */
+async function loadResults() {
+  const base = `${currentContext}/results`;
+  const sections = ["sanity","regression","custom"];
+  const acc = document.getElementById("resultsAccordion");
+  acc.innerHTML = "";
+
+  for (const s of sections) {
+    const url = `${base}/${s}/`;
+    if (!(await exists(url))) continue;
+
+    acc.innerHTML += `
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#${s}">
+            🧪 ${s.toUpperCase()}
+          </button>
+        </h2>
+        <div id="${s}" class="accordion-collapse collapse">
+          <div class="accordion-body p-0">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"
+                  onclick="loadPage('results/${s}')">
+                Open ${s} reports
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>`;
+  }
+}
+
+/* ---------- CONTEXT SWITCH ---------- */
+function switchContext(e, ctx, label) {
+  localStorage.setItem("rhsContext", ctx);
+  currentContext = ctx;
+
+  document.getElementById("activeContextText").innerText = label;
+  document.querySelectorAll(".dropdown-item")
+    .forEach(i => i.classList.remove("active"));
+  e.target.classList.add("active");
+
+  loadResults();
+  loadPage("pages/welcome.html");
+}
+
+/* ---------- INIT ---------- */
+loadResults();
+loadPage("pages/welcome.html");
 </script>
 
 </body>
