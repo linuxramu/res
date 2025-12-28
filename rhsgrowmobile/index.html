@@ -2,118 +2,197 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RHS Grow Mobile – Test Automation</title>
+<title>RHS Grow Mobile – Test Results</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body,html{margin:0;height:100%;font-family:Arial}
-.sidebar{height:calc(100vh - 70px);overflow:auto;border-right:2px solid #73A041}
-.iframe{width:100%;height:calc(100vh - 108px);border:none}
-.footer{position:fixed;bottom:0;width:100%;height:38px;background:#f8f9fa;
-display:flex;justify-content:space-between;align-items:center;padding:0 16px;
-font-size:.85rem;color:#036153}
-.list-group-item{cursor:pointer}
-.list-group-item:hover{background:#e9ffe9}
-.navbar-link{cursor:pointer;font-weight:600;color:#036153;margin-left:18px}
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar-custom {
+  background: #ffffff;
+  border-bottom: 2px solid #e6f2ea;
+  min-height: 70px;
+}
+
+.navbar-brand img {
+  height: 45px;
+}
+
+.navbar-link {
+  font-weight: 600;
+  color: #036153;
+  cursor: pointer;
+  margin-left: 18px;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  background: #f8f9fa;
+  border-right: 2px solid #73A041;
+  height: calc(100vh - 70px - 38px);
+  overflow-y: auto;
+}
+
+.section-title {
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  color: #036153;
+}
+
+/* ---------- CONTENT ---------- */
+.iframe-display {
+  width: 100%;
+  height: calc(100vh - 70px - 38px);
+  border: none;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+.list-group-item:hover {
+  background: #e9ffe9;
+}
+
+/* ---------- FOOTER ---------- */
+.rhs-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 38px;
+  background: #f8f9fa;
+  border-top: 1px solid #dfeee5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 0.85rem;
+  color: #036153;
+  z-index: 999;
+}
 </style>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg bg-white px-3" style="height:70px">
-  <img src="../common/rhs.png" height="45">
+<!-- ---------- NAVBAR ---------- -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container-fluid">
 
-  <span class="navbar-link"
-        onclick="loadProduct('testplan.html')">Test Plan</span>
+    <a class="navbar-brand" onclick="loadBasePage('common/welcome.html')">
+      <img src="common/rhs.png" alt="RHS Logo">
+    </a>
 
-  <span class="navbar-link"
-        onclick="loadProduct('dashboard.html')">Dashboard</span>
+    <a class="navbar-link" onclick="loadSharedPage('testplan.html')">Test Plan</a>
+    <a class="navbar-link" onclick="loadSharedPage('dashboard.html')">Dashboard</a>
 
-  <!-- CONTEXT SWITCHER -->
-  <div class="dropdown ms-auto">
-    <button class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
+    <span class="ms-auto fw-bold text-success">
       RHS Grow Mobile
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li>
-        <a class="dropdown-item active">📱 RHS Grow Mobile</a>
-      </li>
-      <li>
-        <a class="dropdown-item"
-           href="https://linuxramu.github.io/rhsgrowweb/">
-           🖥️ RHS Grow Web
-        </a>
-      </li>
-      <li>
-        <a class="dropdown-item"
-           href="https://linuxramu.github.io/rhsgrowapi/">
-           🔌 RHS Grow API
-        </a>
-      </li>
-    </ul>
+    </span>
+
   </div>
 </nav>
 
+<!-- ---------- MAIN ---------- -->
 <div class="container-fluid">
-<div class="row">
+  <div class="row">
 
-<div class="col-md-3 sidebar p-0">
-  <div class="p-2 fw-bold text-success">Test Executions</div>
-  <ul class="list-group list-group-flush">
-<li class='list-group-item'
-          onclick="loadResult('results/sanity/20251223.3.android.cucumber.html')">
-          Sanity - 20251223.3.android.cucumber.html
-          </li>
-<li class='list-group-item'
-          onclick="loadResult('results/sanity/20251223.3.ios.cucumber.html')">
-          Sanity - 20251223.3.ios.cucumber.html
-          </li>
-<li class='list-group-item'
-          onclick="loadResult('results/regression/20251222.2.android.cucumber.html')">
-          Regression - 20251222.2.android.cucumber.html
-          </li>
-<li class='list-group-item'
-          onclick="loadResult('results/regression/20251222.2.ios.cucumber.html')">
-          Regression - 20251222.2.ios.cucumber.html
-          </li>
-<li class='list-group-item'
-          onclick="loadResult('results/custom/20251223.1.android.cucumber.html')">
-          Custom - 20251223.1.android.cucumber.html
-          </li>
-<li class='list-group-item'
-          onclick="loadResult('results/custom/20251223.1.ios.cucumber.html')">
-          Custom - 20251223.1.ios.cucumber.html
-          </li>
-  </ul>
+    <!-- LEFT -->
+    <div class="col-md-3 sidebar p-0">
+      <div class="section-title">Test Executions</div>
+
+      <div class="accordion" id="resultsAccordion">
+
+        <!-- SANITY -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#sanity">
+              🧪 Sanity
+            </button>
+          </h2>
+          <div id="sanity" class="accordion-collapse collapse">
+            <ul class="list-group list-group-flush">
+              <!-- generated items -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- REGRESSION -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#regression">
+              🧪 Regression
+            </button>
+          </h2>
+          <div id="regression" class="accordion-collapse collapse">
+            <ul class="list-group list-group-flush">
+            </ul>
+          </div>
+        </div>
+
+        <!-- CUSTOM -->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#custom">
+              🧪 Custom
+            </button>
+          </h2>
+          <div id="custom" class="accordion-collapse collapse">
+            <ul class="list-group list-group-flush">
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-md-9 p-0">
+      <iframe id="resultFrame" class="iframe-display"></iframe>
+    </div>
+
+  </div>
 </div>
 
-<div class="col-md-9 p-0">
-  <iframe id="frame" class="iframe"
-          src="../common/welcome.html"></iframe>
-</div>
-
-</div>
-</div>
-
-<div class="footer">
-  <span>© 2025 RHS</span>
-  <span>Build ID: 142654</span>
-</div>
+<!-- ---------- FOOTER ---------- -->
+<footer class="rhs-footer">
+  <div>© <span id="year"></span> RHS</div>
+  <div>Build ID: <span id="build"></span></div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-const PROJECT="rhsgrowmobile";
-
-function loadResult(p){
-  document.getElementById('frame').src=p;
+/* ---------- LOADERS ---------- */
+function loadResult(path) {
+  document.getElementById("resultFrame").src = path;
 }
 
-function loadProduct(page){
-  document.getElementById('frame').src =
-    ;
+function loadSharedPage(page) {
+  document.getElementById("resultFrame").src = `../pages/${page}?project=rhsgrowmobile`;
 }
+
+function loadBasePage(path) {
+  document.getElementById("resultFrame").src = path;
+}
+
+/* ---------- FOOTER ---------- */
+(() => {
+  const d = new Date();
+  document.getElementById("year").innerText = d.getFullYear();
+  document.getElementById("build").innerText =
+    `${d.getHours()}${d.getMinutes()}${d.getSeconds()}`;
+})();
+
+/* ---------- DEFAULT ---------- */
+loadBasePage("common/welcome.html");
 </script>
 
 </body>
