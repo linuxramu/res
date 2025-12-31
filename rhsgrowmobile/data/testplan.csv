@@ -1,163 +1,163 @@
 Feature|TCID|Test Case Description|Type|Status|Priority
 Install and Launch|1486|Uninstall existing app|Regression|Ready to Automate|Critical
-Install and Launch|1487|Install the app|Other|None|Medium
-Install and Launch|1488|Launch the app and check the animation|Other|None|Medium
-Install and Launch|1489|Skip animation|Other|None|Medium
-Signup|1490|Create your RHS Grow account--> Sign up|Other|None|Medium
-Signup|1491|Email field validation|Other|None|Medium
-Signup|1492|Name/Surname field validation|Other|None|Medium
-Signup|1493|Password/Confirm Password field validation|Other|None|Medium
-Signup|1494|Check box validation|Other|None|Medium
-Signup|1495|Mandatory field checks|Other|None|Medium
-Signup|1496|Fill in with valid field values and signup|Other|None|Medium
-Signin|1497|Sign in with your email address|Other|None|Medium
-Signin|1498|Field validation checks|Other|None|Medium
-Signin|1499|Valid credentials|Other|None|Medium
-Signin|1500|Invalid credentials|Other|None|Medium
-Forgot Password|1501|Field validation checks|Other|None|Medium
-Forgot Password|1502|Valid credentials|Other|None|Medium
-Welcome|1503|Details accuracy|Other|None|Medium
-Welcome|1504|Open email app|Other|None|Medium
-Welcome|1505|Didnt Receive it|Other|None|Medium
-Welcome|1506|Verify Later|Other|None|Medium
-Onboarding Setup|1507|Setup--> Start|Other|None|Medium
-Onboarding Setup|1508|What kind of garden do you have?|Other|None|Medium
-Onboarding Setup|1509|Which features are in your garden?|Other|None|Medium
-Onboarding Setup|1510|Which topics are you interested in?|Other|None|Medium
-Onboarding Setup|1511|How confident are you as a gardener?|Other|None|Medium
-Onboarding Setup|1512|Location|Other|None|Medium
-Onboarding Setup|1513|Turn on Notifications|Other|None|Medium
-Home|1514|Email verification status|Other|None|Medium
-Home|1515|Tutorial flow on first launch|Other|None|Medium
-Home|1516|Paywall on first launch|Other|None|Medium
-Home|1517|Welcome section validation|Other|None|Medium
-Home|1518|Features/Sections to be present|Other|None|Medium
-Home|1519|Navigations for each feature|Other|None|Medium
-Home|1520|Bottom menu|Other|None|Medium
-Home|1521|Welcome section validation|Other|None|Medium
-Paywall|1522|Paywall popup frequency|Other|None|Medium
-Paywall|1523|Paywall UI|Other|None|Medium
-Paywall|1524|Locked features|Other|None|Medium
-Paywall|1525|Buy Monthly subscription and check unlocked features|Other|None|Medium
-Paywall|1526|Subscription expiry|Other|None|Medium
-Paywall|1527|Buy yearly subscription and check unlocked features|Other|None|Medium
-Gamification|1528|With No badge|Other|None|Medium
-Gamification|1529|My Garden Dashboard|Other|None|Medium
-Gamification|1530|Plants Added|Other|None|Medium
-Gamification|1531|Pollinator Plants|Other|None|Medium
-Gamification|1532|Your Badges|Other|None|Medium
-Gamification|1533|Show in Groups toggle|Other|None|Medium
-Chatbot|1534|Search Suggestions|Other|None|Medium
-Chatbot|1535|Type a query|Other|None|Medium
-Chatbot|1536|Swear check|Other|None|Medium
-Chatbot|1537|Like/dislike/copy/regenerate|Other|None|Medium
-Chatbot|1538|Voice search|Other|None|Medium
-Chatbot|1539|Chat History|Other|None|Medium
-Chatbot|1540|FAQs|Other|None|Medium
-Chatbot|1541|Feedbacks|Other|None|Medium
-Plant Combination builder|1542|Step 1|Other|None|Medium
-Plant Combination builder|1543|Step 2|Other|None|Medium
-Plant Combination builder|1544|Step 3|Other|None|Medium
-Plant Combination builder|1545|Step 4|Other|None|Medium
-Plant Combination builder|1546|Single selection|Other|None|Medium
-Plant Combination builder|1547|Multiple selection|Other|None|Medium
-Plant Combination builder|1548|Results|Other|None|Medium
-Plant Combination builder|1549|Add to Wishlist|Other|None|Medium
-Plant Combination builder|1550|Restart/Close|Other|None|Medium
-Popular this month|1551|Horizontal scroll|Other|None|Medium
-Popular this month|1552|Show All --> Listing|Other|None|Medium
-Settings|1553|My Garden Profile|Other|None|Medium
-Settings|1554|Chatbot Preferences|Other|None|Medium
-Settings|1555|Notifications & Communications|Other|None|Medium
-Settings|1556|Account & Security|Other|None|Medium
-Settings|1557|Manage my membership|Other|None|Medium
-Settings|1558|FAQs|Other|None|Medium
-Settings|1559|Contact Us|Other|None|Medium
-Settings|1560|Submit Feedback|Other|None|Medium
-Settings|1561|Donate|Other|None|Medium
-Settings|1562|Terms & Use|Other|None|Medium
-Settings|1563|Privacy Policy|Other|None|Medium
-Quick Tutorials|1565|Navigation Tutorial|Other|None|Medium
-Quick Tutorials|1566|Add a plant by text search|Other|None|Medium
-Quick Tutorials|1567|Add a plant via Plant ID|Other|None|Medium
-Discover|1568|'This Week' article|Other|None|Medium
-Discover|1569|Recently Viewed|Other|None|Medium
-Discover|1570|Plant of the Day|Other|None|Medium
-Discover|1571|Inspiration Article|Other|None|Medium
-Discover|1572|Spotlight|Other|None|Medium
-Discover|1573|Articles for you|Other|None|Medium
-Discover|1574|Trending Searches|Other|None|Medium
-Discover|1575|Planet Friendly gardening|Other|None|Medium
-Discover|1576|Popular Plants A-Z|Other|None|Medium
-Discover|1577|Type A-Z|Other|None|Medium
-Discover|1578|GYO A-Z|Other|None|Medium
-Discover|1579|Growing guides A-Z|Other|None|Medium
-Find a Plant|1772|Keyword Search (Old id: )|Other|None|Medium
-Find a Plant|1581|Semantic Search|Other|None|Medium
-Find a Plant|1582|Fuzzy Search|Other|None|Medium
-Find a Plant|1583|Search suggestions|Other|None|Medium
-Find a Plant|1584|Saved Searches|Other|None|Medium
-Find a Plant|1585|Search from search results|Other|None|Medium
-Find a Plant|1586|Botanical Name toggle|Other|None|Medium
-Find a Plant|1587|Grid/Listing|Other|None|Medium
-Find a Plant|1588|Filters - Plant Characteristics|Other|None|Medium
-Find a Plant|1589|Filters - Garden Characteristics|Other|None|Medium
-Find a Plant|1590|Filters - Soil Types|Other|None|Medium
-Find a Plant|1591|Filters - Height, spread and maturity|Other|None|Medium
-Find a Plant|1592|Filters - Sunlight|Other|None|Medium
-Find a Plant|1593|Filters - Season of Interest|Other|None|Medium
-Find a Plant|1594|Filters - Flower Colour|Other|None|Medium
-Find a Plant|1595|Filters - Flower Colour by Season|Other|None|Medium
-Find a Plant|1596|Save Search|Other|None|Medium
-Find a Plant|1597|Reset All|Other|None|Medium
-Find a Plant|1598|Fruit & Veg|Other|None|Medium
-Find a Plant|1599|House Plants|Other|None|Medium
-Find a Plant|1600|Popular this month|Other|None|Medium
-RHS Podcasts|1601|Podcast player|Other|None|Medium
-RHS Podcasts|1602|Mini player|Other|None|Medium
-RHS Podcasts|1603|Podcast Listing|Other|None|Medium
-My Garden--> All Plants|1604|Added plants check|Other|None|Medium
-My Garden--> All Plants|1605|Add plant--> Manual search|Other|None|Medium
-My Garden--> All Plants|1606|Add Plant--> Plant Id|Other|None|Medium
-My Garden--> All Plants|1607|Sort based on date added|Other|None|Medium
-My Garden--> All Plants|1608|Sort based on include/exclude wishlists|Other|None|Medium
-My Garden--> All Plants|1609|Sort based on caretips|Other|None|Medium
-My Garden--> All Plants|1610|Botanical names toggle|Other|None|Medium
-My Garden--> All Plants|1611|List /grid view|Other|None|Medium
-My Garden--> All Plants|1612|Count check|Other|None|Medium
-My Garden--> All Plants|1613|Delete one plant|Other|None|Medium
-My Garden--> All Plants|1614|Delete multiple plants|Other|None|Medium
-My Garden--> All Plants|1615|Plant Card|Other|None|Medium
-My Garden--> All Plants|1616|Edit Collections|Other|None|Medium
-My Garden--> All Plants|1617|Add to Wishlist|Other|None|Medium
-My Garden--> All Plants|1618|Add new plant profile image|Other|None|Medium
-My Garden--> Collections|1619|Created/Default collections check|Other|None|Medium
-My Garden--> Collections|1620|Check added plant under each collection|Other|None|Medium
-My Garden--> Collections|1621|Sort Alphabetical order|Other|None|Medium
-My Garden--> Collections|1622|Add Collection|Other|None|Medium
-My Garden--> Collections|1623|Rename Collection|Other|None|Medium
-My Garden--> Collections|1624|Delete Collection|Other|None|Medium
-My Garden--> Collections|1625|List /grid view|Other|None|Medium
-My Garden--> Collections|1626|Open a collection--> Added plants check|Other|None|Medium
-My Garden--> Collections|1627|Open a collection-->Add plant--> Manual search|Other|None|Medium
-My Garden--> Collections|1628|Open a collection-->Add Plant--> Plant Id|Other|None|Medium
-My Garden--> Collections|1629|Open a collection-->Sort based on date added|Other|None|Medium
-My Garden--> Collections|1630|Open a collection-->Sort based on plant type|Other|None|Medium
-My Garden--> Collections|1631|Open a collection-->Sort based on caretips|Other|None|Medium
-My Garden--> Collections|1632|Open a collection-->Botanical names toggle|Other|None|Medium
-My Garden--> Collections|1633|Open a collection-->List /grid view|Other|None|Medium
-My Garden--> Collections|1634|Open a collection-->Count check|Other|None|Medium
-My Garden--> Collections|1635|Open a collection--> Delete a plant|Other|None|Medium
-My Garden--> Collections|1636|Open a collection-->Plant Card|Other|None|Medium
-My Garden--> Collections|1637|Open a collection--> Add new plant profile image|Other|None|Medium
-My Garden--> Collections|1638|Open a collection--> Edit collections|Other|None|Medium
-My Garden--> Collections|1639|Open a collection--> Edit Wishlists|Other|None|Medium
-My Garden--> Collections|1774|Search a plant, collection, wishlist, garden note and plant note  in My Garden|Other|None|Medium
-My Garden--> Wishlist|1640|Created/Default Wishlist check|Other|None|Medium
-My Garden--> Wishlist|1641|Check added plant under each Wishlist|Other|None|Medium
-My Garden--> Wishlist|1642|Sort Alphabetical order|Other|None|Medium
-My Garden--> Wishlist|1643|Add Collection|Other|None|Medium
-My Garden--> Wishlist|1644|Rename Collection|Other|None|Medium
+Install and Launch|1487|Install the app|Regression|None|Medium
+Install and Launch|1488|Launch the app and check the animation|Regression|None|Medium
+Install and Launch|1489|Skip animation|Regression|None|Medium
+Signup|1490|Create your RHS Grow account--> Sign up|Regression|None|Medium
+Signup|1491|Email field validation|Regression|None|Medium
+Signup|1492|Name/Surname field validation|Regression|None|Medium
+Signup|1493|Password/Confirm Password field validation|Regression|None|Medium
+Signup|1494|Check box validation|Regression|None|Medium
+Signup|1495|Mandatory field checks|Regression|None|Medium
+Signup|1496|Fill in with valid field values and signup|Regression|None|Medium
+Signin|1497|Sign in with your email address|Regression|None|Medium
+Signin|1498|Field validation checks|Regression|None|Medium
+Signin|1499|Valid credentials|Regression|None|Medium
+Signin|1500|Invalid credentials|Regression|None|Medium
+Forgot Password|1501|Field validation checks|Regression|None|Medium
+Forgot Password|1502|Valid credentials|Regression|None|Medium
+Welcome|1503|Details accuracy|Regression|None|Medium
+Welcome|1504|Open email app|Regression|None|Medium
+Welcome|1505|Didnt Receive it|Regression|None|Medium
+Welcome|1506|Verify Later|Regression|None|Medium
+Onboarding Setup|1507|Setup--> Start|Regression|None|Medium
+Onboarding Setup|1508|What kind of garden do you have?|Regression|None|Medium
+Onboarding Setup|1509|Which features are in your garden?|Regression|None|Medium
+Onboarding Setup|1510|Which topics are you interested in?|Regression|None|Medium
+Onboarding Setup|1511|How confident are you as a gardener?|Regression|None|Medium
+Onboarding Setup|1512|Location|Regression|None|Medium
+Onboarding Setup|1513|Turn on Notifications|Regression|None|Medium
+Home|1514|Email verification status|Regression|None|Medium
+Home|1515|Tutorial flow on first launch|Regression|None|Medium
+Home|1516|Paywall on first launch|Regression|None|Medium
+Home|1517|Welcome section validation|Regression|None|Medium
+Home|1518|Features/Sections to be present|Regression|None|Medium
+Home|1519|Navigations for each feature|Regression|None|Medium
+Home|1520|Bottom menu|Regression|None|Medium
+Home|1521|Welcome section validation|Regression|None|Medium
+Paywall|1522|Paywall popup frequency|Regression|None|Medium
+Paywall|1523|Paywall UI|Regression|None|Medium
+Paywall|1524|Locked features|Regression|None|Medium
+Paywall|1525|Buy Monthly subscription and check unlocked features|Regression|None|Medium
+Paywall|1526|Subscription expiry|Regression|None|Medium
+Paywall|1527|Buy yearly subscription and check unlocked features|Regression|None|Medium
+Gamification|1528|With No badge|Regression|None|Medium
+Gamification|1529|My Garden Dashboard|Regression|None|Medium
+Gamification|1530|Plants Added|Regression|None|Medium
+Gamification|1531|Pollinator Plants|Regression|None|Medium
+Gamification|1532|Your Badges|Regression|None|Medium
+Gamification|1533|Show in Groups toggle|Regression|None|Medium
+Chatbot|1534|Search Suggestions|Regression|None|Medium
+Chatbot|1535|Type a query|Regression|None|Medium
+Chatbot|1536|Swear check|Regression|None|Medium
+Chatbot|1537|Like/dislike/copy/regenerate|Regression|None|Medium
+Chatbot|1538|Voice search|Regression|None|Medium
+Chatbot|1539|Chat History|Regression|None|Medium
+Chatbot|1540|FAQs|Regression|None|Medium
+Chatbot|1541|Feedbacks|Regression|None|Medium
+Plant Combination builder|1542|Step 1|Regression|None|Medium
+Plant Combination builder|1543|Step 2|Regression|None|Medium
+Plant Combination builder|1544|Step 3|Regression|None|Medium
+Plant Combination builder|1545|Step 4|Regression|None|Medium
+Plant Combination builder|1546|Single selection|Regression|None|Medium
+Plant Combination builder|1547|Multiple selection|Regression|None|Medium
+Plant Combination builder|1548|Results|Regression|None|Medium
+Plant Combination builder|1549|Add to Wishlist|Regression|None|Medium
+Plant Combination builder|1550|Restart/Close|Regression|None|Medium
+Popular this month|1551|Horizontal scroll|Regression|None|Medium
+Popular this month|1552|Show All --> Listing|Regression|None|Medium
+Settings|1553|My Garden Profile|Regression|None|Medium
+Settings|1554|Chatbot Preferences|Regression|None|Medium
+Settings|1555|Notifications & Communications|Regression|None|Medium
+Settings|1556|Account & Security|Regression|None|Medium
+Settings|1557|Manage my membership|Regression|None|Medium
+Settings|1558|FAQs|Regression|None|Medium
+Settings|1559|Contact Us|Regression|None|Medium
+Settings|1560|Submit Feedback|Regression|None|Medium
+Settings|1561|Donate|Regression|None|Medium
+Settings|1562|Terms & Use|Regression|None|Medium
+Settings|1563|Privacy Policy|Regression|None|Medium
+Quick Tutorials|1565|Navigation Tutorial|Regression|None|Medium
+Quick Tutorials|1566|Add a plant by text search|Regression|None|Medium
+Quick Tutorials|1567|Add a plant via Plant ID|Regression|None|Medium
+Discover|1568|'This Week' article|Regression|None|Medium
+Discover|1569|Recently Viewed|Regression|None|Medium
+Discover|1570|Plant of the Day|Regression|None|Medium
+Discover|1571|Inspiration Article|Regression|None|Medium
+Discover|1572|Spotlight|Regression|None|Medium
+Discover|1573|Articles for you|Regression|None|Medium
+Discover|1574|Trending Searches|Regression|None|Medium
+Discover|1575|Planet Friendly gardening|Regression|None|Medium
+Discover|1576|Popular Plants A-Z|Regression|None|Medium
+Discover|1577|Type A-Z|Regression|None|Medium
+Discover|1578|GYO A-Z|Regression|None|Medium
+Discover|1579|Growing guides A-Z|Regression|None|Medium
+Discover--> Find a Plant|1772|Keyword Search (Old id: )|Regression|None|Medium
+Discover--> Find a Plant|1581|Semantic Search|Regression|None|Medium
+Discover--> Find a Plant|1582|Fuzzy Search|Regression|None|Medium
+Discover--> Find a Plant|1583|Search suggestions|Regression|None|Medium
+Discover--> Find a Plant|1584|Saved Searches|Regression|None|Medium
+Discover--> Find a Plant|1585|Search from search results|Regression|None|Medium
+Discover--> Find a Plant|1586|Botanical Name toggle|Regression|None|Medium
+Discover--> Find a Plant|1587|Grid/Listing|Regression|None|Medium
+Discover--> Find a Plant|1588|Filters - Plant Characteristics|Regression|None|Medium
+Discover--> Find a Plant|1589|Filters - Garden Characteristics|Regression|None|Medium
+Discover--> Find a Plant|1590|Filters - Soil Types|Regression|None|Medium
+Discover--> Find a Plant|1591|Filters - Height, spread and maturity|Regression|None|Medium
+Discover--> Find a Plant|1592|Filters - Sunlight|Regression|None|Medium
+Discover--> Find a Plant|1593|Filters - Season of Interest|Regression|None|Medium
+Discover--> Find a Plant|1594|Filters - Flower Colour|Regression|None|Medium
+Discover--> Find a Plant|1595|Filters - Flower Colour by Season|Regression|None|Medium
+Discover--> Find a Plant|1596|Save Search|Regression|None|Medium
+Discover--> Find a Plant|1597|Reset All|Regression|None|Medium
+Discover--> Find a Plant|1598|Fruit & Veg|Regression|None|Medium
+Discover--> Find a Plant|1599|House Plants|Regression|None|Medium
+Discover--> Find a Plant|1600|Popular this month|Regression|None|Medium
+Discover--> RHS Podcasts|1601|Podcast player|Regression|None|Medium
+Discover--> RHS Podcasts|1602|Mini player|Regression|None|Medium
+Discover--> RHS Podcasts|1603|Podcast Listing|Regression|None|Medium
+My Garden--> All Plants|1604|Added plants check|Regression|None|Medium
+My Garden--> All Plants|1605|Add plant--> Manual search|Regression|None|Medium
+My Garden--> All Plants|1606|Add Plant--> Plant Id|Regression|None|Medium
+My Garden--> All Plants|1607|Sort based on date added|Regression|None|Medium
+My Garden--> All Plants|1608|Sort based on include/exclude wishlists|Regression|None|Medium
+My Garden--> All Plants|1609|Sort based on caretips|Regression|None|Medium
+My Garden--> All Plants|1610|Botanical names toggle|Regression|None|Medium
+My Garden--> All Plants|1611|List /grid view|Regression|None|Medium
+My Garden--> All Plants|1612|Count check|Regression|None|Medium
+My Garden--> All Plants|1613|Delete one plant|Regression|None|Medium
+My Garden--> All Plants|1614|Delete multiple plants|Regression|None|Medium
+My Garden--> All Plants|1615|Plant Card|Regression|None|Medium
+My Garden--> All Plants|1616|Edit Collections|Regression|None|Medium
+My Garden--> All Plants|1617|Add to Wishlist|Regression|None|Medium
+My Garden--> All Plants|1618|Add new plant profile image|Regression|None|Medium
+My Garden--> Collections|1619|Created/Default collections check|Regression|None|Medium
+My Garden--> Collections|1620|Check added plant under each collection|Regression|None|Medium
+My Garden--> Collections|1621|Sort Alphabetical order|Regression|None|Medium
+My Garden--> Collections|1622|Add Collection|Regression|None|Medium
+My Garden--> Collections|1623|Rename Collection|Regression|None|Medium
+My Garden--> Collections|1624|Delete Collection|Regression|None|Medium
+My Garden--> Collections|1625|List /grid view|Regression|None|Medium
+My Garden--> Collections|1626|Open a collection--> Added plants check|Regression|None|Medium
+My Garden--> Collections|1627|Open a collection-->Add plant--> Manual search|Regression|None|Medium
+My Garden--> Collections|1628|Open a collection-->Add Plant--> Plant Id|Regression|None|Medium
+My Garden--> Collections|1629|Open a collection-->Sort based on date added|Regression|None|Medium
+My Garden--> Collections|1630|Open a collection-->Sort based on plant type|Regression|None|Medium
+My Garden--> Collections|1631|Open a collection-->Sort based on caretips|Regression|None|Medium
+My Garden--> Collections|1632|Open a collection-->Botanical names toggle|Regression|None|Medium
+My Garden--> Collections|1633|Open a collection-->List /grid view|Regression|None|Medium
+My Garden--> Collections|1634|Open a collection-->Count check|Regression|None|Medium
+My Garden--> Collections|1635|Open a collection--> Delete a plant|Regression|None|Medium
+My Garden--> Collections|1636|Open a collection-->Plant Card|Regression|None|Medium
+My Garden--> Collections|1637|Open a collection--> Add new plant profile image|Regression|None|Medium
+My Garden--> Collections|1638|Open a collection--> Edit collections|Regression|None|Medium
+My Garden--> Collections|1639|Open a collection--> Edit Wishlists|Regression|None|Medium
+My Garden--> Collections|1774|Search a plant, collection, wishlist, garden note and plant note  in My Garden|Regression|None|Medium
+My Garden--> Wishlist|1640|Created/Default Wishlist check|Regression|None|Medium
+My Garden--> Wishlist|1641|Check added plant under each Wishlist|Regression|None|Medium
+My Garden--> Wishlist|1642|Sort Alphabetical order|Regression|None|Medium
+My Garden--> Wishlist|1643|Add Collection|Regression|None|Medium
+My Garden--> Wishlist|1644|Rename Collection|Regression|None|Medium
 My Garden--> Wishlist|1645|Delete Collection|Other|None|Medium
 My Garden--> Wishlist|1646|List /grid view|Other|None|Medium
 My Garden--> Wishlist|1647|Open a Wishlist--> Added plants check|Other|None|Medium
