@@ -1,284 +1,285 @@
-Feature|TCID|Test Case Description|Status|Priority
-Install and Launch|1486|Uninstall existing app|Ready to Automate|Critical
-Install and Launch|1487|Install the app|Automated|Medium
-Install and Launch|1488|Launch the app and check the animation|Automated|Medium
-Install and Launch|1489|Skip animation|None|Medium
-Signup|1490|Create your RHS Grow account--> Sign up|None|Medium
-Signup|1491|Email field validation|None|Medium
-Signup|1492|Name/Surname field validation|None|Medium
-Signup|1493|Password/Confirm Password field validation|None|Medium
-Signup|1494|Check box validation|None|Medium
-Signup|1495|Mandatory field checks|None|Medium
-Signup|1496|Fill in with valid field values and signup|None|Medium
-Signin|1497|Sign in with your email address|None|Medium
-Signin|1498|Field validation checks|None|Medium
-Signin|1499|Valid credentials|None|Medium
-Signin|1500|Invalid credentials|None|Medium
-Forgot Password|1501|Field validation checks|None|Medium
-Forgot Password|1502|Valid credentials|None|Medium
-Welcome|1503|Details accuracy|None|Medium
-Welcome|1504|Open email app|None|Medium
-Welcome|1505|Didnt Receive it|None|Medium
-Welcome|1506|Verify Later|None|Medium
-Onboarding Setup|1507|Setup--> Start|None|Medium
-Onboarding Setup|1508|What kind of garden do you have?|None|Medium
-Onboarding Setup|1509|Which features are in your garden?|None|Medium
-Onboarding Setup|1510|Which topics are you interested in?|None|Medium
-Onboarding Setup|1511|How confident are you as a gardener?|None|Medium
-Onboarding Setup|1512|Location|None|Medium
-Onboarding Setup|1513|Turn on Notifications|None|Medium
-Home|1514|Email verification status|None|Medium
-Home|1515|Tutorial flow on first launch|None|Medium
-Home|1516|Paywall on first launch|None|Medium
-Home|1517|Welcome section validation|None|Medium
-Home|1518|Features/Sections to be present|None|Medium
-Home|1519|Navigations for each feature|None|Medium
-Home|1520|Bottom menu|None|Medium
-Home|1521|Welcome section validation|None|Medium
-Paywall|1522|Paywall popup frequency|None|Medium
-Paywall|1523|Paywall UI|None|Medium
-Paywall|1524|Locked features|None|Medium
-Paywall|1525|Buy Monthly subscription and check unlocked features|None|Medium
-Paywall|1526|Subscription expiry|None|Medium
-Paywall|1527|Buy yearly subscription and check unlocked features|None|Medium
-Gamification|1528|With No badge|None|Medium
-Gamification|1529|My Garden Dashboard|None|Medium
-Gamification|1530|Plants Added|None|Medium
-Gamification|1531|Pollinator Plants|None|Medium
-Gamification|1532|Your Badges|None|Medium
-Gamification|1533|Show in Groups toggle|None|Medium
-Chatbot|1534|Search Suggestions|None|Medium
-Chatbot|1535|Type a query|None|Medium
-Chatbot|1536|Swear check|None|Medium
-Chatbot|1537|Like/dislike/copy/regenerate|None|Medium
-Chatbot|1538|Voice search|None|Medium
-Chatbot|1539|Chat History|None|Medium
-Chatbot|1540|FAQs|None|Medium
-Chatbot|1541|Feedbacks|None|Medium
-Plant Combination builder|1542|Step 1|None|Medium
-Plant Combination builder|1543|Step 2|None|Medium
-Plant Combination builder|1544|Step 3|None|Medium
-Plant Combination builder|1545|Step 4|None|Medium
-Plant Combination builder|1546|Single selection|None|Medium
-Plant Combination builder|1547|Multiple selection|None|Medium
-Plant Combination builder|1548|Results|None|Medium
-Plant Combination builder|1549|Add to Wishlist|None|Medium
-Plant Combination builder|1550|Restart/Close|None|Medium
-Popular this month|1551|Horizontal scroll|None|Medium
-Popular this month|1552|Show All --> Listing|None|Medium
-Settings|1553|My Garden Profile|None|Medium
-Settings|1554|Chatbot Preferences|None|Medium
-Settings|1555|Notifications & Communications|None|Medium
-Settings|1556|Account & Security|None|Medium
-Settings|1557|Manage my membership|None|Medium
-Settings|1558|FAQs|None|Medium
-Settings|1559|Contact Us|None|Medium
-Settings|1560|Submit Feedback|None|Medium
-Settings|1561|Donate|None|Medium
-Settings|1562|Terms & Use|None|Medium
-Settings|1563|Privacy Policy|None|Medium
-Quick Tutorials|1565|Navigation Tutorial|None|Medium
-Quick Tutorials|1566|Add a plant by text search|None|Medium
-Quick Tutorials|1567|Add a plant via Plant ID|None|Medium
-Discover|1568|'This Week' article|None|Medium
-Discover|1569|Recently Viewed|None|Medium
-Discover|1570|Plant of the Day|None|Medium
-Discover|1571|Inspiration Article|None|Medium
-Discover|1572|Spotlight|None|Medium
-Discover|1573|Articles for you|None|Medium
-Discover|1574|Trending Searches|None|Medium
-Discover|1575|Planet Friendly gardening|None|Medium
-Discover|1576|Popular Plants A-Z|None|Medium
-Discover|1577|Type A-Z|None|Medium
-Discover|1578|GYO A-Z|None|Medium
-Discover|1579|Growing guides A-Z|None|Medium
-Find a Plant|1772|Keyword Search (Old id: )|None|Medium
-Find a Plant|1581|Semantic Search|None|Medium
-Find a Plant|1582|Fuzzy Search|None|Medium
-Find a Plant|1583|Search suggestions|None|Medium
-Find a Plant|1584|Saved Searches|None|Medium
-Find a Plant|1585|Search from search results|None|Medium
-Find a Plant|1586|Botanical Name toggle|None|Medium
-Find a Plant|1587|Grid/Listing|None|Medium
-Find a Plant|1588|Filters - Plant Characteristics|None|Medium
-Find a Plant|1589|Filters - Garden Characteristics|None|Medium
-Find a Plant|1590|Filters - Soil Types|None|Medium
-Find a Plant|1591|Filters - Height, spread and maturity|None|Medium
-Find a Plant|1592|Filters - Sunlight|None|Medium
-Find a Plant|1593|Filters - Season of Interest|None|Medium
-Find a Plant|1594|Filters - Flower Colour|None|Medium
-Find a Plant|1595|Filters - Flower Colour by Season|None|Medium
-Find a Plant|1596|Save Search|None|Medium
-Find a Plant|1597|Reset All|None|Medium
-Find a Plant|1598|Fruit & Veg|None|Medium
-Find a Plant|1599|House Plants|None|Medium
-Find a Plant|1600|Popular this month|None|Medium
-RHS Podcasts|1601|Podcast player|None|Medium
-RHS Podcasts|1602|Mini player|None|Medium
-RHS Podcasts|1603|Podcast Listing|None|Medium
-My Garden--> All Plants|1604|Added plants check|None|Medium
-My Garden--> All Plants|1605|Add plant--> Manual search|None|Medium
-My Garden--> All Plants|1606|Add Plant--> Plant Id|None|Medium
-My Garden--> All Plants|1607|Sort based on date added|None|Medium
-My Garden--> All Plants|1608|Sort based on include/exclude wishlists|None|Medium
-My Garden--> All Plants|1609|Sort based on caretips|None|Medium
-My Garden--> All Plants|1610|Botanical names toggle|None|Medium
-My Garden--> All Plants|1611|List /grid view|None|Medium
-My Garden--> All Plants|1612|Count check|None|Medium
-My Garden--> All Plants|1613|Delete one plant|None|Medium
-My Garden--> All Plants|1614|Delete multiple plants|None|Medium
-My Garden--> All Plants|1615|Plant Card|None|Medium
-My Garden--> All Plants|1616|Edit Collections|None|Medium
-My Garden--> All Plants|1617|Add to Wishlist|None|Medium
-My Garden--> All Plants|1618|Add new plant profile image|None|Medium
-My Garden--> Collections|1619|Created/Default collections check|None|Medium
-My Garden--> Collections|1620|Check added plant under each collection|None|Medium
-My Garden--> Collections|1621|Sort Alphabetical order|None|Medium
-My Garden--> Collections|1622|Add Collection|None|Medium
-My Garden--> Collections|1623|Rename Collection|None|Medium
-My Garden--> Collections|1624|Delete Collection|None|Medium
-My Garden--> Collections|1625|List /grid view|None|Medium
-My Garden--> Collections|1626|Open a collection--> Added plants check|None|Medium
-My Garden--> Collections|1627|Open a collection-->Add plant--> Manual search|None|Medium
-My Garden--> Collections|1628|Open a collection-->Add Plant--> Plant Id|None|Medium
-My Garden--> Collections|1629|Open a collection-->Sort based on date added|None|Medium
-My Garden--> Collections|1630|Open a collection-->Sort based on plant type|None|Medium
-My Garden--> Collections|1631|Open a collection-->Sort based on caretips|None|Medium
-My Garden--> Collections|1632|Open a collection-->Botanical names toggle|None|Medium
-My Garden--> Collections|1633|Open a collection-->List /grid view|None|Medium
-My Garden--> Collections|1634|Open a collection-->Count check|None|Medium
-My Garden--> Collections|1635|Open a collection--> Delete a plant|None|Medium
-My Garden--> Collections|1636|Open a collection-->Plant Card|None|Medium
-My Garden--> Collections|1637|Open a collection--> Add new plant profile image|None|Medium
-My Garden--> Collections|1638|Open a collection--> Edit collections|None|Medium
-My Garden--> Collections|1639|Open a collection--> Edit Wishlists|None|Medium
-My Garden--> Wishlist|1640|Created/Default Wishlist check|None|Medium
-My Garden--> Wishlist|1641|Check added plant under each Wishlist|None|Medium
-My Garden--> Wishlist|1642|Sort Alphabetical order|None|Medium
-My Garden--> Wishlist|1643|Add Collection|None|Medium
-My Garden--> Wishlist|1644|Rename Collection|None|Medium
-My Garden--> Wishlist|1645|Delete Collection|None|Medium
-My Garden--> Wishlist|1646|List /grid view|None|Medium
-My Garden--> Wishlist|1647|Open a Wishlist--> Added plants check|None|Medium
-My Garden--> Wishlist|1648|Open a Wishlist-->Add plant--> Manual search|None|Medium
-My Garden--> Wishlist|1649|Open a Wishlist-->Add Plant--> Plant Id|None|Medium
-My Garden--> Wishlist|1650|Open a Wishlist-->Sort based on date added|None|Medium
-My Garden--> Wishlist|1651|Open a Wishlist-->Sort based on plant type|None|Medium
-My Garden--> Wishlist|1652|Open a Wishlist-->Sort based on caretips|None|Medium
-My Garden--> Wishlist|1653|Open a Wishlist-->Botanical names toggle|None|Medium
-My Garden--> Wishlist|1654|Open a Wishlist-->List /grid view|None|Medium
-My Garden--> Wishlist|1655|Open a Wishlist-->Count check|None|Medium
-My Garden--> Wishlist|1656|Open a Wishlist--> Delete a plant|None|Medium
-My Garden--> Wishlist|1657|Open a Wishlist-->Plant Card|None|Medium
-My Garden--> Wishlist|1658|Open a Wishlist--> Add new plant profile image|None|Medium
-My Garden--> Wishlist|1659|Open a Wishlist--> Edit collections|None|Medium
-My Garden--> Wishlist|1660|Open a Wishlist--> Edit Wishlists|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1661|Add 3 images and save a note|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1662|Add 1 image and save a note|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1663|Add title and description, save a note|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1664|Add 3 images, title and description, save a note|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1665|Mandatory field checks|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1666|Show All --> Listing|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1667|Individual Garden note|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1668|Gallery|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1669|Edit Image|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1670|Edit title|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1671|Edit Description|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1672|Delete image|None|Medium
-My Garden--> Journal--> Garden Notes (Online)|1673|Delete Note|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1674|Add 3 images, title and description, save a note|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1675|Mandatory field checks|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1676|Show All --> Listing|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1677|Individual Garden note|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1678|Gallery|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1679|Edit Image|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1680|Edit title|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1681|Edit Description|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1682|Delete image|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1683|Delete Note|None|Medium
-My Garden--> Journal--> Garden Notes (Offline)|1684|Check everything by going online|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1685|Add plant notes via Journal--> Add Note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1686|Add plant notes via Plant Card|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1687|Multiple notes for same plant|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1688|Add 3 images and save a note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1689|Add 1 image and save a note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1690|Add title and description, save a note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1691|Add rating, save a note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1692|Mandatory checks|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1693|Add image,title,description and rating, save a note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1694|Show All --> Listing|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1695|Individual Garden note|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1696|Gallery|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1697|Edit Image|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1698|Edit title|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1699|Edit Description|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1700|Delete image|None|Medium
-My Garden--> Journal--> Plant Notes (Online)|1701|Delete Note|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1702|Add 3 images, title and description, rating save a note|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1703|Mandatory field checks|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1704|Show All --> Listing|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1705|Individual Plant note|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1706|Gallery|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1707|Edit Image|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1708|Edit title|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1709|Edit Description|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1710|Delete image|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1711|Delete Note|None|Medium
-My Garden--> Journal--> Plant Notes (Offline)|1712|Check everything by going online|None|Medium
-Care Tips|1713|CT for plants added via manual search|None|Medium
-Care Tips|1714|CT for GYO - Fruit|None|Medium
-Care Tips|1715|CT for GYO - Vegetable|None|Medium
-Care Tips|1716|CT for GYO - Herbs|None|Medium
-Care Tips|1717|CT for House plants|None|Medium
-Care Tips|1718|Current Year CT|None|Medium
-Care Tips|1719|Previous Year CT|None|Medium
-Care Tips|1720|Next Year CT|None|Medium
-Care Tips|1721|CT - Bulk Complete|None|Medium
-Care Tips|1722|CT - Bulk Incomplete|None|Medium
-Care Tips|1723|CT - Individual Complete|None|Medium
-Care Tips|1724|CT - Individual Incomplete|None|Medium
-Care Tips|1725|Delete CT|None|Medium
-Care Tips|1726|Sort based on care categories|None|Medium
-Care Tips|1727|Filter based on Care Categories--> Plants, Fruit/Veg & House Plants|None|Medium
-Care Tips|1728|Filter under specific care category - Plants/Fruit & Veg/ House Plants|None|Medium
-Care Tips|1729|Filter under specific care category - To do/Complete|None|Medium
-Care Tips|1730|Sort based on Plants A-Z|None|Medium
-Care Tips|1731|Sort and filter based on Plants A-Z--> Tip Types|None|Medium
-Care Tips|1732|Sort and filter based on Plants A-Z--> Plants, Fruit/Veg & House Plants|None|Medium
-Care Tips|1733|Filter under Plants A-Z-->specific care category--> Plants/Fruit & Veg/ House Plants|None|Medium
-Care Tips|1734|Filter under Plants A-Z-->specific care category--> To do/Complete|None|Medium
-Care Tips|1735|Sort based on Plants Z=A|None|Medium
-Care Tips|1736|Sort and filter based on Plants Z-A--> Tip Types|None|Medium
-Care Tips|1737|Sort ad filter based on Plants Z-A--> Plants, Fruit/Veg & House Plants|None|Medium
-Care Tips|1738|Filter under Plants Z-A-->specific care category--> Plants/Fruit & Veg/ House Plants|None|Medium
-Care Tips|1739|Filter under Plants Z-A-->specific care category--> To do/Complete|None|Medium
-Care Tips|1740|Sort based on Around the Garden|None|Medium
-Care Tips|1741|Filter under specific Around the Garden care category--> Todo/Complete|None|Medium
-Plant ID|1742|Take a photo via Camera, upload and search|None|Medium
-Plant ID|1743|Select an image from gallery and search|None|Medium
-Plant ID|1744|Navigations on Search results|None|Medium
-Plant ID|1745|Add plant to collection from results|None|Medium
-Plant ID|1746|Add plant to wishlist from results|None|Medium
-Plant ID|1747|New Photo' journey|None|Medium
-Plant ID|1748|How to use Plant identifier|None|Medium
-Plant ID|1749|Zoom and select an area in a image before upload|None|Medium
-Cross Channel|1750|Account from Web to Grow App flow|None|Medium
-Cross Channel|1751|Account from Grow App to Web flow|None|Medium
-Update Grow App|1752|Without subscription on a user account in previous version of Grow App, update latest version|None|Medium
-Update Grow App|1753|With subscription on a user account in previous version of Grow App, update latest version|None|Medium
-Update Grow App|1754|Home|None|Medium
-Update Grow App|1755|Discover|None|Medium
-Update Grow App|1756|Care Tips|None|Medium
-Update Grow App|1757|My Garden|None|Medium
-Update Grow App|1758|Chatbot|None|Medium
-Update Grow App|1759|Gamification|None|Medium
-Update Grow App|1760|Plant Combo Builder|None|Medium
-Update Grow App|1761|Journal|None|Medium
-Update Grow App|1762|Plant Id|None|Medium
-Update Grow App|1763|Find a Plant|None|Medium
-Update Grow App|1764|Podcast|None|Medium
-Update Grow App|1765|Settings|None|Medium
-Notifications|1766|Receive notifications|None|Medium
-Notifications|1767|Navigations|None|Medium
-Clevertap|1768|User profile on CT|None|Medium
-Clevertap|1769|Events tracked|None|Medium
+Feature|TCID|Test Case Description|Type|Status|Priority
+Install and Launch|1486|Uninstall existing app|Regression|Ready to Automate|Critical
+Install and Launch|1487|Install the app|Other|None|Medium
+Install and Launch|1488|Launch the app and check the animation|Other|None|Medium
+Install and Launch|1489|Skip animation|Other|None|Medium
+Signup|1490|Create your RHS Grow account--> Sign up|Other|None|Medium
+Signup|1491|Email field validation|Other|None|Medium
+Signup|1492|Name/Surname field validation|Other|None|Medium
+Signup|1493|Password/Confirm Password field validation|Other|None|Medium
+Signup|1494|Check box validation|Other|None|Medium
+Signup|1495|Mandatory field checks|Other|None|Medium
+Signup|1496|Fill in with valid field values and signup|Other|None|Medium
+Signin|1497|Sign in with your email address|Other|None|Medium
+Signin|1498|Field validation checks|Other|None|Medium
+Signin|1499|Valid credentials|Other|None|Medium
+Signin|1500|Invalid credentials|Other|None|Medium
+Forgot Password|1501|Field validation checks|Other|None|Medium
+Forgot Password|1502|Valid credentials|Other|None|Medium
+Welcome|1503|Details accuracy|Other|None|Medium
+Welcome|1504|Open email app|Other|None|Medium
+Welcome|1505|Didnt Receive it|Other|None|Medium
+Welcome|1506|Verify Later|Other|None|Medium
+Onboarding Setup|1507|Setup--> Start|Other|None|Medium
+Onboarding Setup|1508|What kind of garden do you have?|Other|None|Medium
+Onboarding Setup|1509|Which features are in your garden?|Other|None|Medium
+Onboarding Setup|1510|Which topics are you interested in?|Other|None|Medium
+Onboarding Setup|1511|How confident are you as a gardener?|Other|None|Medium
+Onboarding Setup|1512|Location|Other|None|Medium
+Onboarding Setup|1513|Turn on Notifications|Other|None|Medium
+Home|1514|Email verification status|Other|None|Medium
+Home|1515|Tutorial flow on first launch|Other|None|Medium
+Home|1516|Paywall on first launch|Other|None|Medium
+Home|1517|Welcome section validation|Other|None|Medium
+Home|1518|Features/Sections to be present|Other|None|Medium
+Home|1519|Navigations for each feature|Other|None|Medium
+Home|1520|Bottom menu|Other|None|Medium
+Home|1521|Welcome section validation|Other|None|Medium
+Paywall|1522|Paywall popup frequency|Other|None|Medium
+Paywall|1523|Paywall UI|Other|None|Medium
+Paywall|1524|Locked features|Other|None|Medium
+Paywall|1525|Buy Monthly subscription and check unlocked features|Other|None|Medium
+Paywall|1526|Subscription expiry|Other|None|Medium
+Paywall|1527|Buy yearly subscription and check unlocked features|Other|None|Medium
+Gamification|1528|With No badge|Other|None|Medium
+Gamification|1529|My Garden Dashboard|Other|None|Medium
+Gamification|1530|Plants Added|Other|None|Medium
+Gamification|1531|Pollinator Plants|Other|None|Medium
+Gamification|1532|Your Badges|Other|None|Medium
+Gamification|1533|Show in Groups toggle|Other|None|Medium
+Chatbot|1534|Search Suggestions|Other|None|Medium
+Chatbot|1535|Type a query|Other|None|Medium
+Chatbot|1536|Swear check|Other|None|Medium
+Chatbot|1537|Like/dislike/copy/regenerate|Other|None|Medium
+Chatbot|1538|Voice search|Other|None|Medium
+Chatbot|1539|Chat History|Other|None|Medium
+Chatbot|1540|FAQs|Other|None|Medium
+Chatbot|1541|Feedbacks|Other|None|Medium
+Plant Combination builder|1542|Step 1|Other|None|Medium
+Plant Combination builder|1543|Step 2|Other|None|Medium
+Plant Combination builder|1544|Step 3|Other|None|Medium
+Plant Combination builder|1545|Step 4|Other|None|Medium
+Plant Combination builder|1546|Single selection|Other|None|Medium
+Plant Combination builder|1547|Multiple selection|Other|None|Medium
+Plant Combination builder|1548|Results|Other|None|Medium
+Plant Combination builder|1549|Add to Wishlist|Other|None|Medium
+Plant Combination builder|1550|Restart/Close|Other|None|Medium
+Popular this month|1551|Horizontal scroll|Other|None|Medium
+Popular this month|1552|Show All --> Listing|Other|None|Medium
+Settings|1553|My Garden Profile|Other|None|Medium
+Settings|1554|Chatbot Preferences|Other|None|Medium
+Settings|1555|Notifications & Communications|Other|None|Medium
+Settings|1556|Account & Security|Other|None|Medium
+Settings|1557|Manage my membership|Other|None|Medium
+Settings|1558|FAQs|Other|None|Medium
+Settings|1559|Contact Us|Other|None|Medium
+Settings|1560|Submit Feedback|Other|None|Medium
+Settings|1561|Donate|Other|None|Medium
+Settings|1562|Terms & Use|Other|None|Medium
+Settings|1563|Privacy Policy|Other|None|Medium
+Quick Tutorials|1565|Navigation Tutorial|Other|None|Medium
+Quick Tutorials|1566|Add a plant by text search|Other|None|Medium
+Quick Tutorials|1567|Add a plant via Plant ID|Other|None|Medium
+Discover|1568|'This Week' article|Other|None|Medium
+Discover|1569|Recently Viewed|Other|None|Medium
+Discover|1570|Plant of the Day|Other|None|Medium
+Discover|1571|Inspiration Article|Other|None|Medium
+Discover|1572|Spotlight|Other|None|Medium
+Discover|1573|Articles for you|Other|None|Medium
+Discover|1574|Trending Searches|Other|None|Medium
+Discover|1575|Planet Friendly gardening|Other|None|Medium
+Discover|1576|Popular Plants A-Z|Other|None|Medium
+Discover|1577|Type A-Z|Other|None|Medium
+Discover|1578|GYO A-Z|Other|None|Medium
+Discover|1579|Growing guides A-Z|Other|None|Medium
+Find a Plant|1772|Keyword Search (Old id: )|Other|None|Medium
+Find a Plant|1581|Semantic Search|Other|None|Medium
+Find a Plant|1582|Fuzzy Search|Other|None|Medium
+Find a Plant|1583|Search suggestions|Other|None|Medium
+Find a Plant|1584|Saved Searches|Other|None|Medium
+Find a Plant|1585|Search from search results|Other|None|Medium
+Find a Plant|1586|Botanical Name toggle|Other|None|Medium
+Find a Plant|1587|Grid/Listing|Other|None|Medium
+Find a Plant|1588|Filters - Plant Characteristics|Other|None|Medium
+Find a Plant|1589|Filters - Garden Characteristics|Other|None|Medium
+Find a Plant|1590|Filters - Soil Types|Other|None|Medium
+Find a Plant|1591|Filters - Height, spread and maturity|Other|None|Medium
+Find a Plant|1592|Filters - Sunlight|Other|None|Medium
+Find a Plant|1593|Filters - Season of Interest|Other|None|Medium
+Find a Plant|1594|Filters - Flower Colour|Other|None|Medium
+Find a Plant|1595|Filters - Flower Colour by Season|Other|None|Medium
+Find a Plant|1596|Save Search|Other|None|Medium
+Find a Plant|1597|Reset All|Other|None|Medium
+Find a Plant|1598|Fruit & Veg|Other|None|Medium
+Find a Plant|1599|House Plants|Other|None|Medium
+Find a Plant|1600|Popular this month|Other|None|Medium
+RHS Podcasts|1601|Podcast player|Other|None|Medium
+RHS Podcasts|1602|Mini player|Other|None|Medium
+RHS Podcasts|1603|Podcast Listing|Other|None|Medium
+My Garden--> All Plants|1604|Added plants check|Other|None|Medium
+My Garden--> All Plants|1605|Add plant--> Manual search|Other|None|Medium
+My Garden--> All Plants|1606|Add Plant--> Plant Id|Other|None|Medium
+My Garden--> All Plants|1607|Sort based on date added|Other|None|Medium
+My Garden--> All Plants|1608|Sort based on include/exclude wishlists|Other|None|Medium
+My Garden--> All Plants|1609|Sort based on caretips|Other|None|Medium
+My Garden--> All Plants|1610|Botanical names toggle|Other|None|Medium
+My Garden--> All Plants|1611|List /grid view|Other|None|Medium
+My Garden--> All Plants|1612|Count check|Other|None|Medium
+My Garden--> All Plants|1613|Delete one plant|Other|None|Medium
+My Garden--> All Plants|1614|Delete multiple plants|Other|None|Medium
+My Garden--> All Plants|1615|Plant Card|Other|None|Medium
+My Garden--> All Plants|1616|Edit Collections|Other|None|Medium
+My Garden--> All Plants|1617|Add to Wishlist|Other|None|Medium
+My Garden--> All Plants|1618|Add new plant profile image|Other|None|Medium
+My Garden--> Collections|1619|Created/Default collections check|Other|None|Medium
+My Garden--> Collections|1620|Check added plant under each collection|Other|None|Medium
+My Garden--> Collections|1621|Sort Alphabetical order|Other|None|Medium
+My Garden--> Collections|1622|Add Collection|Other|None|Medium
+My Garden--> Collections|1623|Rename Collection|Other|None|Medium
+My Garden--> Collections|1624|Delete Collection|Other|None|Medium
+My Garden--> Collections|1625|List /grid view|Other|None|Medium
+My Garden--> Collections|1626|Open a collection--> Added plants check|Other|None|Medium
+My Garden--> Collections|1627|Open a collection-->Add plant--> Manual search|Other|None|Medium
+My Garden--> Collections|1628|Open a collection-->Add Plant--> Plant Id|Other|None|Medium
+My Garden--> Collections|1629|Open a collection-->Sort based on date added|Other|None|Medium
+My Garden--> Collections|1630|Open a collection-->Sort based on plant type|Other|None|Medium
+My Garden--> Collections|1631|Open a collection-->Sort based on caretips|Other|None|Medium
+My Garden--> Collections|1632|Open a collection-->Botanical names toggle|Other|None|Medium
+My Garden--> Collections|1633|Open a collection-->List /grid view|Other|None|Medium
+My Garden--> Collections|1634|Open a collection-->Count check|Other|None|Medium
+My Garden--> Collections|1635|Open a collection--> Delete a plant|Other|None|Medium
+My Garden--> Collections|1636|Open a collection-->Plant Card|Other|None|Medium
+My Garden--> Collections|1637|Open a collection--> Add new plant profile image|Other|None|Medium
+My Garden--> Collections|1638|Open a collection--> Edit collections|Other|None|Medium
+My Garden--> Collections|1639|Open a collection--> Edit Wishlists|Other|None|Medium
+My Garden--> Collections|1774|Search a plant, collection, wishlist, garden note and plant note  in My Garden|Other|None|Medium
+My Garden--> Wishlist|1640|Created/Default Wishlist check|Other|None|Medium
+My Garden--> Wishlist|1641|Check added plant under each Wishlist|Other|None|Medium
+My Garden--> Wishlist|1642|Sort Alphabetical order|Other|None|Medium
+My Garden--> Wishlist|1643|Add Collection|Other|None|Medium
+My Garden--> Wishlist|1644|Rename Collection|Other|None|Medium
+My Garden--> Wishlist|1645|Delete Collection|Other|None|Medium
+My Garden--> Wishlist|1646|List /grid view|Other|None|Medium
+My Garden--> Wishlist|1647|Open a Wishlist--> Added plants check|Other|None|Medium
+My Garden--> Wishlist|1648|Open a Wishlist-->Add plant--> Manual search|Other|None|Medium
+My Garden--> Wishlist|1649|Open a Wishlist-->Add Plant--> Plant Id|Other|None|Medium
+My Garden--> Wishlist|1650|Open a Wishlist-->Sort based on date added|Other|None|Medium
+My Garden--> Wishlist|1651|Open a Wishlist-->Sort based on plant type|Other|None|Medium
+My Garden--> Wishlist|1652|Open a Wishlist-->Sort based on caretips|Other|None|Medium
+My Garden--> Wishlist|1653|Open a Wishlist-->Botanical names toggle|Other|None|Medium
+My Garden--> Wishlist|1654|Open a Wishlist-->List /grid view|Other|None|Medium
+My Garden--> Wishlist|1655|Open a Wishlist-->Count check|Other|None|Medium
+My Garden--> Wishlist|1656|Open a Wishlist--> Delete a plant|Other|None|Medium
+My Garden--> Wishlist|1657|Open a Wishlist-->Plant Card|Other|None|Medium
+My Garden--> Wishlist|1658|Open a Wishlist--> Add new plant profile image|Other|None|Medium
+My Garden--> Wishlist|1659|Open a Wishlist--> Edit collections|Other|None|Medium
+My Garden--> Wishlist|1660|Open a Wishlist--> Edit Wishlists|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1661|Add 3 images and save a note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1662|Add 1 image and save a note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1663|Add title and description, save a note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1664|Add 3 images, title and description, save a note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1665|Mandatory field checks|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1666|Show All --> Listing|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1667|Individual Garden note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1668|Gallery|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1669|Edit Image|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1670|Edit title|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1671|Edit Description|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1672|Delete image|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Online)|1673|Delete Note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1674|Add 3 images, title and description, save a note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1675|Mandatory field checks|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1676|Show All --> Listing|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1677|Individual Garden note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1678|Gallery|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1679|Edit Image|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1680|Edit title|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1681|Edit Description|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1682|Delete image|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1683|Delete Note|Other|None|Medium
+My Garden--> Journal--> Garden Notes (Offline)|1684|Check everything by going online|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1685|Add plant notes via Journal--> Add Note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1686|Add plant notes via Plant Card|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1687|Multiple notes for same plant|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1688|Add 3 images and save a note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1689|Add 1 image and save a note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1690|Add title and description, save a note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1691|Add rating, save a note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1692|Mandatory checks|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1693|Add image,title,description and rating, save a note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1694|Show All --> Listing|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1695|Individual Garden note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1696|Gallery|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1697|Edit Image|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1698|Edit title|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1699|Edit Description|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1700|Delete image|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Online)|1701|Delete Note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1702|Add 3 images, title and description, rating save a note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1703|Mandatory field checks|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1704|Show All --> Listing|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1705|Individual Plant note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1706|Gallery|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1707|Edit Image|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1708|Edit title|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1709|Edit Description|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1710|Delete image|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1711|Delete Note|Other|None|Medium
+My Garden--> Journal--> Plant Notes (Offline)|1712|Check everything by going online|Other|None|Medium
+Care Tips|1713|CT for plants added via manual search|Other|None|Medium
+Care Tips|1714|CT for GYO - Fruit|Other|None|Medium
+Care Tips|1715|CT for GYO - Vegetable|Other|None|Medium
+Care Tips|1716|CT for GYO - Herbs|Other|None|Medium
+Care Tips|1717|CT for House plants|Other|None|Medium
+Care Tips|1718|Current Year CT|Other|None|Medium
+Care Tips|1719|Previous Year CT|Other|None|Medium
+Care Tips|1720|Next Year CT|Other|None|Medium
+Care Tips|1721|CT - Bulk Complete|Other|None|Medium
+Care Tips|1722|CT - Bulk Incomplete|Other|None|Medium
+Care Tips|1723|CT - Individual Complete|Other|None|Medium
+Care Tips|1724|CT - Individual Incomplete|Other|None|Medium
+Care Tips|1725|Delete CT|Other|None|Medium
+Care Tips|1726|Sort based on care categories|Other|None|Medium
+Care Tips|1727|Filter based on Care Categories--> Plants, Fruit/Veg & House Plants|Other|None|Medium
+Care Tips|1728|Filter under specific care category - Plants/Fruit & Veg/ House Plants|Other|None|Medium
+Care Tips|1729|Filter under specific care category - To do/Complete|Other|None|Medium
+Care Tips|1730|Sort based on Plants A-Z|Other|None|Medium
+Care Tips|1731|Sort and filter based on Plants A-Z--> Tip Types|Other|None|Medium
+Care Tips|1732|Sort and filter based on Plants A-Z--> Plants, Fruit/Veg & House Plants|Other|None|Medium
+Care Tips|1733|Filter under Plants A-Z-->specific care category--> Plants/Fruit & Veg/ House Plants|Other|None|Medium
+Care Tips|1734|Filter under Plants A-Z-->specific care category--> To do/Complete|Other|None|Medium
+Care Tips|1735|Sort based on Plants Z=A|Other|None|Medium
+Care Tips|1736|Sort and filter based on Plants Z-A--> Tip Types|Other|None|Medium
+Care Tips|1737|Sort ad filter based on Plants Z-A--> Plants, Fruit/Veg & House Plants|Other|None|Medium
+Care Tips|1738|Filter under Plants Z-A-->specific care category--> Plants/Fruit & Veg/ House Plants|Other|None|Medium
+Care Tips|1739|Filter under Plants Z-A-->specific care category--> To do/Complete|Other|None|Medium
+Care Tips|1740|Sort based on Around the Garden|Other|None|Medium
+Care Tips|1741|Filter under specific Around the Garden care category--> Todo/Complete|Other|None|Medium
+Plant ID|1742|Take a photo via Camera, upload and search|Other|None|Medium
+Plant ID|1743|Select an image from gallery and search|Other|None|Medium
+Plant ID|1744|Navigations on Search results|Other|None|Medium
+Plant ID|1745|Add plant to collection from results|Other|None|Medium
+Plant ID|1746|Add plant to wishlist from results|Other|None|Medium
+Plant ID|1747|New Photo' journey|Other|None|Medium
+Plant ID|1748|How to use Plant identifier|Other|None|Medium
+Plant ID|1749|Zoom and select an area in a image before upload|Other|None|Medium
+Cross Channel|1750|Account from Web to Grow App flow|Other|None|Medium
+Cross Channel|1751|Account from Grow App to Web flow|Other|None|Medium
+Update Grow App|1752|Without subscription on a user account in previous version of Grow App, update latest version|Other|None|Medium
+Update Grow App|1753|With subscription on a user account in previous version of Grow App, update latest version|Other|None|Medium
+Update Grow App|1754|Home|Other|None|Medium
+Update Grow App|1755|Discover|Other|None|Medium
+Update Grow App|1756|Care Tips|Other|None|Medium
+Update Grow App|1757|My Garden|Other|None|Medium
+Update Grow App|1758|Chatbot|Other|None|Medium
+Update Grow App|1759|Gamification|Other|None|Medium
+Update Grow App|1760|Plant Combo Builder|Other|None|Medium
+Update Grow App|1761|Journal|Other|None|Medium
+Update Grow App|1762|Plant Id|Other|None|Medium
+Update Grow App|1763|Find a Plant|Other|None|Medium
+Update Grow App|1764|Podcast|Other|None|Medium
+Update Grow App|1765|Settings|Other|None|Medium
+Notifications|1766|Receive notifications|Other|None|Medium
+Notifications|1767|Navigations|Other|None|Medium
+Clevertap|1768|User profile on CT|Other|None|Medium
+Clevertap|1769|Events tracked|Other|None|Medium

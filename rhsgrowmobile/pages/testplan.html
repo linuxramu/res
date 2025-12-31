@@ -9,26 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
-/* ===== Overall Progress (Priority based) ===== */
-.overall.highlight {
-  background: #eef6ff;
-  border: 1px solid #d6e6f5;
-}
-.overall-title {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #1f4f8a;
-}
-.overall-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  font-size: 14px;
-}
-.overall-row strong {
-  color: #1f2933;
-}
-
 /* ===== Base ===== */
 body {
   font-family: Inter, sans-serif;
@@ -61,6 +41,31 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
 }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* ===== Overall Progress ===== */
+.overall {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.overall.highlight {
+  background: #eef6ff;
+  border: 1px solid #d6e6f5;
+}
+.overall-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1f4f8a;
+}
+.overall-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.overall-row strong {
+  color: #1f2933;
+}
 
 /* ===== Accordion ===== */
 .feature {
@@ -109,8 +114,10 @@ th {
   background: #fafafa;
   font-weight: 600;
 }
+tbody tr:nth-child(even) { background: #f4f6f2; }
+tbody tr:hover { background: #eef3ec; }
 
-/* ===== Status Pills ===== */
+/* ===== Pills ===== */
 .badge {
   padding: 3px 10px;
   border-radius: 999px;
@@ -118,36 +125,14 @@ th {
   font-weight: 600;
 }
 .Automated { background: #e6f4ea; color: #1e4620; }
-.Ready to Automate { background: #fff7cc; color: #665c00; }
+.ReadytoAutomate { background: #04f06e; color: #665c00; }
 .ToBeAutomated { background: #fdecc8; color: #7a4a00; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
-.Cant { background: #fde2e2; color: #7f1d1d; }
+.CantBeAutomated { background: #fde2e2; color: #7f1d1d; }
 
-/* ===== Priority ===== */
-.priority {
-  font-weight: 600;
-  color: #374151;
-}
-
-/* ===== Overall Box ===== */
-.overall {
-  margin-bottom: 16px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-/* ===== Milestones ===== */
-.box {
-  background: #fbfcfa;
-  border: 1px solid #e3e7df;
-  border-radius: 8px;
-  padding: 16px;
-}
-
-/* ===== Zebra Rows ===== */
-tbody tr:nth-child(even) { background: #f4f6f2; }
-tbody tr:hover { background: #eef3ec; }
+/* ===== Priority & Type ===== */
+.priority { font-weight: 600; color: #374151; }
+.type { font-size: 13px; color: #4b5563; }
 
 /* ===== Chevron ===== */
 .chevron {
@@ -165,6 +150,14 @@ tbody tr:hover { background: #eef3ec; }
   border: none;
   border-radius: 8px;
   background: #ffffff;
+}
+
+/* ===== Box ===== */
+.box {
+  background: #fbfcfa;
+  border: 1px solid #e3e7df;
+  border-radius: 8px;
+  padding: 16px;
 }
 </style>
 </head>
@@ -241,19 +234,17 @@ fetch(TESTPLAN_CSV)
     if (row.Status === "Automated") priorityStats[priority].automated++;
   });
 
-  /* ===== Overall by Priority ===== */
+  /* ===== Overall Automation Progress (Tabular) ===== */
   const order = ["Critical", "High", "Medium", "Low", "Unspecified"];
-  const overallHtml = order
-    .filter(p => priorityStats[p])
-    .map(p => {
-      const s = priorityStats[p];
-      const percent = Math.round((s.automated / s.total) * 100);
-      return `
-        <div class="overall-row">
-          <strong>${p}</strong>
-          <span>${s.automated} / ${s.total} → ${percent}%</span>
-        </div>`;
-    }).join("");
+  const overallHtml = order.filter(p => priorityStats[p]).map(p => {
+    const s = priorityStats[p];
+    const percent = Math.round((s.automated / s.total) * 100);
+    return `
+      <div class="overall-row">
+        <strong>${p}</strong>
+        <span>${s.automated} / ${s.total} → ${percent}%</span>
+      </div>`;
+  }).join("");
 
   document.getElementById("overall").innerHTML = `
     <div class="overall highlight">
@@ -262,7 +253,7 @@ fetch(TESTPLAN_CSV)
     </div>`;
 
   /* ===== Feature Accordions ===== */
-  const featuresContainer = document.getElementById("features");
+  const container = document.getElementById("features");
 
   Object.keys(grouped).forEach(feature => {
     const tests = grouped[feature];
@@ -287,6 +278,7 @@ fetch(TESTPLAN_CSV)
           <tr>
             <th>TCID</th>
             <th>Description</th>
+            <th>Type</th>
             <th>Priority</th>
             <th>Status</th>
           </tr>
@@ -296,9 +288,11 @@ fetch(TESTPLAN_CSV)
             <tr>
               <td>${t.TCID || ""}</td>
               <td>${t["Test Case Description"] || ""}</td>
+              <td><span class="type">${t.Type || "-"}</span></td>
               <td><span class="priority">${t.Priority || "-"}</span></td>
               <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
-            </tr>`).join("")}
+            </tr>
+          `).join("")}
         </tbody>
       </table>
     `;
@@ -310,7 +304,7 @@ fetch(TESTPLAN_CSV)
     };
 
     box.append(header, content);
-    featuresContainer.appendChild(box);
+    container.appendChild(box);
   });
 });
 
@@ -366,7 +360,8 @@ fetch(MILESTONE_CSV)
               <td>${a.Description || "-"}</td>
               <td>${a.Status || "-"}</td>
               <td>${a.Comments || "-"}</td>
-            </tr>`).join("")}
+            </tr>
+          `).join("")}
         </tbody>
       </table>
     `;
