@@ -94,7 +94,7 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
   font-weight: 600;
 }
 .Automated { background: #e6f4ea; color: #1e4620; }
-.ReadyToAutomate { background: #fdecc8; color: #7a4a00; }
+.ReadytoAutomate { background: #fdecc8; color: #7a4a00; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .CantBeAutomated { background: #fde2e2; color: #7f1d1d; }
 
@@ -160,16 +160,34 @@ document.querySelectorAll(".tab").forEach(tab => {
   };
 });
 
-/* Status class */
+/* ========= STATUS NORMALIZATION ========= */
+function normalizeStatus(raw) {
+  if (!raw) return "None";
+
+  const s = raw
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace("'", "");
+
+  if (s === "automated") return "Automated";
+  if (s === "readytoautomate") return "ReadyToAutomate";
+  if (s === "inprogress") return "InProgress";
+  if (s === "cantbeautomated") return "CantBeAutomated";
+
+  return "None";
+}
+
 function cls(status) {
-  return (status || "None").replace(/\s+/g, "").replace("Can't", "Cant");
+  return status === "None" ? "None" : status;
 }
 
 const STATUS_LABEL = {
   Automated: "Automated",
-  ReadyToAutomate: "ReadyToAutomate",
-  InProgress: "InProgress",
-  CantBeAutomated: "CantBeAutomated"
+  ReadyToAutomate: "Ready To Automate",
+  InProgress: "In Progress",
+  CantBeAutomated: "Can't Be Automated",
+  None: "None"
 };
 
 fetch(TESTPLAN_CSV)
@@ -198,8 +216,9 @@ fetch(TESTPLAN_CSV)
     let ready = 0;
 
     tests.forEach(t => {
-      if (t.Status === "Automated") automated++;
-      if (t.Status === "ReadyToAutomate") ready++;
+      const status = normalizeStatus(t.Status);
+      if (status === "Automated") automated++;
+      if (status === "ReadyToAutomate") ready++;
     });
 
     const automatedPct = total ? Math.round((automated / total) * 100) : 0;
@@ -239,19 +258,22 @@ fetch(TESTPLAN_CSV)
           </tr>
         </thead>
         <tbody>
-          ${tests.map(t => `
-            <tr>
-              <td>${t.TCID || "None"}</td>
-              <td>${t["Test Case Description"] || "None"}</td>
-              <td>${t.Type || "None"}</td>
-              <td>${t.Priority || "None"}</td>
-              <td>
-                <span class="badge ${cls(t.Status)}">
-                  ${STATUS_LABEL[t.Status] || "None"}
-                </span>
-              </td>
-            </tr>
-          `).join("")}
+          ${tests.map(t => {
+            const status = normalizeStatus(t.Status);
+            return `
+              <tr>
+                <td>${t.TCID || "None"}</td>
+                <td>${t["Test Case Description"] || "None"}</td>
+                <td>${t.Type || "None"}</td>
+                <td>${t.Priority || "None"}</td>
+                <td>
+                  <span class="badge ${cls(status)}">
+                    ${STATUS_LABEL[status]}
+                  </span>
+                </td>
+              </tr>
+            `;
+          }).join("")}
         </tbody>
       </table>
     `;
