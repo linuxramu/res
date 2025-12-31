@@ -40,28 +40,6 @@ h1 { font-size: 26px; margin-bottom: 20px; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Overall */
-.overall {
-  margin-bottom: 16px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-}
-.overall.highlight {
-  background: #eef6ff;
-  border: 1px solid #d6e6f5;
-}
-.overall-title {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #1f4f8a;
-}
-.overall-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-}
-
 /* Accordion */
 .feature {
   background: #ffffff;
@@ -84,8 +62,8 @@ h1 { font-size: 26px; margin-bottom: 20px; }
 }
 .feature-meta {
   font-size: 13px;
-  color: #5f6f5a;
   text-align: right;
+  white-space: nowrap;
 }
 .feature-content {
   display: none;
@@ -120,6 +98,16 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .CantBeAutomated { background: #fde2e2; color: #7f1d1d; }
 
+/* Summary colors */
+.summary-automated {
+  color: #1e4620;
+  font-weight: 600;
+}
+.summary-ready {
+  color: #7a4a00;
+  font-weight: 600;
+}
+
 /* Chevron */
 .chevron {
   font-size: 14px;
@@ -150,7 +138,6 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
 </div>
 
 <div id="testplan" class="tab-content active">
-  <div id="overall"></div>
   <div id="features"></div>
 </div>
 
@@ -175,7 +162,7 @@ document.querySelectorAll(".tab").forEach(tab => {
 
 /* Status class */
 function cls(status) {
-  return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
+  return (status || "None").replace(/\s+/g, "").replace("Can't", "Cant");
 }
 
 const STATUS_LABEL = {
@@ -196,7 +183,7 @@ fetch(TESTPLAN_CSV)
 
   const grouped = {};
   rows.forEach(r => {
-    const f = r.Feature || "Other";
+    const f = r.Feature || "None";
     grouped[f] = grouped[f] || [];
     grouped[f].push(r);
   });
@@ -207,21 +194,26 @@ fetch(TESTPLAN_CSV)
     const tests = grouped[feature];
     const total = tests.length;
 
-    const counts = {
-      Automated: 0,
-      ReadyToAutomate: 0,
-      InProgress: 0,
-      CantBeAutomated: 0
-    };
+    let automated = 0;
+    let ready = 0;
 
     tests.forEach(t => {
-      if (counts[t.Status] !== undefined) counts[t.Status]++;
+      if (t.Status === "Automated") automated++;
+      if (t.Status === "ReadyToAutomate") ready++;
     });
 
-    const summary = Object.keys(counts).map(status => {
-      const pct = Math.round((counts[status] / total) * 100);
-      return `${pct}% ${STATUS_LABEL[status]}`;
-    }).join(" | ");
+    const automatedPct = total ? Math.round((automated / total) * 100) : 0;
+
+    const summary = `
+      <span class="summary-automated">
+        ${automated}/${total} Automated (${automatedPct}%)
+      </span>
+      ${ready > 0 ? `
+        | <span class="summary-ready">
+            ${ready}/${total} ReadyToAutomate
+          </span>
+      ` : ""}
+    `;
 
     const box = document.createElement("div");
     box.className = "feature";
@@ -249,11 +241,15 @@ fetch(TESTPLAN_CSV)
         <tbody>
           ${tests.map(t => `
             <tr>
-              <td>${t.TCID || ""}</td>
-              <td>${t["Test Case Description"] || ""}</td>
-              <td>${t.Type || "-"}</td>
-              <td>${t.Priority || "-"}</td>
-              <td><span class="badge ${cls(t.Status)}">${STATUS_LABEL[t.Status]}</span></td>
+              <td>${t.TCID || "None"}</td>
+              <td>${t["Test Case Description"] || "None"}</td>
+              <td>${t.Type || "None"}</td>
+              <td>${t.Priority || "None"}</td>
+              <td>
+                <span class="badge ${cls(t.Status)}">
+                  ${STATUS_LABEL[t.Status] || "None"}
+                </span>
+              </td>
             </tr>
           `).join("")}
         </tbody>
