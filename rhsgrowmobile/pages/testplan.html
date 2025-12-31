@@ -9,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
-/* ===== Base ===== */
 body {
   font-family: Inter, sans-serif;
   background: #f7f8f5;
@@ -21,7 +20,7 @@ body {
 h1 { font-size: 26px; margin-bottom: 20px; }
 h2 { font-size: 18px; margin: 24px 0 12px; }
 
-/* ===== Tabs ===== */
+/* Tabs */
 .tabs {
   display: flex;
   gap: 24px;
@@ -42,7 +41,7 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* ===== Overall Progress ===== */
+/* Overall */
 .overall {
   margin-bottom: 16px;
   padding: 12px 14px;
@@ -63,11 +62,8 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
   justify-content: space-between;
   padding: 4px 0;
 }
-.overall-row strong {
-  color: #1f2933;
-}
 
-/* ===== Accordion ===== */
+/* Accordion */
 .feature {
   background: #ffffff;
   border: 1px solid #e1e4dd;
@@ -84,22 +80,21 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
   background: #f2f4ef;
   border-bottom: 1px solid #e1e4dd;
 }
-.feature-title,
-.milestone-title {
+.feature-title {
   font-size: 16px;
   font-weight: 600;
 }
-.feature-meta,
-.milestone-meta {
+.feature-meta {
   font-size: 13px;
   color: #5f6f5a;
+  text-align: right;
 }
 .feature-content {
   display: none;
   padding: 12px 16px 16px;
 }
 
-/* ===== Tables ===== */
+/* Tables */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -115,9 +110,8 @@ th {
   font-weight: 600;
 }
 tbody tr:nth-child(even) { background: #f4f6f2; }
-tbody tr:hover { background: #eef3ec; }
 
-/* ===== Pills ===== */
+/* Badges */
 .badge {
   padding: 3px 10px;
   border-radius: 999px;
@@ -125,16 +119,11 @@ tbody tr:hover { background: #eef3ec; }
   font-weight: 600;
 }
 .Automated { background: #e6f4ea; color: #1e4620; }
-.ReadytoAutomate { background: #04f06e; color: #665c00; }
-.ToBeAutomated { background: #fdecc8; color: #7a4a00; }
+.ReadytoAutomate { background: #fdecc8; color: #7a4a00; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .CantBeAutomated { background: #fde2e2; color: #7f1d1d; }
 
-/* ===== Priority & Type ===== */
-.priority { font-weight: 600; color: #374151; }
-.type { font-size: 13px; color: #4b5563; }
-
-/* ===== Chevron ===== */
+/* Chevron */
 .chevron {
   font-size: 14px;
   margin-right: 10px;
@@ -143,21 +132,12 @@ tbody tr:hover { background: #eef3ec; }
 }
 .feature.open .chevron { transform: rotate(90deg); }
 
-/* ===== Dashboard ===== */
+/* Dashboard */
 #dashboard iframe {
   width: 100%;
   height: 80vh;
   border: none;
   border-radius: 8px;
-  background: #ffffff;
-}
-
-/* ===== Box ===== */
-.box {
-  background: #fbfcfa;
-  border: 1px solid #e3e7df;
-  border-radius: 8px;
-  padding: 16px;
 }
 </style>
 </head>
@@ -172,21 +152,15 @@ tbody tr:hover { background: #eef3ec; }
   <div class="tab" data-tab="dashboard">Dashboard</div>
 </div>
 
-<!-- ===== TEST PLAN ===== -->
 <div id="testplan" class="tab-content active">
   <div id="overall"></div>
   <div id="features"></div>
 </div>
 
-<!-- ===== MILESTONES ===== -->
 <div id="milestones" class="tab-content">
-  <div class="box">
-    <h2>Milestones</h2>
-    <div id="milestone-accordion"></div>
-  </div>
+  <div id="milestone-accordion"></div>
 </div>
 
-<!-- ===== DASHBOARD ===== -->
 <div id="dashboard" class="tab-content">
   <iframe src="dashboard.html"></iframe>
 </div>
@@ -205,9 +179,17 @@ document.querySelectorAll(".tab").forEach(tab => {
   };
 });
 
+/* Status helpers */
 function cls(status) {
   return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
 }
+
+const STATUS_SHORT = {
+  Automated: "Done",
+  ReadyToAutomate: "RTA",
+  InProgress: "IP",
+  CantBeAutomated: "Cant"
+};
 
 /* ===== TEST PLAN ===== */
 fetch(TESTPLAN_CSV)
@@ -229,36 +211,49 @@ fetch(TESTPLAN_CSV)
     grouped[feature] = grouped[feature] || [];
     grouped[feature].push(row);
 
-    priorityStats[priority] = priorityStats[priority] || { total: 0, automated: 0 };
+    priorityStats[priority] = priorityStats[priority] || { total: 0, done: 0 };
     priorityStats[priority].total++;
-    if (row.Status === "Automated") priorityStats[priority].automated++;
+    if (row.Status === "Automated") priorityStats[priority].done++;
   });
 
-  /* ===== Overall Automation Progress (Tabular) ===== */
+  /* Overall */
   const order = ["Critical", "High", "Medium", "Low", "Unspecified"];
-  const overallHtml = order.filter(p => priorityStats[p]).map(p => {
-    const s = priorityStats[p];
-    const percent = Math.round((s.automated / s.total) * 100);
-    return `
-      <div class="overall-row">
-        <strong>${p}</strong>
-        <span>${s.automated} / ${s.total} → ${percent}%</span>
-      </div>`;
-  }).join("");
-
   document.getElementById("overall").innerHTML = `
     <div class="overall highlight">
       <div class="overall-title">Overall Automation Progress</div>
-      ${overallHtml}
-    </div>`;
+      ${order.filter(p => priorityStats[p]).map(p => {
+        const s = priorityStats[p];
+        const pct = Math.round((s.done / s.total) * 100);
+        return `<div class="overall-row"><strong>${p}</strong><span>${s.done}/${s.total} → ${pct}%</span></div>`;
+      }).join("")}
+    </div>
+  `;
 
-  /* ===== Feature Accordions ===== */
+  /* Features */
   const container = document.getElementById("features");
 
   Object.keys(grouped).forEach(feature => {
     const tests = grouped[feature];
-    const automated = tests.filter(t => t.Status === "Automated").length;
-    const percent = Math.round((automated / tests.length) * 100);
+    const total = tests.length;
+
+    const counts = {
+      Automated: 0,
+      ReadyToAutomate: 0,
+      InProgress: 0,
+      CantBeAutomated: 0
+    };
+
+    tests.forEach(t => {
+      if (counts[t.Status] !== undefined) counts[t.Status]++;
+    });
+
+    const summary = Object.keys(counts)
+      .filter(s => counts[s] > 0)
+      .map(s => {
+        const pct = Math.round((counts[s] / total) * 100);
+        return `${STATUS_SHORT[s]} ${pct}% (${counts[s]}/${total})`;
+      })
+      .join(" | ");
 
     const box = document.createElement("div");
     box.className = "feature";
@@ -267,7 +262,7 @@ fetch(TESTPLAN_CSV)
     header.className = "feature-header";
     header.innerHTML = `
       <div class="feature-title"><span class="chevron">▸</span>${feature}</div>
-      <div class="feature-meta">${percent}% automated (${automated}/${tests.length})</div>
+      <div class="feature-meta">${summary}</div>
     `;
 
     const content = document.createElement("div");
@@ -288,9 +283,9 @@ fetch(TESTPLAN_CSV)
             <tr>
               <td>${t.TCID || ""}</td>
               <td>${t["Test Case Description"] || ""}</td>
-              <td><span class="type">${t.Type || "-"}</span></td>
-              <td><span class="priority">${t.Priority || "-"}</span></td>
-              <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
+              <td>${t.Type || "-"}</td>
+              <td>${t.Priority || "-"}</td>
+              <td><span class="badge ${cls(t.Status)}">${STATUS_SHORT[t.Status] || t.Status}</span></td>
             </tr>
           `).join("")}
         </tbody>
@@ -337,8 +332,8 @@ fetch(MILESTONE_CSV)
     const header = document.createElement("div");
     header.className = "milestone-header";
     header.innerHTML = `
-      <div class="milestone-title"><span class="chevron">▸</span>${milestone}</div>
-      <div class="milestone-meta">${achieved}/${acts.length} achieved</div>
+      <div class="feature-title"><span class="chevron">▸</span>${milestone}</div>
+      <div class="feature-meta">${achieved}/${acts.length} achieved</div>
     `;
 
     const content = document.createElement("div");
