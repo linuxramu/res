@@ -7,12 +7,12 @@
     },
     {
       "id": "rhsgrowweb",
-      "name": "RHS Grow Web",
+      "name": "RHS Grow Web [Demo Only]",
       "testplan": "rhsgrowweb/pages/testplan.html"
     },
     {
       "id": "rhsgrowapi",
-      "name": "RHS Grow API",
+      "name": "RHS Grow API [Demo Only]",
       "testplan": "rhsgrowapi/pages/testplan.html"
     }
   ]
