@@ -18,7 +18,6 @@ body {
 }
 
 h1 { font-size: 26px; margin-bottom: 20px; }
-h2 { font-size: 18px; margin: 24px 0 12px; }
 
 /* Tabs */
 .tabs {
@@ -70,8 +69,7 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
   border-radius: 8px;
   margin-bottom: 10px;
 }
-.feature-header,
-.milestone-header {
+.feature-header {
   padding: 14px 16px;
   display: flex;
   justify-content: space-between;
@@ -103,7 +101,6 @@ table {
 th, td {
   padding: 8px;
   border-bottom: 1px solid #e5e7eb;
-  text-align: left;
 }
 th {
   background: #fafafa;
@@ -157,9 +154,7 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
   <div id="features"></div>
 </div>
 
-<div id="milestones" class="tab-content">
-  <div id="milestone-accordion"></div>
-</div>
+<div id="milestones" class="tab-content"></div>
 
 <div id="dashboard" class="tab-content">
   <iframe src="dashboard.html"></iframe>
@@ -167,7 +162,6 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
 
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
-const MILESTONE_CSV = "../data/milestones.csv";
 
 /* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
@@ -179,19 +173,18 @@ document.querySelectorAll(".tab").forEach(tab => {
   };
 });
 
-/* Status helpers */
+/* Status class */
 function cls(status) {
   return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
 }
 
-const STATUS_SHORT = {
-  Automated: "Done",
-  ReadyToAutomate: "RTA",
-  InProgress: "IP",
-  CantBeAutomated: "Cant"
+const STATUS_LABEL = {
+  Automated: "Automated",
+  ReadyToAutomate: "Ready To Automate",
+  InProgress: "In Progress",
+  CantBeAutomated: "Can't Be Automated"
 };
 
-/* ===== TEST PLAN ===== */
 fetch(TESTPLAN_CSV)
 .then(r => r.text())
 .then(csv => {
@@ -202,34 +195,12 @@ fetch(TESTPLAN_CSV)
   }).data;
 
   const grouped = {};
-  const priorityStats = {};
-
-  rows.forEach(row => {
-    const feature = row.Feature || "Other";
-    const priority = row.Priority || "Unspecified";
-
-    grouped[feature] = grouped[feature] || [];
-    grouped[feature].push(row);
-
-    priorityStats[priority] = priorityStats[priority] || { total: 0, done: 0 };
-    priorityStats[priority].total++;
-    if (row.Status === "Automated") priorityStats[priority].done++;
+  rows.forEach(r => {
+    const f = r.Feature || "Other";
+    grouped[f] = grouped[f] || [];
+    grouped[f].push(r);
   });
 
-  /* Overall */
-  const order = ["Critical", "High", "Medium", "Low", "Unspecified"];
-  document.getElementById("overall").innerHTML = `
-    <div class="overall highlight">
-      <div class="overall-title">Overall Automation Progress</div>
-      ${order.filter(p => priorityStats[p]).map(p => {
-        const s = priorityStats[p];
-        const pct = Math.round((s.done / s.total) * 100);
-        return `<div class="overall-row"><strong>${p}</strong><span>${s.done}/${s.total} → ${pct}%</span></div>`;
-      }).join("")}
-    </div>
-  `;
-
-  /* Features */
   const container = document.getElementById("features");
 
   Object.keys(grouped).forEach(feature => {
@@ -247,13 +218,10 @@ fetch(TESTPLAN_CSV)
       if (counts[t.Status] !== undefined) counts[t.Status]++;
     });
 
-    const summary = Object.keys(counts)
-      .filter(s => counts[s] > 0)
-      .map(s => {
-        const pct = Math.round((counts[s] / total) * 100);
-        return `${STATUS_SHORT[s]} ${pct}% (${counts[s]}/${total})`;
-      })
-      .join(" | ");
+    const summary = Object.keys(counts).map(status => {
+      const pct = Math.round((counts[status] / total) * 100);
+      return `${pct}% ${STATUS_LABEL[status]}`;
+    }).join(" | ");
 
     const box = document.createElement("div");
     box.className = "feature";
@@ -285,76 +253,7 @@ fetch(TESTPLAN_CSV)
               <td>${t["Test Case Description"] || ""}</td>
               <td>${t.Type || "-"}</td>
               <td>${t.Priority || "-"}</td>
-              <td><span class="badge ${cls(t.Status)}">${STATUS_SHORT[t.Status] || t.Status}</span></td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-    `;
-
-    header.onclick = () => {
-      const open = content.style.display === "block";
-      content.style.display = open ? "none" : "block";
-      box.classList.toggle("open", !open);
-    };
-
-    box.append(header, content);
-    container.appendChild(box);
-  });
-});
-
-/* ===== MILESTONES ===== */
-fetch(MILESTONE_CSV)
-.then(r => r.text())
-.then(csv => {
-  const rows = Papa.parse(csv, {
-    header: true,
-    delimiter: "|",
-    skipEmptyLines: true
-  }).data;
-
-  const grouped = {};
-  rows.forEach(r => {
-    const m = r.Milestone || "Other";
-    grouped[m] = grouped[m] || [];
-    grouped[m].push(r);
-  });
-
-  const container = document.getElementById("milestone-accordion");
-
-  Object.keys(grouped).forEach(milestone => {
-    const acts = grouped[milestone];
-    const achieved = acts.filter(a => a.Status === "Achieved").length;
-
-    const box = document.createElement("div");
-    box.className = "feature";
-
-    const header = document.createElement("div");
-    header.className = "milestone-header";
-    header.innerHTML = `
-      <div class="feature-title"><span class="chevron">▸</span>${milestone}</div>
-      <div class="feature-meta">${achieved}/${acts.length} achieved</div>
-    `;
-
-    const content = document.createElement("div");
-    content.className = "feature-content";
-    content.innerHTML = `
-      <table>
-        <thead>
-          <tr>
-            <th>Activity</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Comments</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${acts.map(a => `
-            <tr>
-              <td>${a.Activity || "-"}</td>
-              <td>${a.Description || "-"}</td>
-              <td>${a.Status || "-"}</td>
-              <td>${a.Comments || "-"}</td>
+              <td><span class="badge ${cls(t.Status)}">${STATUS_LABEL[t.Status]}</span></td>
             </tr>
           `).join("")}
         </tbody>
