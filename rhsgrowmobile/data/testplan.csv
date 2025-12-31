@@ -10,7 +10,7 @@ Signup|1493|Password/Confirm Password field validation|Regression|None|Medium
 Signup|1494|Check box validation|Regression|None|Medium
 Signup|1495|Mandatory field checks|Regression|None|Medium
 Signup|1496|Fill in with valid field values and signup|Regression|None|Medium
-Signin|1497|Sign in with your email address|Regression|Ready to Automate|Medium
+Signin|1497|Sign in with your email address|Regression|None|Medium
 Signin|1498|Field validation checks|Regression|Ready to Automate|Medium
 Signin|1499|Valid credentials|Regression|Automated|Critical
 Signin|1500|Invalid credentials|Regression|Automated|Critical
