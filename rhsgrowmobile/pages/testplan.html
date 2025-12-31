@@ -9,14 +9,27 @@
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
 <style>
-/* Overall Automation Progress – highlight (light) */
+/* ===== Overall Progress (Priority based) ===== */
 .overall.highlight {
   background: #eef6ff;
   border: 1px solid #d6e6f5;
 }
-.overall.highlight strong { color: #1f4f8a; }
-.overall.highlight span { color: #4b6b8a; }
+.overall-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1f4f8a;
+}
+.overall-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 14px;
+}
+.overall-row strong {
+  color: #1f2933;
+}
 
+/* ===== Base ===== */
 body {
   font-family: Inter, sans-serif;
   background: #f7f8f5;
@@ -28,7 +41,7 @@ body {
 h1 { font-size: 26px; margin-bottom: 20px; }
 h2 { font-size: 18px; margin: 24px 0 12px; }
 
-/* Tabs */
+/* ===== Tabs ===== */
 .tabs {
   display: flex;
   gap: 24px;
@@ -49,7 +62,7 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Feature accordion */
+/* ===== Accordion ===== */
 .feature {
   background: #ffffff;
   border: 1px solid #e1e4dd;
@@ -81,7 +94,7 @@ h2 { font-size: 18px; margin: 24px 0 12px; }
   padding: 12px 16px 16px;
 }
 
-/* Tables */
+/* ===== Tables ===== */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -97,7 +110,7 @@ th {
   font-weight: 600;
 }
 
-/* Status pills */
+/* ===== Status Pills ===== */
 .badge {
   padding: 3px 10px;
   border-radius: 999px;
@@ -110,28 +123,21 @@ th {
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .Cant { background: #fde2e2; color: #7f1d1d; }
 
-/* Priority */
+/* ===== Priority ===== */
 .priority {
   font-weight: 600;
   color: #374151;
 }
 
-/* Overall progress */
+/* ===== Overall Box ===== */
 .overall {
   margin-bottom: 16px;
   padding: 12px 14px;
-  background: #f2f4ef;
-  border: 1px solid #e1e4dd;
   border-radius: 8px;
   font-size: 14px;
 }
-.overall strong {
-  font-size: 18px;
-  margin-right: 8px;
-}
-.overall span { color: #5f6f5a; }
 
-/* Milestone box */
+/* ===== Milestones ===== */
 .box {
   background: #fbfcfa;
   border: 1px solid #e3e7df;
@@ -139,11 +145,11 @@ th {
   padding: 16px;
 }
 
-/* Zebra rows */
+/* ===== Zebra Rows ===== */
 tbody tr:nth-child(even) { background: #f4f6f2; }
 tbody tr:hover { background: #eef3ec; }
 
-/* Chevron */
+/* ===== Chevron ===== */
 .chevron {
   font-size: 14px;
   margin-right: 10px;
@@ -152,7 +158,7 @@ tbody tr:hover { background: #eef3ec; }
 }
 .feature.open .chevron { transform: rotate(90deg); }
 
-/* Dashboard iframe */
+/* ===== Dashboard ===== */
 #dashboard iframe {
   width: 100%;
   height: 80vh;
@@ -173,13 +179,13 @@ tbody tr:hover { background: #eef3ec; }
   <div class="tab" data-tab="dashboard">Dashboard</div>
 </div>
 
-<!-- ================= TEST PLAN ================= -->
+<!-- ===== TEST PLAN ===== -->
 <div id="testplan" class="tab-content active">
   <div id="overall"></div>
   <div id="features"></div>
 </div>
 
-<!-- ================= MILESTONES ================= -->
+<!-- ===== MILESTONES ===== -->
 <div id="milestones" class="tab-content">
   <div class="box">
     <h2>Milestones</h2>
@@ -187,15 +193,16 @@ tbody tr:hover { background: #eef3ec; }
   </div>
 </div>
 
-<!-- ================= DASHBOARD ================= -->
+<!-- ===== DASHBOARD ===== -->
 <div id="dashboard" class="tab-content">
-  <iframe src="dashboard.html" title="Automation Dashboard"></iframe>
+  <iframe src="dashboard.html"></iframe>
 </div>
 
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
 const MILESTONE_CSV = "../data/milestones.csv";
 
+/* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -209,154 +216,171 @@ function cls(status) {
   return (status || "").replace(/\s+/g, "").replace("Can't", "Cant");
 }
 
-/* ================= TEST PLAN ================= */
+/* ===== TEST PLAN ===== */
 fetch(TESTPLAN_CSV)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = Papa.parse(csv, {
-      header: true,
-      delimiter: "|",
-      skipEmptyLines: true
-    }).data;
+.then(r => r.text())
+.then(csv => {
+  const rows = Papa.parse(csv, {
+    header: true,
+    delimiter: "|",
+    skipEmptyLines: true
+  }).data;
 
-    const grouped = {};
-    let totalTests = 0;
-    let automatedTests = 0;
+  const grouped = {};
+  const priorityStats = {};
 
-    rows.forEach(row => {
-      const feature = row.Feature || "Other";
-      grouped[feature] = grouped[feature] || [];
-      grouped[feature].push(row);
-      totalTests++;
-      if (row.Status === "Automated") automatedTests++;
-    });
+  rows.forEach(row => {
+    const feature = row.Feature || "Other";
+    const priority = row.Priority || "Unspecified";
 
-    const featuresContainer = document.getElementById("features");
+    grouped[feature] = grouped[feature] || [];
+    grouped[feature].push(row);
 
-    Object.keys(grouped).forEach(feature => {
-      const tests = grouped[feature];
-      const automated = tests.filter(t => t.Status === "Automated").length;
-      const percent = Math.round((automated / tests.length) * 100);
-
-      const featureBox = document.createElement("div");
-      featureBox.className = "feature";
-
-      const header = document.createElement("div");
-      header.className = "feature-header";
-      header.innerHTML = `
-        <div class="feature-title"><span class="chevron">▸</span>${feature}</div>
-        <div class="feature-meta">${percent}% automated (${automated}/${tests.length})</div>
-      `;
-
-      const content = document.createElement("div");
-      content.className = "feature-content";
-      content.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>TCID</th>
-              <th>Description</th>
-              <th>Priority</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${tests.map(t => `
-              <tr>
-                <td>${t.TCID || ""}</td>
-                <td>${t["Test Case Description"] || ""}</td>
-                <td><span class="priority">${t.Priority || "-"}</span></td>
-                <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
-              </tr>`).join("")}
-          </tbody>
-        </table>
-      `;
-
-      header.onclick = () => {
-        const open = content.style.display === "block";
-        content.style.display = open ? "none" : "block";
-        featureBox.classList.toggle("open", !open);
-      };
-
-      featureBox.append(header, content);
-      featuresContainer.appendChild(featureBox);
-    });
-
-    document.getElementById("overall").innerHTML = `
-      <div class="overall highlight">
-        <strong>${Math.round((automatedTests / totalTests) * 100)}%</strong>
-        Overall Automation Progress
-        <span>(${automatedTests} of ${totalTests} test cases automated)</span>
-      </div>`;
+    priorityStats[priority] = priorityStats[priority] || { total: 0, automated: 0 };
+    priorityStats[priority].total++;
+    if (row.Status === "Automated") priorityStats[priority].automated++;
   });
 
-/* ================= MILESTONES ================= */
+  /* ===== Overall by Priority ===== */
+  const order = ["Critical", "High", "Medium", "Low", "Unspecified"];
+  const overallHtml = order
+    .filter(p => priorityStats[p])
+    .map(p => {
+      const s = priorityStats[p];
+      const percent = Math.round((s.automated / s.total) * 100);
+      return `
+        <div class="overall-row">
+          <strong>${p}</strong>
+          <span>${s.automated} / ${s.total} → ${percent}%</span>
+        </div>`;
+    }).join("");
+
+  document.getElementById("overall").innerHTML = `
+    <div class="overall highlight">
+      <div class="overall-title">Overall Automation Progress</div>
+      ${overallHtml}
+    </div>`;
+
+  /* ===== Feature Accordions ===== */
+  const featuresContainer = document.getElementById("features");
+
+  Object.keys(grouped).forEach(feature => {
+    const tests = grouped[feature];
+    const automated = tests.filter(t => t.Status === "Automated").length;
+    const percent = Math.round((automated / tests.length) * 100);
+
+    const box = document.createElement("div");
+    box.className = "feature";
+
+    const header = document.createElement("div");
+    header.className = "feature-header";
+    header.innerHTML = `
+      <div class="feature-title"><span class="chevron">▸</span>${feature}</div>
+      <div class="feature-meta">${percent}% automated (${automated}/${tests.length})</div>
+    `;
+
+    const content = document.createElement("div");
+    content.className = "feature-content";
+    content.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>TCID</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tests.map(t => `
+            <tr>
+              <td>${t.TCID || ""}</td>
+              <td>${t["Test Case Description"] || ""}</td>
+              <td><span class="priority">${t.Priority || "-"}</span></td>
+              <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+    `;
+
+    header.onclick = () => {
+      const open = content.style.display === "block";
+      content.style.display = open ? "none" : "block";
+      box.classList.toggle("open", !open);
+    };
+
+    box.append(header, content);
+    featuresContainer.appendChild(box);
+  });
+});
+
+/* ===== MILESTONES ===== */
 fetch(MILESTONE_CSV)
-  .then(r => r.text())
-  .then(csv => {
-    const rows = Papa.parse(csv, {
-      header: true,
-      delimiter: "|",
-      skipEmptyLines: true
-    }).data;
+.then(r => r.text())
+.then(csv => {
+  const rows = Papa.parse(csv, {
+    header: true,
+    delimiter: "|",
+    skipEmptyLines: true
+  }).data;
 
-    const grouped = {};
-    rows.forEach(r => {
-      const m = r.Milestone || "Other";
-      grouped[m] = grouped[m] || [];
-      grouped[m].push(r);
-    });
-
-    const container = document.getElementById("milestone-accordion");
-
-    Object.keys(grouped).forEach(milestone => {
-      const activities = grouped[milestone];
-      const achieved = activities.filter(a => a.Status === "Achieved").length;
-
-      const box = document.createElement("div");
-      box.className = "feature";
-
-      const header = document.createElement("div");
-      header.className = "milestone-header";
-      header.innerHTML = `
-        <div class="milestone-title"><span class="chevron">▸</span>${milestone}</div>
-        <div class="milestone-meta">${achieved}/${activities.length} achieved</div>
-      `;
-
-      const content = document.createElement("div");
-      content.className = "feature-content";
-      content.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>Activity</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Comments</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${activities.map(a => `
-              <tr>
-                <td>${a.Activity || "-"}</td>
-                <td>${a.Description || "-"}</td>
-                <td>${a.Status || "-"}</td>
-                <td>${a.Comments || "-"}</td>
-              </tr>`).join("")}
-          </tbody>
-        </table>
-      `;
-
-      header.onclick = () => {
-        const open = content.style.display === "block";
-        content.style.display = open ? "none" : "block";
-        box.classList.toggle("open", !open);
-      };
-
-      box.append(header, content);
-      container.appendChild(box);
-    });
+  const grouped = {};
+  rows.forEach(r => {
+    const m = r.Milestone || "Other";
+    grouped[m] = grouped[m] || [];
+    grouped[m].push(r);
   });
+
+  const container = document.getElementById("milestone-accordion");
+
+  Object.keys(grouped).forEach(milestone => {
+    const acts = grouped[milestone];
+    const achieved = acts.filter(a => a.Status === "Achieved").length;
+
+    const box = document.createElement("div");
+    box.className = "feature";
+
+    const header = document.createElement("div");
+    header.className = "milestone-header";
+    header.innerHTML = `
+      <div class="milestone-title"><span class="chevron">▸</span>${milestone}</div>
+      <div class="milestone-meta">${achieved}/${acts.length} achieved</div>
+    `;
+
+    const content = document.createElement("div");
+    content.className = "feature-content";
+    content.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Activity</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${acts.map(a => `
+            <tr>
+              <td>${a.Activity || "-"}</td>
+              <td>${a.Description || "-"}</td>
+              <td>${a.Status || "-"}</td>
+              <td>${a.Comments || "-"}</td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+    `;
+
+    header.onclick = () => {
+      const open = content.style.display === "block";
+      content.style.display = open ? "none" : "block";
+      box.classList.toggle("open", !open);
+    };
+
+    box.append(header, content);
+    container.appendChild(box);
+  });
+});
 </script>
 
 </body>
