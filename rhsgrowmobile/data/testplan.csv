@@ -1,5 +1,5 @@
 Feature|TCID|Test Case Description|Type|Status|Priority
-Install and Launch|1486|Uninstall existing app|Regression|Ready to Automate|Critical
+Install and Launch|1486|Uninstall existing app|Regression|ReadyToAutomate|Critical
 Install and Launch|1487|Install the app|Regression|None|Medium
 Install and Launch|1488|Launch the app and check the animation|Regression|None|Medium
 Install and Launch|1489|Skip animation|Regression|None|Medium
@@ -10,8 +10,8 @@ Signup|1493|Password/Confirm Password field validation|Regression|None|Medium
 Signup|1494|Check box validation|Regression|None|Medium
 Signup|1495|Mandatory field checks|Regression|None|Medium
 Signup|1496|Fill in with valid field values and signup|Regression|None|Medium
-Signin|1497|Sign in with your email address|Regression|None|Medium
-Signin|1498|Field validation checks|Regression|Ready to Automate|Medium
+Signin|1497|Sign in with your email address|Regression|InProgress|Medium
+Signin|1498|Field validation checks|Regression|ReadyToAutomate|Medium
 Signin|1499|Valid credentials|Regression|Automated|Critical
 Signin|1500|Invalid credentials|Regression|Automated|Critical
 Forgot Password|1501|Field validation checks|Regression|None|Medium
@@ -255,7 +255,7 @@ Care Tips|1738|Filter under Plants Z-A-->specific care category--> Plants/Fruit 
 Care Tips|1739|Filter under Plants Z-A-->specific care category--> To do/Complete|Regression|None|Medium
 Care Tips|1740|Sort based on Around the Garden|Regression|None|Medium
 Care Tips|1741|Filter under specific Around the Garden care category--> Todo/Complete|Regression|None|Medium
-Plant ID|1742|Take a photo via Camera, upload and search|Regression|Can't be Automated|Medium
+Plant ID|1742|Take a photo via Camera, upload and search|Regression|CantBeAutomated|Medium
 Plant ID|1743|Select an image from gallery and search|Regression|None|Medium
 Plant ID|1744|Navigations on Search results|Regression|None|Medium
 Plant ID|1745|Add plant to collection from results|Regression|None|Medium
