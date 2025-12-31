@@ -110,6 +110,12 @@ th {
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .Cant { background: #fde2e2; color: #7f1d1d; }
 
+/* Priority */
+.priority {
+  font-weight: 600;
+  color: #374151;
+}
+
 /* Overall progress */
 .overall {
   margin-bottom: 16px;
@@ -189,10 +195,7 @@ tbody tr:hover { background: #eef3ec; }
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
 const MILESTONE_CSV = "../data/milestones.csv";
-const params = new URLSearchParams(location.search);
-const project = params.get("project") || "rhsgrowmobile";
 
-/* Tabs */
 document.querySelectorAll(".tab").forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -250,13 +253,19 @@ fetch(TESTPLAN_CSV)
       content.innerHTML = `
         <table>
           <thead>
-            <tr><th>TCID</th><th>Description</th><th>Status</th></tr>
+            <tr>
+              <th>TCID</th>
+              <th>Description</th>
+              <th>Priority</th>
+              <th>Status</th>
+            </tr>
           </thead>
           <tbody>
             ${tests.map(t => `
               <tr>
                 <td>${t.TCID || ""}</td>
                 <td>${t["Test Case Description"] || ""}</td>
+                <td><span class="priority">${t.Priority || "-"}</span></td>
                 <td><span class="badge ${cls(t.Status)}">${t.Status}</span></td>
               </tr>`).join("")}
           </tbody>
@@ -319,7 +328,12 @@ fetch(MILESTONE_CSV)
       content.innerHTML = `
         <table>
           <thead>
-            <tr><th>Activity</th><th>Description</th><th>Status</th><th>Comments</th></tr>
+            <tr>
+              <th>Activity</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Comments</th>
+            </tr>
           </thead>
           <tbody>
             ${activities.map(a => `
