@@ -62,12 +62,8 @@ h1 { font-size: 26px; margin-bottom: 20px; }
 }
 .feature-meta {
   font-size: 13px;
+  color: #5f6f5a;
   text-align: right;
-  white-space: nowrap;
-}
-.feature-content {
-  display: none;
-  padding: 12px 16px 16px;
 }
 
 /* Tables */
@@ -94,12 +90,18 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
   font-weight: 600;
 }
 .Automated { background: #e6f4ea; color: #1e4620; }
-.ReadytoAutomate { background: #fdecc8; color: #7a4a00; }
+.ReadyToAutomate { background: #fdecc8; color: #7a4a00; }
 .InProgress { background: #ede9fe; color: #4c1d95; }
 .CantBeAutomated { background: #fde2e2; color: #7f1d1d; }
+.None { background: #f3f4f6; color: #374151; }
+.Undefined { background: #fee2e2; color: #991b1b; }
 
 /* Summary colors */
-.summary-automated {
+.summary-automated-zero {
+  color: #6b7280;
+  font-weight: 600;
+}
+.summary-automated-nonzero {
   color: #1e4620;
   font-weight: 600;
 }
@@ -110,20 +112,10 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
 
 /* Chevron */
 .chevron {
-  font-size: 14px;
-  margin-right: 10px;
+  margin-right: 8px;
   color: #6b7b67;
-  transition: transform 0.2s ease;
 }
 .feature.open .chevron { transform: rotate(90deg); }
-
-/* Dashboard */
-#dashboard iframe {
-  width: 100%;
-  height: 80vh;
-  border: none;
-  border-radius: 8px;
-}
 </style>
 </head>
 
@@ -133,39 +125,24 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
 
 <div class="tabs">
   <div class="tab active" data-tab="testplan">Test Coverage</div>
-  <div class="tab" data-tab="milestones">Milestones</div>
-  <div class="tab" data-tab="dashboard">Dashboard</div>
 </div>
 
 <div id="testplan" class="tab-content active">
   <div id="features"></div>
 </div>
 
-<div id="milestones" class="tab-content"></div>
-
-<div id="dashboard" class="tab-content">
-  <iframe src="dashboard.html"></iframe>
-</div>
-
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
 
-/* Tabs */
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.onclick = () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById(tab.dataset.tab).classList.add("active");
-  };
-});
-
-/* ========= STATUS NORMALIZATION ========= */
+/* Status normalization */
 function normalizeStatus(raw) {
-  if (!raw) return "None";
+  if (raw === undefined || raw === null || raw.toString().trim() === "") {
+    return "None";
+  }
 
   const s = raw
     .toString()
+    .trim()
     .toLowerCase()
     .replace(/\s+/g, "")
     .replace("'", "");
@@ -175,11 +152,7 @@ function normalizeStatus(raw) {
   if (s === "inprogress") return "InProgress";
   if (s === "cantbeautomated") return "CantBeAutomated";
 
-  return "None";
-}
-
-function cls(status) {
-  return status === "None" ? "None" : status;
+  return "Undefined";
 }
 
 const STATUS_LABEL = {
@@ -187,7 +160,8 @@ const STATUS_LABEL = {
   ReadyToAutomate: "Ready To Automate",
   InProgress: "In Progress",
   CantBeAutomated: "Can't Be Automated",
-  None: "None"
+  None: "None",
+  Undefined: "Undefined"
 };
 
 fetch(TESTPLAN_CSV)
@@ -201,7 +175,7 @@ fetch(TESTPLAN_CSV)
 
   const grouped = {};
   rows.forEach(r => {
-    const f = r.Feature || "None";
+    const f = r.Feature || "Other";
     grouped[f] = grouped[f] || [];
     grouped[f].push(r);
   });
@@ -216,15 +190,20 @@ fetch(TESTPLAN_CSV)
     let ready = 0;
 
     tests.forEach(t => {
-      const status = normalizeStatus(t.Status);
-      if (status === "Automated") automated++;
-      if (status === "ReadyToAutomate") ready++;
+      const st = normalizeStatus(t.Status);
+      if (st === "Automated") automated++;
+      if (st === "ReadyToAutomate") ready++;
+      t._normalizedStatus = st;
     });
 
-    const automatedPct = total ? Math.round((automated / total) * 100) : 0;
+    const automatedPct = Math.round((automated / total) * 100);
+    const automatedClass =
+      automatedPct > 0
+        ? "summary-automated-nonzero"
+        : "summary-automated-zero";
 
     const summary = `
-      <span class="summary-automated">
+      <span class="${automatedClass}">
         ${automated}/${total} Automated (${automatedPct}%)
       </span>
       ${ready > 0 ? `
@@ -240,12 +219,14 @@ fetch(TESTPLAN_CSV)
     const header = document.createElement("div");
     header.className = "feature-header";
     header.innerHTML = `
-      <div class="feature-title"><span class="chevron">▸</span>${feature}</div>
+      <div class="feature-title">
+        <span class="chevron">▸</span>${feature}
+      </div>
       <div class="feature-meta">${summary}</div>
     `;
 
     const content = document.createElement("div");
-    content.className = "feature-content";
+    content.style.display = "none";
     content.innerHTML = `
       <table>
         <thead>
@@ -258,22 +239,19 @@ fetch(TESTPLAN_CSV)
           </tr>
         </thead>
         <tbody>
-          ${tests.map(t => {
-            const status = normalizeStatus(t.Status);
-            return `
-              <tr>
-                <td>${t.TCID || "None"}</td>
-                <td>${t["Test Case Description"] || "None"}</td>
-                <td>${t.Type || "None"}</td>
-                <td>${t.Priority || "None"}</td>
-                <td>
-                  <span class="badge ${cls(status)}">
-                    ${STATUS_LABEL[status]}
-                  </span>
-                </td>
-              </tr>
-            `;
-          }).join("")}
+          ${tests.map(t => `
+            <tr>
+              <td>${t.TCID || ""}</td>
+              <td>${t["Test Case Description"] || ""}</td>
+              <td>${t.Type || "-"}</td>
+              <td>${t.Priority || "-"}</td>
+              <td>
+                <span class="badge ${t._normalizedStatus}">
+                  ${STATUS_LABEL[t._normalizedStatus]}
+                </span>
+              </td>
+            </tr>
+          `).join("")}
         </tbody>
       </table>
     `;
