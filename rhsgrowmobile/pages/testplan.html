@@ -17,7 +17,10 @@ body {
   color: #1f2933;
 }
 
-h1 { font-size: 26px; margin-bottom: 20px; }
+h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
 
 /* Tabs */
 .tabs {
@@ -39,6 +42,29 @@ h1 { font-size: 26px; margin-bottom: 20px; }
 }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
+
+/* Priority Summary */
+.priority-summary {
+  background: #ffffff;
+  border: 1px solid #e1e4dd;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.priority-item {
+  font-weight: 600;
+  color: #374151;
+}
+
+.priority-item span {
+  font-weight: 500;
+  color: #6b7280;
+}
 
 /* Accordion */
 .feature {
@@ -80,7 +106,9 @@ th {
   background: #fafafa;
   font-weight: 600;
 }
-tbody tr:nth-child(even) { background: #f4f6f2; }
+tbody tr:nth-child(even) {
+  background: #f4f6f2;
+}
 
 /* Badges */
 .badge {
@@ -115,7 +143,9 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
   margin-right: 8px;
   color: #6b7b67;
 }
-.feature.open .chevron { transform: rotate(90deg); }
+.feature.open .chevron {
+  transform: rotate(90deg);
+}
 </style>
 </head>
 
@@ -128,6 +158,7 @@ tbody tr:nth-child(even) { background: #f4f6f2; }
 </div>
 
 <div id="testplan" class="tab-content active">
+  <div id="priority-summary"></div>
   <div id="features"></div>
 </div>
 
@@ -136,16 +167,9 @@ const TESTPLAN_CSV = "../data/testplan.csv";
 
 /* Status normalization */
 function normalizeStatus(raw) {
-  if (raw === undefined || raw === null || raw.toString().trim() === "") {
-    return "None";
-  }
+  if (!raw || raw.toString().trim() === "") return "None";
 
-  const s = raw
-    .toString()
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace("'", "");
+  const s = raw.toString().trim().toLowerCase().replace(/\s+/g, "").replace("'", "");
 
   if (s === "automated") return "Automated";
   if (s === "readytoautomate") return "ReadyToAutomate";
@@ -173,6 +197,48 @@ fetch(TESTPLAN_CSV)
     skipEmptyLines: true
   }).data;
 
+  /* -------- Priority Summary -------- */
+  const priorityStats = {};
+  let totalAll = 0;
+  let totalAutomated = 0;
+
+  rows.forEach(r => {
+    const priority = (r.Priority || "Undefined").trim();
+    const status = normalizeStatus(r.Status);
+
+    priorityStats[priority] = priorityStats[priority] || { total: 0, automated: 0 };
+    priorityStats[priority].total++;
+    totalAll++;
+
+    if (status === "Automated") {
+      priorityStats[priority].automated++;
+      totalAutomated++;
+    }
+  });
+
+  const priorityOrder = ["Critical", "High", "Medium", "Low"];
+  const summaryDiv = document.getElementById("priority-summary");
+
+  priorityOrder.forEach(p => {
+    if (!priorityStats[p]) return;
+    const { total, automated } = priorityStats[p];
+    const pct = Math.round((automated / total) * 100);
+
+    summaryDiv.innerHTML += `
+      <div class="priority-item">
+        ${p}: <span>${automated}/${total} – ${pct}%</span>
+      </div>
+    `;
+  });
+
+  const totalPct = Math.round((totalAutomated / totalAll) * 100);
+  summaryDiv.innerHTML += `
+    <div class="priority-item">
+      Total: <span>${totalAutomated}/${totalAll} – ${totalPct}%</span>
+    </div>
+  `;
+
+  /* -------- Feature Grouping -------- */
   const grouped = {};
   rows.forEach(r => {
     const f = r.Feature || "Other";
@@ -198,10 +264,9 @@ fetch(TESTPLAN_CSV)
     });
 
     const automatedPct = Math.round((automated / total) * 100);
-    const automatedClass =
-      automatedPct > 0
-        ? "summary-automated-nonzero"
-        : "summary-automated-zero";
+    const automatedClass = automatedPct > 0
+      ? "summary-automated-nonzero"
+      : "summary-automated-zero";
 
     const summary = `
       <span class="${automatedClass}">
@@ -209,9 +274,8 @@ fetch(TESTPLAN_CSV)
       </span>
       ${ready > 0 ? `
         | <span class="summary-ready">
-            ${ready}/${total} ReadyToAutomate
-          </span>
-      ` : ""}
+          ${ready}/${total} ReadyToAutomate
+        </span>` : ""}
     `;
 
     const box = document.createElement("div");
