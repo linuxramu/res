@@ -43,34 +43,52 @@ h1 {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Priority Summary */
+/* ===== Priority Summary ===== */
 .priority-summary {
-  background: #ffffff;
+  background: linear-gradient(180deg, #ffffff, #f9faf7);
   border: 1px solid #e1e4dd;
-  border-radius: 8px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  font-size: 14px;
+  gap: 12px;
 }
 
 .priority-item {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2933;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.priority-item span {
   font-weight: 600;
   color: #374151;
 }
 
-.priority-item span {
-  font-weight: 500;
-  color: #6b7280;
+/* Priority emphasis */
+.priority-item:nth-child(1) { border-left: 4px solid #b91c1c; }
+.priority-item:nth-child(2) { border-left: 4px solid #d97706; }
+.priority-item:nth-child(3) { border-left: 4px solid #2563eb; }
+.priority-item:nth-child(4) { border-left: 4px solid #059669; }
+.priority-item:last-child {
+  border-left: 4px solid #6b7280;
+  background: #f9fafb;
 }
 
 /* Accordion */
 .feature {
   background: #ffffff;
   border: 1px solid #e1e4dd;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 10px;
 }
 .feature-header {
@@ -81,15 +99,22 @@ h1 {
   cursor: pointer;
   background: #f2f4ef;
   border-bottom: 1px solid #e1e4dd;
+  transition: background 0.2s ease;
+}
+.feature-header:hover {
+  background: #eef2ec;
 }
 .feature-title {
   font-size: 16px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .feature-meta {
   font-size: 13px;
   color: #5f6f5a;
-  text-align: right;
+  font-weight: 500;
 }
 
 /* Tables */
@@ -140,7 +165,7 @@ tbody tr:nth-child(even) {
 
 /* Chevron */
 .chevron {
-  margin-right: 8px;
+  margin-right: 6px;
   color: #6b7b67;
 }
 .feature.open .chevron {
@@ -154,7 +179,7 @@ tbody tr:nth-child(even) {
 <h1>QA Test Plan</h1>
 
 <div class="tabs">
-  <div class="tab active" data-tab="testplan">Test Coverage</div>
+  <div class="tab active">Test Coverage</div>
 </div>
 
 <div id="testplan" class="tab-content active">
@@ -165,17 +190,13 @@ tbody tr:nth-child(even) {
 <script>
 const TESTPLAN_CSV = "../data/testplan.csv";
 
-/* Status normalization */
 function normalizeStatus(raw) {
   if (!raw || raw.toString().trim() === "") return "None";
-
   const s = raw.toString().trim().toLowerCase().replace(/\s+/g, "").replace("'", "");
-
   if (s === "automated") return "Automated";
   if (s === "readytoautomate") return "ReadyToAutomate";
   if (s === "inprogress") return "InProgress";
   if (s === "cantbeautomated") return "CantBeAutomated";
-
   return "Undefined";
 }
 
@@ -197,48 +218,43 @@ fetch(TESTPLAN_CSV)
     skipEmptyLines: true
   }).data;
 
-  /* -------- Priority Summary -------- */
+  /* Priority summary */
   const priorityStats = {};
   let totalAll = 0;
   let totalAutomated = 0;
 
   rows.forEach(r => {
-    const priority = (r.Priority || "Undefined").trim();
-    const status = normalizeStatus(r.Status);
-
-    priorityStats[priority] = priorityStats[priority] || { total: 0, automated: 0 };
-    priorityStats[priority].total++;
+    const p = (r.Priority || "Undefined").trim();
+    const s = normalizeStatus(r.Status);
+    priorityStats[p] = priorityStats[p] || { total: 0, automated: 0 };
+    priorityStats[p].total++;
     totalAll++;
-
-    if (status === "Automated") {
-      priorityStats[priority].automated++;
+    if (s === "Automated") {
+      priorityStats[p].automated++;
       totalAutomated++;
     }
   });
 
-  const priorityOrder = ["Critical", "High", "Medium", "Low"];
-  const summaryDiv = document.getElementById("priority-summary");
+  const order = ["Critical", "High", "Medium", "Low"];
+  const summary = document.getElementById("priority-summary");
 
-  priorityOrder.forEach(p => {
+  order.forEach(p => {
     if (!priorityStats[p]) return;
     const { total, automated } = priorityStats[p];
     const pct = Math.round((automated / total) * 100);
-
-    summaryDiv.innerHTML += `
+    summary.innerHTML += `
       <div class="priority-item">
         ${p}: <span>${automated}/${total} – ${pct}%</span>
-      </div>
-    `;
+      </div>`;
   });
 
   const totalPct = Math.round((totalAutomated / totalAll) * 100);
-  summaryDiv.innerHTML += `
+  summary.innerHTML += `
     <div class="priority-item">
       Total: <span>${totalAutomated}/${totalAll} – ${totalPct}%</span>
-    </div>
-  `;
+    </div>`;
 
-  /* -------- Feature Grouping -------- */
+  /* Feature grouping */
   const grouped = {};
   rows.forEach(r => {
     const f = r.Feature || "Other";
@@ -248,8 +264,8 @@ fetch(TESTPLAN_CSV)
 
   const container = document.getElementById("features");
 
-  Object.keys(grouped).forEach((feature, index) => {
-    const serial = String(index + 1).padStart(2, "0");
+  Object.keys(grouped).forEach((feature, i) => {
+    const serial = String(i + 1).padStart(2, "0");
     const tests = grouped[feature];
     const total = tests.length;
 
@@ -263,19 +279,14 @@ fetch(TESTPLAN_CSV)
       t._normalizedStatus = st;
     });
 
-    const automatedPct = Math.round((automated / total) * 100);
-    const automatedClass = automatedPct > 0
-      ? "summary-automated-nonzero"
-      : "summary-automated-zero";
+    const pct = Math.round((automated / total) * 100);
+    const cls = pct > 0 ? "summary-automated-nonzero" : "summary-automated-zero";
 
-    const summary = `
-      <span class="${automatedClass}">
-        ${automated}/${total} Automated (${automatedPct}%)
+    const summaryTxt = `
+      <span class="${cls}">
+        ${automated}/${total} Automated (${pct}%)
       </span>
-      ${ready > 0 ? `
-        | <span class="summary-ready">
-          ${ready}/${total} ReadyToAutomate
-        </span>` : ""}
+      ${ready > 0 ? ` | <span class="summary-ready">${ready}/${total} ReadyToAutomate</span>` : ""}
     `;
 
     const box = document.createElement("div");
@@ -287,7 +298,7 @@ fetch(TESTPLAN_CSV)
       <div class="feature-title">
         <span class="chevron">▸</span>${serial} - ${feature}
       </div>
-      <div class="feature-meta">${summary}</div>
+      <div class="feature-meta">${summaryTxt}</div>
     `;
 
     const content = document.createElement("div");
@@ -315,8 +326,7 @@ fetch(TESTPLAN_CSV)
                   ${STATUS_LABEL[t._normalizedStatus]}
                 </span>
               </td>
-            </tr>
-          `).join("")}
+            </tr>`).join("")}
         </tbody>
       </table>
     `;
