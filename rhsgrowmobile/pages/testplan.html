@@ -182,7 +182,8 @@ fetch(TESTPLAN_CSV)
 
   const container = document.getElementById("features");
 
-  Object.keys(grouped).forEach(feature => {
+  Object.keys(grouped).forEach((feature, index) => {
+    const serial = String(index + 1).padStart(2, "0");
     const tests = grouped[feature];
     const total = tests.length;
 
@@ -220,7 +221,7 @@ fetch(TESTPLAN_CSV)
     header.className = "feature-header";
     header.innerHTML = `
       <div class="feature-title">
-        <span class="chevron">▸</span>${feature}
+        <span class="chevron">▸</span>${serial} - ${feature}
       </div>
       <div class="feature-meta">${summary}</div>
     `;
