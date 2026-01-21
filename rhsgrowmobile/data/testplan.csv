@@ -1,16 +1,16 @@
 Feature|TCID|Test Case Description|Type|Status|Priority
 Install and Launch|1486|Uninstall existing app|Regression|ReadyToAutomate|High
-Install and Launch|1487|Install the app|Regression|None|High
-Install and Launch|1488|Launch the app and check the animation|Regression|None|High
-Install and Launch|1489|Skip animation|Regression|None|High
-Signup|1490|Create your RHS Grow account--> Sign up|Regression|None|Critical
+Install and Launch|1487|Install the app|Regression|Automated|High
+Install and Launch|1488|Launch the app and check the animation|Regression|Automated|High
+Install and Launch|1489|Skip animation|Regression|Automated|High
+Signup|1490|Create your RHS Grow account--> Sign up|Regression|ReadyToAutomate|Critical
 Signup|1491|Email field validation|Regression|None|Medium
 Signup|1492|Name/Surname field validation|Regression|None|Medium
 Signup|1493|Password/Confirm Password field validation|Regression|None|Medium
 Signup|1494|Check box validation|Regression|None|Medium
 Signup|1495|Mandatory field checks|Regression|None|High
-Signup|1496|Fill in with valid field values and signup|Regression|None|Critical
-Signin|1497|Sign in with your email address|Regression|InProgress|Critical
+Signup|1496|Fill in with valid field values and signup|Regression|ReadyToAutomate|Critical
+Signin|1497|Sign in with your email address|Regression|Automated|Critical
 Signin|1498|Field validation checks|Regression|ReadyToAutomate|Medium
 Signin|1499|Valid credentials with a deleted account|Regression|Automated|Medium
 Signin|1500|Invalid credentials|Regression|Automated|Critical
@@ -26,7 +26,7 @@ Onboarding Setup|1509|Which features are in your garden?|Regression|None|High
 Onboarding Setup|1510|Which topics are you interested in?|Regression|None|High
 Onboarding Setup|1511|How confident are you as a gardener?|Regression|None|High
 Onboarding Setup|1512|Location|Regression|None|High
-Onboarding Setup|1513|Turn on Notifications|Regression|None|Critical
+Onboarding Setup|1513|Turn on Notifications|Regression|Automated|Critical
 Home|1514|Email verification status|Regression|None|Critical
 Home|1515|Tutorial flow on first launch|Regression|None|High
 Home|1516|Paywall on first launch|Regression|None|Critical
@@ -64,7 +64,7 @@ Plant Combination builder|1547|Multiple selection|Regression|None|Medium
 Plant Combination builder|1548|Results|Regression|None|Critical
 Plant Combination builder|1549|Add to Wishlist|Regression|None|Critical
 Plant Combination builder|1550|Restart/Close|Regression|None|Medium
-Popular this month|1551|Horizontal scroll and add plants tp coll/wish|Regression|None|Critical
+Popular this month|1551|Horizontal scroll and add plants tp coll/wish|Regression|ReadyToAutomate|Critical
 Popular this month|1552|Show All --> Listing|Regression|None|High
 Settings|1553|My Garden Profile|Regression|None|Critical
 Settings|1554|Chatbot Preferences|Regression|None|High
@@ -136,7 +136,7 @@ My Garden--> Collections|1620|Check added plant under each collection|Regression
 My Garden--> Collections|1621|Sort Alphabetical order|Regression|None|High
 My Garden--> Collections|1622|Add Collection|Regression|None|Critical
 My Garden--> Collections|1623|Rename Collection|Regression|None|High
-My Garden--> Collections|1624|Delete Collection|Regression|None|High
+My Garden--> Collections|1624|Delete Collection|Regression|Automated|High
 My Garden--> Collections|1625|List /grid view|Regression|None|High
 My Garden--> Collections|1626|Open a collection--> Added plants check|Regression|None|Critical
 My Garden--> Collections|1627|Open a collection-->Add plant--> Manual search|Regression|None|Critical
@@ -226,12 +226,13 @@ My Garden--> Journal--> Plant Notes (Offline)|1709|Edit Description|Regression|N
 My Garden--> Journal--> Plant Notes (Offline)|1710|Delete image|Regression|None|High
 My Garden--> Journal--> Plant Notes (Offline)|1711|Delete Note|Regression|None|Critical
 My Garden--> Journal--> Plant Notes (Offline)|1712|Check everything by going online|Regression|None|Critical
-Care Tips|1713|CT for plants added via manual search|Regression|InProgress|Critical
+Care Tips|1713|CT for plants added via manual search/Current Month|Regression|InProgress|Critical
+Care Tips|1718|Current Year - Future Month CT|Regression|ReadyToAutomate|Critical
+Care Tips|1835|Current Year - Past month CT|Other|ReadyToAutomate|Critical
 Care Tips|1714|CT for GYO - Fruit|Regression|ReadyToAutomate|Critical
 Care Tips|1715|CT for GYO - Vegetable|Regression|ReadyToAutomate|Critical
 Care Tips|1716|CT for GYO - Herbs|Regression|ReadyToAutomate|Critical
 Care Tips|1717|CT for House plants|Regression|ReadyToAutomate|Critical
-Care Tips|1718|Current Year CT|Regression|None|Critical
 Care Tips|1719|Previous Year CT|Regression|None|High
 Care Tips|1720|Next Year CT|Regression|None|High
 Care Tips|1721|CT - Bulk Complete|Regression|None|Critical
